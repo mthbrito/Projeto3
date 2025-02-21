@@ -49,7 +49,7 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
 
     private void atualizarJson(List<Veiculo> veiculosAtualizado){
         String veiculosAtualizadoJson = new Gson().toJson(veiculosAtualizado);
-        try(FileWriter writer = new FileWriter("src/main/java/locadora/dao/veiculos.json")) {
+        try(FileWriter writer = new FileWriter("src/main/java/locadora/json/veiculos.json")) {
             writer.write(veiculosAtualizadoJson);
             System.out.println("adicionado");
         } catch (IOException e) {

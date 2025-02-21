@@ -47,7 +47,7 @@ public class ClienteDAO implements IPersistencia<Cliente> {
 
     private void atualizarJson(List<Cliente> clientesAtualizado) {
         String clientesAtualizadoJson = new Gson().toJson(clientesAtualizado);
-        try (FileWriter writer = new FileWriter("src/main/java/locadora/dao/clientes.json")) {
+        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/clientes.json")) {
             writer.write(clientesAtualizadoJson);
             System.out.println("adicionado");
         } catch (IOException e) {

@@ -47,12 +47,11 @@ public class LocacaoDAO implements IPersistencia<Locacao>{
 
     private void atualizarJson(List<Locacao> locacoesAtualizado) {
         String locacoesAtualizadoJson = new Gson().toJson(locacoesAtualizado);
-        try (FileWriter writer = new FileWriter("src/main/java/locadora/dao/locacoes.json")) {
+        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/locacoes.json")) {
             writer.write(locacoesAtualizadoJson);
             System.out.println("adicionado");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
