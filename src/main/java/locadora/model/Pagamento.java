@@ -57,4 +57,16 @@ public class Pagamento {
     public void setMetodoPagamento(String metodoPagamento) {
         this.metodoPagamento = metodoPagamento;
     }
+
+    @Override
+    public String toString() {
+        return "Pagamento{" +
+                "idPagamento=" + idPagamento +
+                ", idLocacao=" + idLocacao +
+                ", valorPago=" + valorPago +
+                ", dataPagamento=" + dataPagamento +
+                ", metodoPagamento='" + metodoPagamento + '\'' +
+                '}';
+    }
+
 }

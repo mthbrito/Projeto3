@@ -10,4 +10,5 @@ public class Carro extends Veiculo{
     double calcularCustoLocacao() {
         return 0;
     }
+
 }
