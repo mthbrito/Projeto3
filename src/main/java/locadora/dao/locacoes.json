@@ -1,0 +1,34 @@
+[
+  {
+    "cliente": {
+      "nome": "Matheus",
+      "cpf": "123456789",
+      "telefone": "9999-8888",
+      "email": "matheus@ifpb.com"
+    },
+    "veiculo": {
+      "placa": "abc2000",
+      "modelo": "uno",
+      "ano": 2000,
+      "status": "locado"
+    },
+    "dataDeRetirada": "2025-2-2",
+    "dataDeDevolucao": "2025-2-18"
+  },
+  {
+    "cliente": {
+      "nome": "Matheus",
+      "cpf": "123456789",
+      "telefone": "9999-8888",
+      "email": "matheus@ifpb.com"
+    },
+    "veiculo": {
+      "placa": "xyz2001",
+      "modelo": "corsa",
+      "ano": 2005,
+      "status": "disponível"
+    },
+    "dataDeRetirada": "2025-1-1",
+    "dataDeDevolucao": "2025-2-12"
+  }
+]

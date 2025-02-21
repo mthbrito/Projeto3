@@ -1,0 +1,14 @@
+[
+  {
+    "nome": "Matheus",
+    "cpf": "123456789",
+    "telefone": "9999-8888",
+    "email": "matheus@ifpb.com"
+  },
+  {
+    "nome": "Maria",
+    "cpf": "987654321",
+    "telefone": "9666-9666",
+    "email": "maria@ifpb.com"
+  }
+]

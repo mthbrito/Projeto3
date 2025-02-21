@@ -1,0 +1,20 @@
+[
+  {
+    "placa": "abc2000",
+    "modelo": "uno",
+    "ano": 2000,
+    "status": "locado"
+  },
+  {
+    "placa": "sje2025",
+    "modelo": "truck",
+    "ano": 1997,
+    "status": "disponível"
+  },
+  {
+    "placa": "lmn7894",
+    "modelo": "honda",
+    "ano": 2010,
+    "status": "locada"
+  }
+]
