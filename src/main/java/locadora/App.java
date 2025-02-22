@@ -1,17 +1,11 @@
 package locadora;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import locadora.dao.ClienteDAO;
 import locadora.dao.LocacaoDAO;
-import locadora.dao.VeiculoDAO;
+import locadora.dao.PagamentoDAO;
 import locadora.model.*;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class App
 {
@@ -48,11 +42,14 @@ public class App
         c.salvar(c2);
 
         LocacaoDAO l = new LocacaoDAO();
-        Locacao l1 = new Locacao(c1, ca, "02/02/2025", "18/02/2025");
-        Locacao l2 = new Locacao(c1, ca1,"01/01/2025", "12/02/2025");
+        Locacao l1 = new Locacao(101, c1, ca, "02/02/2025", "18/02/2025");
+        Locacao l2 = new Locacao(102, c2, ca1, "01/01/2025", "12/02/2025");
         l.salvar(l1);
         l.salvar(l2);
 
+        PagamentoDAO p = new PagamentoDAO();
+        Pagamento p1 = new Pagamento(101, 101, 555.4, "21/02/2025", "credito");
+        p.salvar(p1);
 
     }
 }

@@ -1,0 +1,9 @@
+[
+  {
+    "idPagamento": 101,
+    "idLocacao": 101,
+    "valorPago": 555.4,
+    "dataPagamento": "2025-2-21",
+    "metodoPagamento": "credito"
+  }
+]

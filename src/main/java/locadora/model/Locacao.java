@@ -2,21 +2,27 @@ package locadora.model;
 
 import locadora.Utils.Data;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 public class Locacao {
 
+    private int idLocacao;
     private Cliente cliente;
     private Veiculo veiculo;
     private String dataDeRetirada;
     private String dataDeDevolucao;
 
-    public Locacao(Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
+    public Locacao(int idLocacao, Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataDeRetirada = new Data().formataData(dataDeRetirada);
         this.dataDeDevolucao = new Data().formataData(dataDeDevolucao);
+    }
+
+    public int getIdLocacao() {
+        return idLocacao;
+    }
+
+    public void setIdLocacao(int idLocacao) {
+        this.idLocacao = idLocacao;
     }
 
     public Cliente getCliente() {
@@ -54,11 +60,11 @@ public class Locacao {
     @Override
     public String toString() {
         return "Locacao{" +
-                "cliente=" + cliente +
+                "idLocacao=" + idLocacao +
+                ", cliente=" + cliente +
                 ", veiculo=" + veiculo +
                 ", dataDeRetirada='" + dataDeRetirada + '\'' +
                 ", dataDeDevolucao='" + dataDeDevolucao + '\'' +
                 '}';
     }
-
 }

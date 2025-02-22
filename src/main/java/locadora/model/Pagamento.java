@@ -1,5 +1,7 @@
 package locadora.model;
 
+import locadora.Utils.Data;
+
 import java.util.Date;
 
 public class Pagamento {
@@ -7,14 +9,14 @@ public class Pagamento {
     private int idPagamento;
     private int idLocacao;
     private double valorPago;
-    private Date dataPagamento;
+    private String dataPagamento;
     private String metodoPagamento;
 
-    public Pagamento(int idPagamento, int idLocacao, double valorPago, Date dataPagamento, String metodoPagamento) {
+    public Pagamento(int idPagamento, int idLocacao, double valorPago, String dataPagamento, String metodoPagamento) {
         this.idPagamento = idPagamento;
         this.idLocacao = idLocacao;
         this.valorPago = valorPago;
-        this.dataPagamento = dataPagamento;
+        this.dataPagamento = new Data().formataData(dataPagamento);
         this.metodoPagamento = metodoPagamento;
     }
 
@@ -42,11 +44,11 @@ public class Pagamento {
         this.valorPago = valorPago;
     }
 
-    public Date getDataPagamento() {
+    public String getDataPagamento() {
         return dataPagamento;
     }
 
-    public void setDataPagamento(Date dataPagamento) {
+    public void setDataPagamento(String dataPagamento) {
         this.dataPagamento = dataPagamento;
     }
 
@@ -64,9 +66,8 @@ public class Pagamento {
                 "idPagamento=" + idPagamento +
                 ", idLocacao=" + idLocacao +
                 ", valorPago=" + valorPago +
-                ", dataPagamento=" + dataPagamento +
+                ", dataPagamento='" + dataPagamento + '\'' +
                 ", metodoPagamento='" + metodoPagamento + '\'' +
                 '}';
     }
-
 }

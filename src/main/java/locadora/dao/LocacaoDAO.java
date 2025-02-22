@@ -11,7 +11,7 @@ import java.util.List;
 
 public class LocacaoDAO implements IPersistencia<Locacao>{
 
-    private List<Locacao> locacoes;
+    private final List<Locacao> locacoes;
 
     public LocacaoDAO() {
         locacoes = new ArrayList<>();
