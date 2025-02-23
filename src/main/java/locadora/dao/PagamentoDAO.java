@@ -7,10 +7,9 @@ import locadora.utils.JsonHandler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento>{
+public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento> {
 
     private List<Pagamento> pagamentos;
 
@@ -25,9 +24,9 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
     }
 
     @Override
-    public Pagamento ler(Pagamento pagamento) {
+    public Pagamento ler(Object idPagamento) {
         for (Pagamento pagamentoListado : pagamentos) {
-            if (pagamentoListado.getIdPagamento() == pagamento.getIdPagamento()) {
+            if (pagamentoListado.getIdPagamento() == (Integer)idPagamento) {
                 return pagamentoListado;
             }
         }
@@ -35,20 +34,23 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
     }
 
     @Override
-    public void deletar(Pagamento pagamento) {
-        List<Pagamento> paraRemover = new ArrayList<>();
+    public void atualizar(Pagamento Objeto) {
+
+    }
+
+    @Override
+    public void deletar(Object idPagamento) {
         for (Pagamento pagamentoListado : pagamentos) {
-            if (pagamentoListado.getIdPagamento() == pagamento.getIdPagamento()) {
-                paraRemover.add(pagamentoListado);
+            if (pagamentoListado.getIdPagamento() == (Integer)idPagamento) {
+                pagamentos.remove(pagamentoListado);
             }
         }
-        pagamentos.removeAll(paraRemover);
         atualizarJson(pagamentos);
     }
 
     private List<Pagamento> pagamentosCadastrados() {
         String arquivo = "src/main/java/locadora/json/pagamentos.json";
-        if(this.isVazio(arquivo, Pagamento.class)) {
+        if (this.isVazio(arquivo, Pagamento.class)) {
             pagamentos = new ArrayList<>();
         } else {
             pagamentos = this.getConteudo(arquivo, Pagamento.class);

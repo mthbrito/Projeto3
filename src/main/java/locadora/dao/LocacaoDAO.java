@@ -11,9 +11,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
-public class LocacaoDAO implements IPersistencia<Locacao>{
+public class LocacaoDAO implements IPersistencia<Locacao> {
 
     private final List<Locacao> locacoes;
 
@@ -28,9 +31,9 @@ public class LocacaoDAO implements IPersistencia<Locacao>{
     }
 
     @Override
-    public Locacao ler(Locacao locacao) {
+    public Locacao ler(Object idLocacao) {
         for (Locacao locacaoListada : locacoes) {
-            if (locacaoListada.getCliente().equals(locacao.getCliente())) {
+            if (locacaoListada.getCliente().equals(idLocacao)) {
                 return locacaoListada;
             }
         }
@@ -38,10 +41,15 @@ public class LocacaoDAO implements IPersistencia<Locacao>{
     }
 
     @Override
-    public void deletar(Locacao locacao) {
+    public void atualizar(Locacao Objeto) {
+
+    }
+
+    @Override
+    public void deletar(Object idLocacao) {
         List<Locacao> paraRemover = new ArrayList<>();
         for (Locacao locacaoListada : locacoes) {
-            if (locacaoListada.getCliente().equals(locacao.getCliente())) {
+            if (locacaoListada.getCliente().equals(idLocacao)) {
                 paraRemover.add(locacaoListada);
             }
         }
@@ -98,7 +106,7 @@ public class LocacaoDAO implements IPersistencia<Locacao>{
         List<Locacao> locacoes = this.locacoesCadastradas();
         locacoes.sort(Comparator.comparing(Locacao::getIdLocacao));
         String[] idLocacoes = new String[locacoes.size()];
-        for(int i = 0; i < locacoes.size(); i++) {
+        for (int i = 0; i < locacoes.size(); i++) {
             idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
                     + locacoes.get(i).getCliente().getNome() + "/"
                     + locacoes.get(i).getVeiculo().getModelo() + "/"

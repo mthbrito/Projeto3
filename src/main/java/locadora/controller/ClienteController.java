@@ -13,4 +13,13 @@ public class ClienteController {
         Cliente cliente = new Cliente(txtNome.getText(), txtCpf.getText(), txtTelefone.getText(), txtEmail.getText());
         clienteDAO.salvar(cliente);
     }
+
+    public void EditarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
+        Cliente cliente = new Cliente(txtNome.getText(), txtCpf.getText(), txtTelefone.getText(), txtEmail.getText());
+        clienteDAO.atualizar(cliente);
+    }
+
+    public void ExcluirCliente(JTextField txtCpf) {
+        clienteDAO.deletar(txtCpf.getText());
+    }
 }

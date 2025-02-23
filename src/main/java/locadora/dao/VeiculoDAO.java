@@ -3,17 +3,20 @@ package locadora.dao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import locadora.model.*;
-import locadora.utils.JsonHandler;
+import locadora.model.StatusVeiculo;
+import locadora.model.Veiculo;
 import locadora.utils.VeiculoDeserializer;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
-public class VeiculoDAO implements IPersistencia<Veiculo>{
+public class VeiculoDAO implements IPersistencia<Veiculo, Object> {
 
     private final List<Veiculo> veiculos;
 
@@ -23,14 +26,20 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
 
     @Override
     public void salvar(Veiculo veiculo) {
+        for(Veiculo veiculoListado : veiculos) {
+            if(veiculoListado.getPlaca().equals(veiculo.getPlaca())){
+                System.out.println("Veículo já existe!");
+                return;
+            }
+        }
         veiculos.add(veiculo);
         atualizarJson(veiculos);
     }
 
     @Override
-    public Veiculo ler(Veiculo veiculo) {
+    public Veiculo ler(Object placa) {
         for (Veiculo veiculoListado : veiculos) {
-            if (veiculoListado.getPlaca().equals(veiculo.getPlaca())) {
+            if (veiculoListado.getPlaca().equals(placa)) {
                 return veiculoListado;
             }
         }
@@ -38,14 +47,22 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
     }
 
     @Override
+    public void atualizar(Veiculo Objeto) {
+
+    }
+
+    @Override
+    public void deletar(Object identificador) {
+
+    }
+
+    @Override
     public void deletar(Veiculo veiculo) {
-        List<Veiculo> paraRemover = new ArrayList<>();
         for (Veiculo veiculoListado : veiculos) {
             if (veiculoListado.getPlaca().equals(veiculo.getPlaca())) {
-                paraRemover.add(veiculoListado);
+                veiculos.remove(veiculoListado);
             }
         }
-        veiculos.removeAll(paraRemover);
         atualizarJson(veiculos);
     }
 
@@ -83,8 +100,6 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
         }
         return veiculos;
     }
-
-
 
 
 //    private boolean isVazio(String arquivo) {
@@ -135,9 +150,9 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
 //        return ListaVeiculos;
 
 
-    private void atualizarJson(List<Veiculo> veiculosAtualizado){
+    private void atualizarJson(List<Veiculo> veiculosAtualizado) {
         String veiculosAtualizadoJson = new Gson().toJson(veiculosAtualizado);
-        try(FileWriter writer = new FileWriter("src/main/java/locadora/json/veiculos.json")) {
+        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/veiculos.json")) {
             writer.write(veiculosAtualizadoJson);
             System.out.println("Veículo adicionado");
         } catch (IOException e) {
