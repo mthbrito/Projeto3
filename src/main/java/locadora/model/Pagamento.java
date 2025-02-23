@@ -1,8 +1,6 @@
 package locadora.model;
 
-import locadora.Utils.Data;
-
-import java.util.Date;
+import locadora.utils.DataHandler;
 
 public class Pagamento {
 
@@ -16,7 +14,7 @@ public class Pagamento {
         this.idPagamento = idPagamento;
         this.idLocacao = idLocacao;
         this.valorPago = valorPago;
-        this.dataPagamento = new Data().formataData(dataPagamento);
+        this.dataPagamento = new DataHandler().formatarData(dataPagamento);
         this.metodoPagamento = metodoPagamento;
     }
 

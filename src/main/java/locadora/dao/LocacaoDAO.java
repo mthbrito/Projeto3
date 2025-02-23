@@ -2,7 +2,6 @@ package locadora.dao;
 
 import com.google.gson.Gson;
 import locadora.model.Locacao;
-import locadora.model.Veiculo;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,9 +48,9 @@ public class LocacaoDAO implements IPersistencia<Locacao>{
         String locacoesAtualizadoJson = new Gson().toJson(locacoesAtualizado);
         try (FileWriter writer = new FileWriter("src/main/java/locadora/json/locacoes.json")) {
             writer.write(locacoesAtualizadoJson);
-            System.out.println("adicionado");
+            System.out.println("Locação adicionada");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

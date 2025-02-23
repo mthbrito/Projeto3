@@ -1,7 +1,5 @@
 package locadora.dao;
 
-import java.io.IOException;
-
 public interface IPersistencia<T> {
 
     void salvar(T objeto);

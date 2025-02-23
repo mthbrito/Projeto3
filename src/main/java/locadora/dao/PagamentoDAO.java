@@ -1,7 +1,6 @@
 package locadora.dao;
 
 import com.google.gson.Gson;
-import locadora.model.Locacao;
 import locadora.model.Pagamento;
 
 import java.io.FileWriter;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class PagamentoDAO implements IPersistencia<Pagamento>{
 
-    private List<Pagamento> pagamentos;
+    private final List<Pagamento> pagamentos;
 
     public PagamentoDAO() {
         pagamentos = new ArrayList<>();
@@ -49,9 +48,9 @@ public class PagamentoDAO implements IPersistencia<Pagamento>{
         String pagamentosAtualizadoJson = new Gson().toJson(pagamentosAtualizado);
         try (FileWriter writer = new FileWriter("src/main/java/locadora/json/pagamentos.json")) {
             writer.write(pagamentosAtualizadoJson);
-            System.out.println("adicionado");
+            System.out.println("Pagamento adicionado");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

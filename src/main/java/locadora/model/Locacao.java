@@ -1,6 +1,6 @@
 package locadora.model;
 
-import locadora.Utils.Data;
+import locadora.utils.DataHandler;
 
 public class Locacao {
 
@@ -13,8 +13,8 @@ public class Locacao {
     public Locacao(int idLocacao, Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
         this.cliente = cliente;
         this.veiculo = veiculo;
-        this.dataDeRetirada = new Data().formataData(dataDeRetirada);
-        this.dataDeDevolucao = new Data().formataData(dataDeDevolucao);
+        this.dataDeRetirada = new DataHandler().formatarData(dataDeRetirada);
+        this.dataDeDevolucao = new DataHandler().formatarData(dataDeDevolucao);
     }
 
     public int getIdLocacao() {

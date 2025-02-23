@@ -2,12 +2,14 @@ package locadora.model;
 
 public abstract class Veiculo {
 
+    protected String tipo;
     protected String placa;
     protected String modelo;
     protected int ano;
     protected String status;
 
-    public Veiculo(String placa, String modelo, int ano, String status) {
+    public Veiculo(String tipo, String placa, String modelo, int ano, String status) {
+        this.tipo = tipo;
         this.placa = placa;
         this.modelo = modelo;
         this.ano = ano;
@@ -15,6 +17,14 @@ public abstract class Veiculo {
     }
 
     abstract double calcularCustoLocacao();
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
     public String getPlaca() {
         return placa;
@@ -51,11 +61,12 @@ public abstract class Veiculo {
     @Override
     public String toString() {
         return "Veiculo{" +
-                "placa='" + placa + '\'' +
+                "tipo='" + tipo + '\'' +
+                ", placa='" + placa + '\'' +
                 ", modelo='" + modelo + '\'' +
                 ", ano=" + ano +
                 ", status='" + status + '\'' +
                 '}';
     }
-
+    
 }

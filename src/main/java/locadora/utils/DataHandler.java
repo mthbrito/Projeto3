@@ -1,11 +1,8 @@
-package locadora.Utils;
+package locadora.utils;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+public class DataHandler {
 
-public class Data {
-
-    public String formataData(String data) {
+    public String formatarData(String data) {
         String[] array = data.split("/");
         int dia = Integer.parseInt(array[0].trim());
         int mes = Integer.parseInt(array[1].trim());

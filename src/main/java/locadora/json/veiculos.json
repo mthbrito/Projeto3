@@ -1,20 +1,30 @@
 [
   {
-    "placa": "abc2000",
-    "modelo": "uno",
-    "ano": 2000,
-    "status": "locado"
+    "tipo": "Carro",
+    "placa": "xtg2010",
+    "modelo": "mob",
+    "ano": 2014,
+    "status": "not ok"
   },
   {
-    "placa": "sje2025",
+    "tipo": "Moto",
+    "placa": "huj9854",
+    "modelo": "bis",
+    "ano": 2015,
+    "status": "ok"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "fty4565",
+    "modelo": "bros",
+    "ano": 2020,
+    "status": "ok"
+  },
+  {
+    "tipo": "Caminhão",
+    "placa": "sdr6699",
     "modelo": "truck",
-    "ano": 1997,
-    "status": "disponível"
-  },
-  {
-    "placa": "lmn7894",
-    "modelo": "honda",
-    "ano": 2010,
-    "status": "locada"
+    "ano": 1998,
+    "status": "not ok"
   }
 ]
