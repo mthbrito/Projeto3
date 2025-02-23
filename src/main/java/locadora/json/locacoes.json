@@ -1,1 +1,71 @@
-[{"idLocacao":0,"cliente":{"nome":"Matheus","cpf":"123456789","telefone":"9999-8888","email":"matheus@ifpb.com"},"veiculo":{"placa":"abc2000","modelo":"uno","ano":2000,"status":"locado"},"dataDeRetirada":"2025-2-2","dataDeDevolucao":"2025-2-18"},{"idLocacao":0,"cliente":{"nome":"Maria","cpf":"987654321","telefone":"9666-9666","email":"maria@ifpb.com"},"veiculo":{"placa":"xyz2001","modelo":"corsa","ano":2005,"status":"disponível"},"dataDeRetirada":"2025-1-1","dataDeDevolucao":"2025-2-12"}]
+[
+  {
+    "idLocacao": 1001,
+    "cliente": {
+      "nome": "Joana",
+      "cpf": "987.789.123-10",
+      "telefone": "(83)98888-2222",
+      "email": "joana@ifpb.com"
+    },
+    "veiculo": {
+      "tipo": "Carro",
+      "placa": "loc2024",
+      "modelo": "Camaro",
+      "ano": 2024
+    },
+    "dataDeRetirada": "2024-12-14",
+    "dataDeDevolucao": "2025-2-1"
+  },
+  {
+    "idLocacao": 1001,
+    "cliente": {
+      "nome": "Maria",
+      "cpf": "123.456.789-00",
+      "telefone": "(83)98888-1111",
+      "email": "maria@ifpb.com"
+    },
+    "veiculo": {
+      "tipo": "Moto",
+      "placa": "fgv2005",
+      "modelo": "Bis",
+      "ano": 2014
+    },
+    "dataDeRetirada": "2024-12-14",
+    "dataDeDevolucao": "2025-2-1"
+  },
+  {
+    "idLocacao": 1001,
+    "cliente": {
+      "nome": "João",
+      "cpf": "899.456.789-10",
+      "telefone": "(81)97777-5555",
+      "email": "joao@ufpe.com"
+    },
+    "veiculo": {
+      "tipo": "Caminhão",
+      "placa": "web9999",
+      "modelo": "truck",
+      "ano": 1999
+    },
+    "dataDeRetirada": "2025-2-20",
+    "dataDeDevolucao": "2025-3-10"
+  },
+  {
+    "idLocacao": 1001,
+    "cliente": {
+      "nome": "Ana",
+      "cpf": "555.666.777-98",
+      "telefone": "(11)93332-5478",
+      "email": "ana@usp.com"
+    },
+    "veiculo": {
+      "tipo": "Carro",
+      "placa": "loc2024",
+      "modelo": "Camaro",
+      "ano": 2024,
+      "status": "DISPONIVEL"
+    },
+    "dataDeRetirada": "2006-12-21",
+    "dataDeDevolucao": "2007-1-14"
+  }
+]

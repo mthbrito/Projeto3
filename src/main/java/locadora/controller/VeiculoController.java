@@ -9,14 +9,15 @@ public class VeiculoController {
 
     private final VeiculoDAO veiculoDAO = new VeiculoDAO();
 
-    public void CadastrarVeiculo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto, JTextField txtPlaca, JTextField txtModelo, JTextField txtAno, JTextField txtStatus) {
+    public void CadastrarVeiculo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto, JTextField txtPlaca, JTextField txtModelo, JTextField txtAno, JComboBox<StatusVeiculo> comboBoxStatus) {
         Veiculo veiculo = null;
+        StatusVeiculo status = (StatusVeiculo) comboBoxStatus.getSelectedItem();
         if(rdbtnCaminhao.isSelected()) {
-            veiculo = new Caminhao(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), txtStatus.getText());
+            veiculo = new Caminhao(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), status);
         } else if(rdbtnCarro.isSelected()) {
-            veiculo = new Carro(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), txtStatus.getText());
+            veiculo = new Carro(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), status);
         } else if(rdbtnMoto.isSelected()) {
-            veiculo = new Moto(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), txtStatus.getText());
+            veiculo = new Moto(txtPlaca.getText(), txtModelo.getText(), Integer.parseInt(txtAno.getText()), status);
         }
         veiculoDAO.salvar(veiculo);
     }

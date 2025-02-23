@@ -6,9 +6,9 @@ public abstract class Veiculo {
     protected String placa;
     protected String modelo;
     protected int ano;
-    protected String status;
+    protected StatusVeiculo status;
 
-    public Veiculo(String tipo, String placa, String modelo, int ano, String status) {
+    public Veiculo(String tipo, String placa, String modelo, int ano, StatusVeiculo status) {
         this.tipo = tipo;
         this.placa = placa;
         this.modelo = modelo;
@@ -50,13 +50,10 @@ public abstract class Veiculo {
         this.ano = ano;
     }
 
-    public String getStatus() {
+    public StatusVeiculo getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {

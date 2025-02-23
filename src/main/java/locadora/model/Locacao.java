@@ -4,13 +4,14 @@ import locadora.utils.DataHandler;
 
 public class Locacao {
 
-    private int idLocacao;
+    private int idLocacao = 1000;
     private Cliente cliente;
     private Veiculo veiculo;
     private String dataDeRetirada;
     private String dataDeDevolucao;
 
-    public Locacao(int idLocacao, Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
+    public Locacao(Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
+        this.idLocacao += 1;
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataDeRetirada = new DataHandler().formatarData(dataDeRetirada);

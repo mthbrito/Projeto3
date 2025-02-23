@@ -1,30 +1,51 @@
 [
   {
     "tipo": "Carro",
-    "placa": "xtg2010",
-    "modelo": "mob",
+    "placa": "loc2024",
+    "modelo": "Camaro",
+    "ano": 2024,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "cvv1234",
+    "modelo": "Fusca",
+    "ano": 1990,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "fgv2000",
+    "modelo": "Ford ka",
+    "ano": 2004,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "fgv2005",
+    "modelo": "Bis",
     "ano": 2014,
-    "status": "not ok"
-  },
-  {
-    "tipo": "Moto",
-    "placa": "huj9854",
-    "modelo": "bis",
-    "ano": 2015,
-    "status": "ok"
-  },
-  {
-    "tipo": "Moto",
-    "placa": "fty4565",
-    "modelo": "bros",
-    "ano": 2020,
-    "status": "ok"
+    "status": "DISPONIVEL"
   },
   {
     "tipo": "Caminhão",
-    "placa": "sdr6699",
+    "placa": "web9999",
     "modelo": "truck",
-    "ano": 1998,
-    "status": "not ok"
+    "ano": 1999,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "web2000",
+    "modelo": "palio",
+    "ano": 2006,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Caminhão",
+    "placa": "rtg4000",
+    "modelo": "carreta",
+    "ano": 1970,
+    "status": "DISPONIVEL"
   }
 ]

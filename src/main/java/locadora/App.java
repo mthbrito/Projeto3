@@ -8,6 +8,9 @@ import locadora.model.*;
 
 import java.io.IOException;
 
+import static locadora.model.StatusVeiculo.DISPONIVEL;
+import static locadora.model.StatusVeiculo.LOCADO;
+
 public class App
 {
     public static void main( String[] args ) throws IOException {
@@ -23,8 +26,8 @@ public class App
 
 
         VeiculoDAO v = new VeiculoDAO();
-        Carro ca = new Carro("abc2000", "uno", 2000, "locado");
-        Carro ca1 = new Carro("xyz2001", "corsa", 2005, "disponível");
+        Carro ca = new Carro("abc2000", "uno", 2000, LOCADO);
+        Carro ca1 = new Carro("xyz2001", "corsa", 2005, DISPONIVEL);
 //        Caminhao t = new Caminhao("sje2025", "truck", 1997, "disponível");
         v.salvar(ca);
         v.salvar(ca1);

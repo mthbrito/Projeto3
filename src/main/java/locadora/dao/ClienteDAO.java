@@ -7,6 +7,7 @@ import locadora.utils.JsonHandler;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente> {
@@ -63,6 +64,19 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente> {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public String[] listagemClientesCadastrados() {
+        List<Cliente> clientes = this.clientesCadastrados();
+        clientes.sort(Comparator.comparing(Cliente::getNome));
+        String[] idClientes = new String[clientes.size()];
+        for(int i = 0; i < clientes.size(); i++) {
+            idClientes[i] = clientes.get(i).getNome() + "/"
+                    + clientes.get(i).getCpf() + "/"
+                    + clientes.get(i).getTelefone() + "/"
+                    + clientes.get(i).getEmail();
+        }
+        return idClientes;
     }
 
 }

@@ -8,10 +8,10 @@ public class Pagamento {
     private int idLocacao;
     private double valorPago;
     private String dataPagamento;
-    private String metodoPagamento;
+    private MetodosPagamento metodoPagamento;
 
-    public Pagamento(int idPagamento, int idLocacao, double valorPago, String dataPagamento, String metodoPagamento) {
-        this.idPagamento = idPagamento;
+    public Pagamento(int idLocacao, double valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
+        this.idPagamento += 1;
         this.idLocacao = idLocacao;
         this.valorPago = valorPago;
         this.dataPagamento = new DataHandler().formatarData(dataPagamento);
@@ -50,13 +50,10 @@ public class Pagamento {
         this.dataPagamento = dataPagamento;
     }
 
-    public String getMetodoPagamento() {
+    public MetodosPagamento getMetodoPagamento() {
         return metodoPagamento;
     }
 
-    public void setMetodoPagamento(String metodoPagamento) {
-        this.metodoPagamento = metodoPagamento;
-    }
 
     @Override
     public String toString() {

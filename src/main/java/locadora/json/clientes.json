@@ -1,14 +1,1 @@
-[
-  {
-    "nome": "Maria",
-    "cpf": "987456123",
-    "telefone": "88885478",
-    "email": "maria@ifpb.com"
-  },
-  {
-    "nome": "joana",
-    "cpf": "4568762",
-    "telefone": "78456",
-    "email": "joana@ifpb.com"
-  }
-]
+[{"nome":"Maria","cpf":"123.456.789-00","telefone":"(83)98888-1111","email":"maria@ifpb.com"},{"nome":"Joana","cpf":"987.789.123-10","telefone":"(83)98888-2222","email":"joana@ifpb.com"},{"nome":"José","cpf":"255.789.654-14","telefone":"(91)97777-1456","email":"jose@ufpa.com"},{"nome":"João","cpf":"899.456.789-10","telefone":"(81)97777-5555","email":"joao@ufpe.com"},{"nome":"Ana","cpf":"555.666.777-98","telefone":"(11)93332-5478","email":"ana@usp.com"}]

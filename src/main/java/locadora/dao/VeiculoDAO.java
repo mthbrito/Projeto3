@@ -1,16 +1,17 @@
 package locadora.dao;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import locadora.model.*;
+import locadora.utils.JsonHandler;
+import locadora.utils.VeiculoDeserializer;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VeiculoDAO implements IPersistencia<Veiculo>{
 
@@ -50,53 +51,91 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
 
     private boolean isVazio(String arquivo) {
         try (FileReader reader = new FileReader(arquivo)) {
-            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
-            List<Map<String, Object>> conteudo = new Gson().fromJson(reader, type);
-            return conteudo == null || conteudo.isEmpty();
-        } catch (IOException | NullPointerException e) {
+            Type type = TypeToken.getArray(Veiculo.class).getType();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Veiculo.class, new VeiculoDeserializer()).create();
+            Veiculo[] conteudo = gson.fromJson(reader, type);
+            return conteudo.length == 0;
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
+        } catch (NullPointerException e) {
+            return false;
         }
     }
 
-    private List<Map<String, Object>> getConteudo(String arquivo) {
+    private List<Veiculo> getConteudo(String arquivo) {
         try (FileReader reader = new FileReader(arquivo)) {
-            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
-            return new Gson().fromJson(reader, type);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            Type type = TypeToken.getArray(Veiculo.class).getType();
+            Gson gson = new GsonBuilder().registerTypeAdapter(Veiculo.class, new VeiculoDeserializer()).create();
+            Veiculo[] conteudo = gson.fromJson(reader, type);
+            return new ArrayList<>(Arrays.asList(conteudo));
+        } catch (IOException | NullPointerException e) {
+            return new ArrayList<>();
         }
     }
 
     private List<Veiculo> veiculoCadastrados() {
         String arquivo = "src/main/java/locadora/json/veiculos.json";
-        List<Veiculo> ListaVeiculos;
+        List<Veiculo> veiculos;
         if (this.isVazio(arquivo)) {
-            ListaVeiculos = new ArrayList<>();
+            veiculos = new ArrayList<>();
         } else {
-            List<Map<String, Object>> dadosVeiculos = this.getConteudo(arquivo);
-            ListaVeiculos = new ArrayList<>();
-            for (Map<String, Object> dadoVeiculo : dadosVeiculos) {
-                Object tipo = dadoVeiculo.get("tipo");
-                String placa = (String) dadoVeiculo.get("placa");
-                String modelo = (String) dadoVeiculo.get("modelo");
-                int ano = ((Number) dadoVeiculo.get("ano")).intValue();
-                String status = (String) dadoVeiculo.get("status");
-                if (tipo.equals("Caminhao")) {
-                    Veiculo veiculo = new Caminhao(placa, modelo, ano, status);
-                    ListaVeiculos.add(veiculo);
-                } else if (tipo.equals("Carro")) {
-                    Veiculo veiculo = new Carro(placa, modelo, ano, status);
-                    ListaVeiculos.add(veiculo);
-                } else if (tipo.equals("Moto")) {
-                    Veiculo veiculo = new Moto(placa, modelo, ano, status);
-                    ListaVeiculos.add(veiculo);
-                }
-            }
+            veiculos = this.getConteudo(arquivo);
         }
-        return ListaVeiculos;
+        return veiculos;
     }
 
-    protected void atualizarJson(List<Veiculo> veiculosAtualizado){
+
+
+
+//    private boolean isVazio(String arquivo) {
+//        try (FileReader reader = new FileReader(arquivo)) {
+//            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
+//            List<Map<String, Object>> conteudo = new Gson().fromJson(reader, type);
+//            return conteudo == null || conteudo.isEmpty();
+//        } catch (IOException | NullPointerException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+//
+//    private List<Map<String, Object>> getConteudo(String arquivo) {
+//        try (FileReader reader = new FileReader(arquivo)) {
+//            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
+//            return new Gson().fromJson(reader, type);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+//
+//    private List<Veiculo> veiculoCadastrados() {
+//        String arquivo = "src/main/java/locadora/json/veiculos.json";
+//        List<Veiculo> ListaVeiculos;
+//        if (this.isVazio(arquivo)) {
+//            ListaVeiculos = new ArrayList<>();
+//        } else {
+//            List<Map<String, Object>> dadosVeiculos = this.getConteudo(arquivo);
+//            ListaVeiculos = new ArrayList<>();
+//            for (Map<String, Object> dadoVeiculo : dadosVeiculos) {
+//                Object tipo = dadoVeiculo.get("tipo");
+//                String placa = (String) dadoVeiculo.get("placa");
+//                String modelo = (String) dadoVeiculo.get("modelo");
+//                int ano = ((Number) dadoVeiculo.get("ano")).intValue();
+//                String status = (String) dadoVeiculo.get("status");
+//                if (tipo.equals("Caminhao")) {
+//                    Veiculo veiculo = new Caminhao(placa, modelo, ano, status);
+//                    ListaVeiculos.add(veiculo);
+//                } else if (tipo.equals("Carro")) {
+//                    Veiculo veiculo = new Carro(placa, modelo, ano, status);
+//                    ListaVeiculos.add(veiculo);
+//                } else if (tipo.equals("Moto")) {
+//                    Veiculo veiculo = new Moto(placa, modelo, ano, status);
+//                    ListaVeiculos.add(veiculo);
+//                }
+//            }
+//        }
+//        return ListaVeiculos;
+
+
+    private void atualizarJson(List<Veiculo> veiculosAtualizado){
         String veiculosAtualizadoJson = new Gson().toJson(veiculosAtualizado);
         try(FileWriter writer = new FileWriter("src/main/java/locadora/json/veiculos.json")) {
             writer.write(veiculosAtualizadoJson);
@@ -106,8 +145,19 @@ public class VeiculoDAO implements IPersistencia<Veiculo>{
         }
     }
 
-
-
-
-
+    public String[] listagemVeiculosDisponiveis() {
+        List<Veiculo> veiculos = this.veiculoCadastrados();
+        veiculos.sort(Comparator.comparing(Veiculo::getModelo));
+        String[] idVeiculos = new String[veiculos.size()];
+        for (int i = 0; i < veiculos.size(); i++) {
+            if (veiculos.get(i).getStatus() == StatusVeiculo.DISPONIVEL) {
+                idVeiculos[i] = veiculos.get(i).getTipo() + "/"
+                        + veiculos.get(i).getPlaca() + "/"
+                        + veiculos.get(i).getModelo() + "/"
+                        + veiculos.get(i).getAno() + "/"
+                        + veiculos.get(i).getStatus();
+            }
+        }
+        return idVeiculos;
+    }
 }
