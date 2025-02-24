@@ -25,15 +25,16 @@ public class VeiculoDAO implements IPersistencia<Veiculo, Object> {
     }
 
     @Override
-    public void salvar(Veiculo veiculo) {
+    public void salvar(Veiculo veiculoNovo) {
         for(Veiculo veiculoListado : veiculos) {
-            if(veiculoListado.getPlaca().equals(veiculo.getPlaca())){
+            if(veiculoListado.getPlaca().equals(veiculoNovo.getPlaca())){
                 System.out.println("Veículo já existe!");
                 return;
             }
         }
-        veiculos.add(veiculo);
+        veiculos.add(veiculoNovo);
         atualizarJson(veiculos);
+        System.out.println("Veículo salvo!");
     }
 
     @Override
@@ -47,23 +48,30 @@ public class VeiculoDAO implements IPersistencia<Veiculo, Object> {
     }
 
     @Override
-    public void atualizar(Veiculo Objeto) {
-
-    }
-
-    @Override
-    public void deletar(Object identificador) {
-
-    }
-
-    @Override
-    public void deletar(Veiculo veiculo) {
+    public void atualizar(Veiculo veiculoAtualizado) {
+        List<Veiculo> veiculosParaRemover =  new ArrayList<>();
         for (Veiculo veiculoListado : veiculos) {
-            if (veiculoListado.getPlaca().equals(veiculo.getPlaca())) {
-                veiculos.remove(veiculoListado);
+            if (veiculoListado.getPlaca().equals(veiculoAtualizado.getPlaca())) {
+                veiculosParaRemover.add(veiculoListado);
             }
         }
+        veiculos.removeAll(veiculosParaRemover);
+        veiculos.add(veiculoAtualizado);
         atualizarJson(veiculos);
+        System.out.println("Veículo atualizado!");
+    }
+
+    @Override
+    public void deletar(Object placa) {
+        List<Veiculo> veiculosParaRemover =  new ArrayList<>();
+        for (Veiculo veiculoListado : veiculos) {
+            if (veiculoListado.getPlaca().equals(placa)) {
+                veiculosParaRemover.add(veiculoListado);
+            }
+        }
+        veiculos.removeAll(veiculosParaRemover);
+        atualizarJson(veiculos);
+        System.out.println("Veículo excluído!");
     }
 
     private boolean isVazio(String arquivo) {
@@ -101,60 +109,10 @@ public class VeiculoDAO implements IPersistencia<Veiculo, Object> {
         return veiculos;
     }
 
-
-//    private boolean isVazio(String arquivo) {
-//        try (FileReader reader = new FileReader(arquivo)) {
-//            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
-//            List<Map<String, Object>> conteudo = new Gson().fromJson(reader, type);
-//            return conteudo == null || conteudo.isEmpty();
-//        } catch (IOException | NullPointerException e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    private List<Map<String, Object>> getConteudo(String arquivo) {
-//        try (FileReader reader = new FileReader(arquivo)) {
-//            Type type = new TypeToken<List<Map<String, Object>>>() {}.getType();
-//            return new Gson().fromJson(reader, type);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
-//
-//    private List<Veiculo> veiculoCadastrados() {
-//        String arquivo = "src/main/java/locadora/json/veiculos.json";
-//        List<Veiculo> ListaVeiculos;
-//        if (this.isVazio(arquivo)) {
-//            ListaVeiculos = new ArrayList<>();
-//        } else {
-//            List<Map<String, Object>> dadosVeiculos = this.getConteudo(arquivo);
-//            ListaVeiculos = new ArrayList<>();
-//            for (Map<String, Object> dadoVeiculo : dadosVeiculos) {
-//                Object tipo = dadoVeiculo.get("tipo");
-//                String placa = (String) dadoVeiculo.get("placa");
-//                String modelo = (String) dadoVeiculo.get("modelo");
-//                int ano = ((Number) dadoVeiculo.get("ano")).intValue();
-//                String status = (String) dadoVeiculo.get("status");
-//                if (tipo.equals("Caminhao")) {
-//                    Veiculo veiculo = new Caminhao(placa, modelo, ano, status);
-//                    ListaVeiculos.add(veiculo);
-//                } else if (tipo.equals("Carro")) {
-//                    Veiculo veiculo = new Carro(placa, modelo, ano, status);
-//                    ListaVeiculos.add(veiculo);
-//                } else if (tipo.equals("Moto")) {
-//                    Veiculo veiculo = new Moto(placa, modelo, ano, status);
-//                    ListaVeiculos.add(veiculo);
-//                }
-//            }
-//        }
-//        return ListaVeiculos;
-
-
     private void atualizarJson(List<Veiculo> veiculosAtualizado) {
         String veiculosAtualizadoJson = new Gson().toJson(veiculosAtualizado);
         try (FileWriter writer = new FileWriter("src/main/java/locadora/json/veiculos.json")) {
             writer.write(veiculosAtualizadoJson);
-            System.out.println("Veículo adicionado");
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

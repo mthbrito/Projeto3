@@ -9,17 +9,17 @@ public class ClienteController {
 
     private final ClienteDAO clienteDAO = new ClienteDAO();
 
-    public void CadastrarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
+    public void cadastrarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
         Cliente cliente = new Cliente(txtNome.getText(), txtCpf.getText(), txtTelefone.getText(), txtEmail.getText());
         clienteDAO.salvar(cliente);
     }
 
-    public void EditarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
+    public void editarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
         Cliente cliente = new Cliente(txtNome.getText(), txtCpf.getText(), txtTelefone.getText(), txtEmail.getText());
         clienteDAO.atualizar(cliente);
     }
 
-    public void ExcluirCliente(JTextField txtCpf) {
+    public void excluirCliente(JTextField txtCpf) {
         clienteDAO.deletar(txtCpf.getText());
     }
 }

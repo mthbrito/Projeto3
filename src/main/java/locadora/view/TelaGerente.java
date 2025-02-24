@@ -188,8 +188,8 @@ public class TelaGerente {
 //        btnGerarRelatorio.setBounds(304, 40, 120, 23);
 //        frame.getContentPane().add(btnGerarRelatorio);
 
-        btnExcluirCliente.addActionListener(e -> new ClienteController().CadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
-        btnExcluirVeiculo.addActionListener(e -> new VeiculoController().CadastrarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus));
+        btnExcluirCliente.addActionListener(e -> new ClienteController().cadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
+        btnExcluirVeiculo.addActionListener(e -> new VeiculoController().cadastrarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus));
     }
 
 }

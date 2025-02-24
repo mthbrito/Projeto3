@@ -7,16 +7,14 @@ import locadora.model.Locacao;
 import locadora.model.Veiculo;
 import locadora.utils.VeiculoDeserializer;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class LocacaoDAO implements IPersistencia<Locacao> {
+public class LocacaoDAO implements IPersistencia<Locacao, Object> {
 
     private final List<Locacao> locacoes;
 
@@ -25,15 +23,22 @@ public class LocacaoDAO implements IPersistencia<Locacao> {
     }
 
     @Override
-    public void salvar(Locacao locacao) {
-        locacoes.add(locacao);
+    public void salvar(Locacao locacaoNova) {
+        for(Locacao locacaoListada : locacoes) {
+            if(locacaoListada.getIdLocacao() == locacaoNova.getIdLocacao()){
+                System.out.println("Locação já existe!");
+                return;
+            }
+        }
+        locacoes.add(locacaoNova);
         atualizarJson(locacoes);
+        System.out.println("Locação salva!");
     }
 
     @Override
     public Locacao ler(Object idLocacao) {
         for (Locacao locacaoListada : locacoes) {
-            if (locacaoListada.getCliente().equals(idLocacao)) {
+            if (locacaoListada.getIdLocacao() == (Integer)idLocacao) {
                 return locacaoListada;
             }
         }
@@ -41,20 +46,30 @@ public class LocacaoDAO implements IPersistencia<Locacao> {
     }
 
     @Override
-    public void atualizar(Locacao Objeto) {
-
+    public void atualizar(Locacao locacaoAtualizada) {
+        List<Locacao> locacoesParaRemover = new ArrayList<>();
+        for (Locacao locacaoListada : locacoes) {
+            if (locacaoListada.getIdLocacao() == locacaoAtualizada.getIdLocacao()) {
+                locacoesParaRemover.add(locacaoListada);
+            }
+        }
+        locacoes.removeAll(locacoesParaRemover);
+        locacoes.add(locacaoAtualizada);
+        atualizarJson(locacoes);
+        System.out.println("Locação atualizada!");
     }
 
     @Override
     public void deletar(Object idLocacao) {
-        List<Locacao> paraRemover = new ArrayList<>();
+        List<Locacao> locacoesParaRemover = new ArrayList<>();
         for (Locacao locacaoListada : locacoes) {
-            if (locacaoListada.getCliente().equals(idLocacao)) {
-                paraRemover.add(locacaoListada);
+            if (locacaoListada.getIdLocacao() == (Integer)idLocacao) {
+                locacoesParaRemover.add(locacaoListada);
             }
         }
-        locacoes.removeAll(paraRemover);
+        locacoes.removeAll(locacoesParaRemover);
         atualizarJson(locacoes);
+        System.out.println("Locação excluída!");
     }
 
     private boolean isVazio(String arquivo) {
@@ -96,7 +111,6 @@ public class LocacaoDAO implements IPersistencia<Locacao> {
         String locacoesAtualizadoJson = new Gson().toJson(locacoesAtualizado);
         try (FileWriter writer = new FileWriter("src/main/java/locadora/json/locacoes.json")) {
             writer.write(locacoesAtualizadoJson);
-            System.out.println("Locação adicionada");
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -115,4 +129,5 @@ public class LocacaoDAO implements IPersistencia<Locacao> {
         }
         return idLocacoes;
     }
+
 }

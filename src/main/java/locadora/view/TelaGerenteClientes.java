@@ -1,8 +1,6 @@
 package locadora.view;
 
 import locadora.controller.ClienteController;
-import locadora.controller.VeiculoController;
-import locadora.model.StatusVeiculo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,12 +41,12 @@ public class TelaGerenteClientes {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel lblCadastroClientes = new JLabel("Clientes");
-        lblCadastroClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblCadastroClientes.setBounds(85, 10, 60, 15);
-        lblCadastroClientes.setVerticalAlignment(SwingConstants.CENTER);
-        lblCadastroClientes.setHorizontalAlignment(SwingConstants.CENTER);
-        frame.getContentPane().add(lblCadastroClientes);
+        JLabel lblClientes = new JLabel("Clientes");
+        lblClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblClientes.setBounds(120, 10, 60, 15);
+        lblClientes.setVerticalAlignment(SwingConstants.CENTER);
+        lblClientes.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.getContentPane().add(lblClientes);
 
         JPanel panelClientes = new JPanel();
         panelClientes.setLayout(null);
@@ -58,22 +56,22 @@ public class TelaGerenteClientes {
 
         JTextField txtNome = new JTextField();
         txtNome.setColumns(10);
-        txtNome.setBounds(55, 10, 80, 20);
+        txtNome.setBounds(45, 10, 90, 20);
         panelClientes.add(txtNome);
 
         JTextField txtCpf = new JTextField();
         txtCpf.setColumns(10);
-        txtCpf.setBounds(55, 40, 80, 20);
+        txtCpf.setBounds(45, 40, 90, 20);
         panelClientes.add(txtCpf);
 
         JTextField txtTelefone = new JTextField();
         txtTelefone.setColumns(10);
-        txtTelefone.setBounds(210, 10, 80, 20);
+        txtTelefone.setBounds(200, 10, 90, 20);
         panelClientes.add(txtTelefone);
 
         JTextField txtEmail = new JTextField();
         txtEmail.setColumns(10);
-        txtEmail.setBounds(210, 40, 80, 20);
+        txtEmail.setBounds(200, 40, 90, 20);
         panelClientes.add(txtEmail);
 
         JLabel lblNome = new JLabel("Nome");
@@ -87,12 +85,12 @@ public class TelaGerenteClientes {
         panelClientes.add(lblCpf);
 
         JLabel lblTelefone = new JLabel("Telefone");
-        lblTelefone.setBounds(155, 10, 50, 15);
+        lblTelefone.setBounds(145, 10, 50, 15);
         lblTelefone.setVerticalAlignment(SwingConstants.CENTER);
         panelClientes.add(lblTelefone);
 
         JLabel lblEmail = new JLabel("E-mail");
-        lblEmail.setBounds(155, 40, 50, 15);
+        lblEmail.setBounds(145, 40, 50, 15);
         lblEmail.setVerticalAlignment(SwingConstants.CENTER);
         panelClientes.add(lblEmail);
 
@@ -114,9 +112,9 @@ public class TelaGerenteClientes {
         btnExcluirCliente.setVerticalAlignment(SwingConstants.CENTER);
         frame.add(btnExcluirCliente);
 
-        btnCadastrarCliente.addActionListener(e -> new ClienteController().CadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
-        btnEditarCliente.addActionListener(e -> new ClienteController().EditarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
-        btnExcluirCliente.addActionListener(e -> new ClienteController().ExcluirCliente(txtCpf));
+        btnCadastrarCliente.addActionListener(e -> new ClienteController().cadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
+        btnEditarCliente.addActionListener(e -> new ClienteController().editarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
+        btnExcluirCliente.addActionListener(e -> new ClienteController().excluirCliente(txtCpf));
     }
 
 }

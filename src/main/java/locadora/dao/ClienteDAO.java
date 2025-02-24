@@ -28,6 +28,7 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
         }
         clientes.add(clienteNovo);
         atualizarJson(clientes);
+        System.out.println("Cliente salvo!");
     }
 
     @Override
@@ -42,23 +43,29 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
 
     @Override
     public void atualizar(Cliente clienteAtualizado) {
+        List<Cliente> clientesParaRemover = new ArrayList<>();
         for (Cliente clienteListado: clientes) {
             if (clienteListado.getCpf().equals(clienteAtualizado.getCpf())) {
-                clientes.remove(clienteListado);
-                clientes.add(clienteAtualizado);
+                clientesParaRemover.add(clienteListado);
             }
         }
+        clientes.removeAll(clientesParaRemover);
+        clientes.add(clienteAtualizado);
         atualizarJson(clientes);
+        System.out.println("Cliente atualizado!");
     }
 
     @Override
     public void deletar(Object cpf) {
+        List<Cliente> clientesParaRemover = new ArrayList<>();
         for (Cliente clienteListado : clientes) {
             if (clienteListado.getCpf().equals(cpf)) {
-                clientes.remove(clienteListado);
+                clientesParaRemover.add(clienteListado);
             }
         }
+        clientes.removeAll(clientesParaRemover);
         atualizarJson(clientes);
+        System.out.println("Cliente excluído!");
     }
 
     private List<Cliente> clientesCadastrados() {
@@ -75,7 +82,6 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
         String clientesAtualizadoJson = new Gson().toJson(clientesAtualizado);
         try (FileWriter writer = new FileWriter("src/main/java/locadora/json/clientes.json")) {
             writer.write(clientesAtualizadoJson);
-            System.out.println("Cliente adicionado");
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

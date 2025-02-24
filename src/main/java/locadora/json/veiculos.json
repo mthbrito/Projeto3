@@ -1,13 +1,6 @@
 [
   {
     "tipo": "Carro",
-    "placa": "loc2024",
-    "modelo": "Camaro",
-    "ano": 2024,
-    "status": "DISPONIVEL"
-  },
-  {
-    "tipo": "Carro",
     "placa": "cvv1234",
     "modelo": "Fusca",
     "ano": 1990,
@@ -35,17 +28,24 @@
     "status": "DISPONIVEL"
   },
   {
-    "tipo": "Carro",
-    "placa": "web2000",
-    "modelo": "palio",
-    "ano": 2006,
-    "status": "DISPONIVEL"
-  },
-  {
     "tipo": "Caminhão",
     "placa": "rtg4000",
     "modelo": "carreta",
     "ano": 1970,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "pov1598",
+    "modelo": "kawasaki",
+    "ano": 2021,
+    "status": "LOCADO"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "web2040",
+    "modelo": "palio",
+    "ano": 2024,
     "status": "DISPONIVEL"
   }
 ]
