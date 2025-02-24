@@ -54,24 +54,6 @@
     "dataDeDevolucao": "2025-2-24"
   },
   {
-    "idLocacao": 1003,
-    "cliente": {
-      "nome": "Severina",
-      "cpf": "666.999.333-22",
-      "telefone": "(83)97744-5566",
-      "email": "severina@ufpb.com"
-    },
-    "veiculo": {
-      "tipo": "Carro",
-      "placa": "web2040",
-      "modelo": "palio",
-      "ano": 2024,
-      "status": "DISPONIVEL"
-    },
-    "dataDeRetirada": "2024-2-28",
-    "dataDeDevolucao": "2024-3-1"
-  },
-  {
     "idLocacao": 1004,
     "cliente": {
       "nome": "Severina",
@@ -88,5 +70,41 @@
     },
     "dataDeRetirada": "2024-2-20",
     "dataDeDevolucao": "2024-3-1"
+  },
+  {
+    "idLocacao": 1005,
+    "cliente": {
+      "nome": "Maria",
+      "cpf": "123.456.789-00",
+      "telefone": "(83)98888-1111",
+      "email": "maria@ifpb.com"
+    },
+    "veiculo": {
+      "tipo": "Carro",
+      "placa": "cvv1234",
+      "modelo": "Fusca",
+      "ano": 1990,
+      "status": "DISPONIVEL"
+    },
+    "dataDeRetirada": "2025-2-24",
+    "dataDeDevolucao": "2025-2-26"
+  },
+  {
+    "idLocacao": 1006,
+    "cliente": {
+      "nome": "João",
+      "cpf": "899.456.789-10",
+      "telefone": "(81)97777-5555",
+      "email": "joao@ufpe.com"
+    },
+    "veiculo": {
+      "tipo": "Caminhão",
+      "placa": "web9999",
+      "modelo": "truck",
+      "ano": 1999,
+      "status": "DISPONIVEL"
+    },
+    "dataDeRetirada": "2010-10-10",
+    "dataDeDevolucao": "2010-10-12"
   }
 ]

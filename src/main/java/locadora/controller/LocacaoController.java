@@ -36,7 +36,7 @@ public class LocacaoController {
         locacaoDAO.salvar(locacao);
     }
 
-    public void editarLocacao(JComboBox<String> comboBoxClientes, JComboBox<String> comboBoxVeiculos, JTextField txtDataRetirada, JTextField txtDataDevolucao) {
+    public void editarLocacao(JTextField txtIdLocacao, JComboBox<String> comboBoxClientes, JComboBox<String> comboBoxVeiculos, JTextField txtDataRetirada, JTextField txtDataDevolucao) {
         String dadosClientes = (String) comboBoxClientes.getSelectedItem();
         Cliente cliente = null;
         if(dadosClientes != null) {
@@ -59,10 +59,11 @@ public class LocacaoController {
                     break;
             }
         }
-        Locacao locacao = new Locacao(cliente, veiculo, txtDataRetirada.getText(), txtDataDevolucao.getText());
+        Locacao locacao = new Locacao(Integer.parseInt(txtIdLocacao.getText()), cliente, veiculo, txtDataRetirada.getText(), txtDataDevolucao.getText());
         locacaoDAO.atualizar(locacao);
     }
 
-    public void excluirLocacao(JComboBox<String> comboBoxClientes) {
+    public void excluirLocacao(JTextField txtIdLocacao) {
+        locacaoDAO.deletar(Integer.parseInt(txtIdLocacao.getText()));
     }
 }

@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Locacao {
 
-    private static int idCounter = carregarIdLocacaoCounter();
+    private static int idLocacaoCounter = carregarIdLocacaoCounter();
     private int idLocacao;
     private Cliente cliente;
     private Veiculo veiculo;
@@ -14,8 +14,16 @@ public class Locacao {
     private String dataDeDevolucao;
 
     public Locacao(Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
-        this.idLocacao = idCounter++;
-        salvarIdLocacaoCounter(idCounter);
+        this.idLocacao = idLocacaoCounter++;
+        salvarIdLocacaoCounter(idLocacaoCounter);
+        this.cliente = cliente;
+        this.veiculo = veiculo;
+        this.dataDeRetirada = new DataHandler().formatarData(dataDeRetirada);
+        this.dataDeDevolucao = new DataHandler().formatarData(dataDeDevolucao);
+    }
+
+    public Locacao(int idLocacao, Cliente cliente, Veiculo veiculo, String dataDeRetirada, String dataDeDevolucao) {
+        this.idLocacao = idLocacao;
         this.cliente = cliente;
         this.veiculo = veiculo;
         this.dataDeRetirada = new DataHandler().formatarData(dataDeRetirada);

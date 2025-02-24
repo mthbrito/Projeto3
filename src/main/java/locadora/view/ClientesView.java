@@ -5,7 +5,7 @@ import locadora.controller.ClienteController;
 import javax.swing.*;
 import java.awt.*;
 
-public class TelaGerenteClientes {
+public class ClientesView {
 
     private final JFrame frame = new JFrame();
 
@@ -16,7 +16,7 @@ public class TelaGerenteClientes {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TelaGerenteClientes window = new TelaGerenteClientes();
+                    ClientesView window = new ClientesView();
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     System.out.println("Erro: " + e.getMessage());
@@ -28,7 +28,7 @@ public class TelaGerenteClientes {
     /**
      * Create the application.
      */
-    public TelaGerenteClientes() {
+    public ClientesView() {
         initialize();
     }
 
