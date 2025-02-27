@@ -68,7 +68,7 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
         System.out.println("Pagamento excluído!");
     }
 
-    private List<Pagamento> pagamentosCadastrados() {
+    protected List<Pagamento> pagamentosCadastrados() {
         String arquivo = "src/main/java/locadora/json/pagamentos.json";
         if (this.isVazio(arquivo, Pagamento.class)) {
             pagamentos = new ArrayList<>();

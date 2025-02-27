@@ -115,7 +115,11 @@ public class LocacoesView {
         btnExcluirLocacao.setBounds(315, 150, 90, 40);
         frame.add(btnExcluirLocacao);
 
-        btnRegistrarLocacao.addActionListener(e -> new LocacaoController().registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
+        btnRegistrarLocacao.addActionListener(e -> {
+            new LocacaoController().registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
+            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listagemVeiculosDisponiveis()));
+
+        });
         btnEditarLocacao.addActionListener(e -> new LocacaoController().editarLocacao(txtIdLocacao, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
         btnExcluirLocacao.addActionListener(e -> new LocacaoController().excluirLocacao(txtIdLocacao));
 

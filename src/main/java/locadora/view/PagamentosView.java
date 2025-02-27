@@ -3,6 +3,7 @@ package locadora.view;
 import locadora.controller.LocacaoController;
 import locadora.controller.PagamentoController;
 import locadora.dao.LocacaoDAO;
+import locadora.dao.VeiculoDAO;
 import locadora.model.MetodosPagamento;
 import locadora.model.Pagamento;
 
@@ -50,7 +51,7 @@ public class PagamentosView {
         lblPagamentos.setHorizontalAlignment(SwingConstants.CENTER);
         lblPagamentos.setVerticalAlignment(SwingConstants.CENTER);
         lblPagamentos.setFont(new Font("Tahoma", Font.BOLD, 14));
-        lblPagamentos.setBounds(165, 10, 70, 20);
+        lblPagamentos.setBounds(140, 10, 120, 20);
         frame.getContentPane().add(lblPagamentos);
 
         JPanel panelRegistroPagamento = new JPanel();
@@ -61,7 +62,7 @@ public class PagamentosView {
 
         JLabel lblIdPagamento = new JLabel("ID (Pagamento)");
         lblIdPagamento.setVerticalAlignment(SwingConstants.CENTER);
-        lblIdPagamento.setBounds(120, 10, 80, 20);
+        lblIdPagamento.setBounds(115, 10, 120, 20);
         panelRegistroPagamento.add(lblIdPagamento);
 
         JTextField txtIdPagamento = new JTextField();
@@ -69,41 +70,45 @@ public class PagamentosView {
         panelRegistroPagamento.add(txtIdPagamento);
 
         JComboBox<String> comboBoxLocacoes = new JComboBox<>(new LocacaoDAO().listagemLocacoesCadastradas());
-        comboBoxLocacoes.setBounds(65, 40, 125, 20);
+        comboBoxLocacoes.setBounds(75, 40, 95, 20);
         comboBoxLocacoes.setSelectedIndex(-1);
         panelRegistroPagamento.add(comboBoxLocacoes);
 
         JTextField txtValorPago = new JTextField();
-        txtValorPago.setBounds(65, 70, 125, 20);
+        txtValorPago.setBounds(75, 70, 95, 20);
         panelRegistroPagamento.add(txtValorPago);
 
         JTextField txtDataPagamento = new JTextField();
-        txtDataPagamento.setBounds(315, 40, 70, 20);
+        txtDataPagamento.setBounds(305, 40, 80, 20);
         panelRegistroPagamento.add(txtDataPagamento);
 
         JComboBox<MetodosPagamento> comboBoxMetodoPagamento = new JComboBox<>(MetodosPagamento.values());
-        comboBoxMetodoPagamento.setBounds(315, 70, 70, 20);
+        comboBoxMetodoPagamento.setBounds(305, 70, 80, 20);
         panelRegistroPagamento.add(comboBoxMetodoPagamento);
 
         JLabel lblLocacao = new JLabel("Locacão");
-        lblLocacao.setBounds(10, 40, 45, 15);
+        lblLocacao.setBounds(10, 40, 65, 15);
         lblLocacao.setVerticalAlignment(SwingConstants.CENTER);
         panelRegistroPagamento.add(lblLocacao);
 
-        JLabel lblValorPago = new JLabel("ValorPago");
-        lblValorPago.setBounds(10, 70, 45, 15);
+        JLabel lblValorPago = new JLabel("Valor Pago");
+        lblValorPago.setBounds(10, 70, 65, 15);
         lblValorPago.setVerticalAlignment(SwingConstants.CENTER);
         panelRegistroPagamento.add(lblValorPago);
 
         JLabel lblDataPagamento = new JLabel("Data de pagamento");
-        lblDataPagamento.setBounds(200, 40, 120, 15);
+        lblDataPagamento.setBounds(175, 40, 130, 15);
         lblDataPagamento.setVerticalAlignment(SwingConstants.CENTER);
         panelRegistroPagamento.add(lblDataPagamento);
 
         JLabel lblMetodoPagamento = new JLabel("Método de pagamento");
-        lblMetodoPagamento.setBounds(200, 70, 120, 15);
+        lblMetodoPagamento.setBounds(175, 70, 130, 15);
         lblDataPagamento.setVerticalAlignment(SwingConstants.CENTER);
         panelRegistroPagamento.add(lblMetodoPagamento);
+
+        JButton btnGerarValorPago = new JButton("<html><div style='text-align:center'>Gerar valor</div></html>");
+        btnGerarValorPago.setBounds(305, 10, 80, 20);
+        frame.add(btnGerarValorPago);
 
         JButton btnRegistrarPagamento = new JButton("<html><div style='text-align:center'>Registrar Pagamento</div></html>");
         btnRegistrarPagamento.setBounds(10, 150, 90, 40);
@@ -117,7 +122,15 @@ public class PagamentosView {
         btnExcluirPagamento.setBounds(315, 150, 90, 40);
         frame.add(btnExcluirPagamento);
 
-        btnRegistrarPagamento.addActionListener(e -> new PagamentoController().registrarPagamento(comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento));
+        btnGerarValorPago.addActionListener(e -> {
+            double valor = new PagamentoController().calcularPagamento(comboBoxLocacoes, txtDataPagamento);
+            txtValorPago.setText(String.valueOf(valor));
+        });
+
+        btnRegistrarPagamento.addActionListener(e -> {
+            new PagamentoController().registrarPagamento(comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
+            comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listagemLocacoesCadastradas()));
+        });
         btnEditarPagamento.addActionListener(e -> new PagamentoController().editarPagamento(txtIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento));
         btnExcluirPagamento.addActionListener(e -> new PagamentoController().excluirPagamento(txtIdPagamento));
 

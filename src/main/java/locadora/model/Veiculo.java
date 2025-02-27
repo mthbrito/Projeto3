@@ -54,6 +54,10 @@ public abstract class Veiculo {
         return status;
     }
 
+    public void setStatus(StatusVeiculo status) {
+        this.status = status;
+    }
+
 
     @Override
     public String toString() {
@@ -65,5 +69,4 @@ public abstract class Veiculo {
                 ", status='" + status + '\'' +
                 '}';
     }
-    
 }

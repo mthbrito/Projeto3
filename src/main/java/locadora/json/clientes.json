@@ -30,9 +30,15 @@
     "email": "carla@uepb.com"
   },
   {
-    "nome": "Severina",
-    "cpf": "666.999.333-22",
-    "telefone": "(83)97744-5566",
-    "email": "severina@ufpb.com"
+    "nome": "Manoel",
+    "cpf": "258.147.369-00",
+    "telefone": "(83)96666-4561",
+    "email": "manoel@ifpb.com"
+  },
+  {
+    "nome": "Matheus",
+    "cpf": "110.555.789-20",
+    "telefone": "(83)98819-5699",
+    "email": "matheus@ifpb.com"
   }
 ]

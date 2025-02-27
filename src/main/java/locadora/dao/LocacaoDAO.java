@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import locadora.model.Locacao;
+import locadora.model.Pagamento;
 import locadora.model.Veiculo;
 import locadora.utils.VeiculoDeserializer;
 
@@ -121,13 +122,24 @@ public class LocacaoDAO implements IPersistencia<Locacao, Object> {
         locacoes.sort(Comparator.comparing(Locacao::getIdLocacao));
         String[] idLocacoes = new String[locacoes.size()];
         for (int i = 0; i < locacoes.size(); i++) {
-            idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
-                    + locacoes.get(i).getCliente().getNome() + "/"
-                    + locacoes.get(i).getVeiculo().getModelo() + "/"
-                    + locacoes.get(i).getDataDeRetirada() + "/"
-                    + locacoes.get(i).getDataDeRetirada();
+            if(!isLocacaoPaga(locacoes.get(i).getIdLocacao())) {
+                idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
+                        + locacoes.get(i).getCliente().getNome() + "/"
+                        + locacoes.get(i).getVeiculo().getModelo() + "/"
+                        + locacoes.get(i).getDataDeRetirada() + "/"
+                        + locacoes.get(i).getDataDeRetirada();
+            }
         }
         return idLocacoes;
+    }
+
+    private boolean isLocacaoPaga(int idLocacao){
+        for(Pagamento pagamento: new PagamentoDAO().pagamentosCadastrados()) {
+           if(pagamento.getIdLocacao() == idLocacao) {
+               return true;
+           }
+        }
+        return false;
     }
 
 }

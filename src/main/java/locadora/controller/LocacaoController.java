@@ -1,6 +1,7 @@
 package locadora.controller;
 
 import locadora.dao.LocacaoDAO;
+import locadora.dao.VeiculoDAO;
 import locadora.model.*;
 
 import javax.swing.*;
@@ -22,18 +23,19 @@ public class LocacaoController {
             String[] dadosVeiculo = dadosVeiculos.split("/");
             switch (dadosVeiculo[0]) {
                 case "Caminhão":
-                    veiculo = new Caminhao(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.valueOf(dadosVeiculo[4].toUpperCase()));
+                    veiculo = new Caminhao(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.LOCADO);
                     break;
                 case "Carro":
-                    veiculo = new Carro(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.valueOf(dadosVeiculo[4].toUpperCase()));
+                    veiculo = new Carro(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.LOCADO);
                     break;
                 case "Moto":
-                    veiculo = new Moto(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.valueOf(dadosVeiculo[4].toUpperCase()));
+                    veiculo = new Moto(dadosVeiculo[1], dadosVeiculo[2], Integer.parseInt(dadosVeiculo[3]), StatusVeiculo.LOCADO);
                     break;
             }
         }
         Locacao locacao = new Locacao(cliente, veiculo, txtDataRetirada.getText(), txtDataDevolucao.getText());
         locacaoDAO.salvar(locacao);
+        new VeiculoDAO().atualizar(locacao.getVeiculo());
     }
 
     public void editarLocacao(JTextField txtIdLocacao, JComboBox<String> comboBoxClientes, JComboBox<String> comboBoxVeiculos, JTextField txtDataRetirada, JTextField txtDataDevolucao) {
@@ -59,6 +61,7 @@ public class LocacaoController {
                     break;
             }
         }
+
         Locacao locacao = new Locacao(Integer.parseInt(txtIdLocacao.getText()), cliente, veiculo, txtDataRetirada.getText(), txtDataDevolucao.getText());
         locacaoDAO.atualizar(locacao);
     }
@@ -66,4 +69,5 @@ public class LocacaoController {
     public void excluirLocacao(JTextField txtIdLocacao) {
         locacaoDAO.deletar(Integer.parseInt(txtIdLocacao.getText()));
     }
+
 }
