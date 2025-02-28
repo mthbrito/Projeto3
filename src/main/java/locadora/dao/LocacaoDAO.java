@@ -97,7 +97,7 @@ public class LocacaoDAO implements IPersistencia<Locacao, Object> {
         }
     }
 
-    private List<Locacao> locacoesCadastradas() {
+    public List<Locacao> locacoesCadastradas() {
         String arquivo = "src/main/java/locadora/json/locacoes.json";
         List<Locacao> locacoes;
         if (this.isVazio(arquivo)) {

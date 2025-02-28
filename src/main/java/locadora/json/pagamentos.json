@@ -1,1 +1,37 @@
-[{"idPagamento":1000,"idLocacao":1000,"valorPago":1000.0,"dataPagamento":"2025-2-26","metodoPagamento":"A_VISTA"},{"idPagamento":1001,"idLocacao":1003,"valorPago":850.0,"dataPagamento":"2025-2-26","metodoPagamento":"DEBITO"},{"idPagamento":1002,"idLocacao":1001,"valorPago":750.0,"dataPagamento":"2025-2-25","metodoPagamento":"A_VISTA"},{"idPagamento":1003,"idLocacao":1002,"valorPago":3600.0,"dataPagamento":"2025-2-26","metodoPagamento":"A_VISTA"},{"idPagamento":1004,"idLocacao":1005,"valorPago":725.0,"dataPagamento":"2025-2-27","metodoPagamento":"A_VISTA"}]
+[
+  {
+    "idPagamento": 1000,
+    "idLocacao": 1000,
+    "valorPago": 1000.0,
+    "dataPagamento": "2025-2-26",
+    "metodoPagamento": "A_VISTA"
+  },
+  {
+    "idPagamento": 1001,
+    "idLocacao": 1003,
+    "valorPago": 850.0,
+    "dataPagamento": "2025-2-26",
+    "metodoPagamento": "DEBITO"
+  },
+  {
+    "idPagamento": 1002,
+    "idLocacao": 1001,
+    "valorPago": 750.0,
+    "dataPagamento": "2025-2-25",
+    "metodoPagamento": "A_VISTA"
+  },
+  {
+    "idPagamento": 1003,
+    "idLocacao": 1002,
+    "valorPago": 3600.0,
+    "dataPagamento": "2025-2-26",
+    "metodoPagamento": "A_VISTA"
+  },
+  {
+    "idPagamento": 1004,
+    "idLocacao": 1005,
+    "valorPago": 725.0,
+    "dataPagamento": "2025-2-27",
+    "metodoPagamento": "A_VISTA"
+  }
+]

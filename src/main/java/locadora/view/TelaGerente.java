@@ -1,14 +1,10 @@
 package locadora.view;
 
-import locadora.controller.ClienteController;
-import locadora.controller.VeiculoController;
-import locadora.model.StatusVeiculo;
+import locadora.utils.RelatorioGerencial;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.Color;
-import java.awt.Font;
 
 public class TelaGerente {
 
@@ -46,9 +42,28 @@ public class TelaGerente {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JButton gerarRelatorio = new JButton("Gerar relatório");
-        gerarRelatorio.setBounds(150, 50, 100, 30);
-        frame.add(gerarRelatorio);
+        JLabel lblGerarRelatorio = new JLabel("Gerar relatórios");
+        lblGerarRelatorio.setBounds(100, 10, 200, 20);
+        lblGerarRelatorio.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblGerarRelatorio.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.add(lblGerarRelatorio);
+
+        JButton btnGerarRelatorioClienteLocacoes = new JButton("<html><div style='text-align:center'>Cliente e suas locações</div></html>");
+        btnGerarRelatorioClienteLocacoes.setBounds(140, 50, 120, 40);
+        frame.add(btnGerarRelatorioClienteLocacoes);
+
+        JButton btnGerarRelatorioVeiculosLocados = new JButton("<html><div style='text-align:center'>Veículos locados</div></html>");
+        btnGerarRelatorioVeiculosLocados.setBounds(140, 100, 120, 40);
+        frame.add(btnGerarRelatorioVeiculosLocados);
+
+        JButton btnGerarRelatorioFaturamentoMensal = new JButton("<html><div style='text-align:center'>Faturamento mensal</div></html>");
+        btnGerarRelatorioFaturamentoMensal.setBounds(140, 150, 120, 40);
+        frame.add(btnGerarRelatorioFaturamentoMensal);
+
+        btnGerarRelatorioClienteLocacoes.addActionListener(e -> new RelatorioGerencial().gerarRelatorioClientesLocacoes());
+        btnGerarRelatorioVeiculosLocados.addActionListener(e -> new RelatorioGerencial().gerarRelatorioVeiculosLocados());
+        btnGerarRelatorioFaturamentoMensal.addActionListener(e -> new RelatorioGerencial().gerarFaturamentoMensal());
+
 
 //        JPanel panelVeiculos = new JPanel();
 //        panelVeiculos.setBackground(new Color(255, 255, 255));

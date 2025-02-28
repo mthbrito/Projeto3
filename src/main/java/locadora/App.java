@@ -1,20 +1,16 @@
 package locadora;
 
-import locadora.dao.ClienteDAO;
-import locadora.dao.LocacaoDAO;
-import locadora.dao.PagamentoDAO;
-import locadora.dao.VeiculoDAO;
-import locadora.model.*;
+import locadora.utils.RelatorioGerencial;
 
 import java.io.IOException;
-
-import static locadora.model.StatusVeiculo.DISPONIVEL;
-import static locadora.model.StatusVeiculo.LOCADO;
 
 public class App
 {
     public static void main( String[] args ) throws IOException {
 
+//        new RelatorioGerencial().gerarRelatorioVeiculosLocados();
+//        new RelatorioGerencial().gerarFaturamentoMensal();
+        new RelatorioGerencial().gerarRelatorioClientesLocacoes();
 //        Gson gson = new Gson();
 //        String veiculos = gson.toJson(c);
 //        System.out.println(veiculos);
@@ -24,13 +20,13 @@ public class App
 //        System.out.println(v.getPlaca());
 
 
-
-        VeiculoDAO v = new VeiculoDAO();
-        Carro ca = new Carro("abc2000", "uno", 2000, LOCADO);
-        Carro ca1 = new Carro("xyz2001", "corsa", 2005, DISPONIVEL);
-//        Caminhao t = new Caminhao("sje2025", "truck", 1997, "disponível");
-        v.salvar(ca);
-        v.salvar(ca1);
+//
+//        VeiculoDAO v = new VeiculoDAO();
+//        Carro ca = new Carro("abc2000", "uno", 2000, LOCADO);
+//        Carro ca1 = new Carro("xyz2001", "corsa", 2005, DISPONIVEL);
+////        Caminhao t = new Caminhao("sje2025", "truck", 1997, "disponível");
+//        v.salvar(ca);
+//        v.salvar(ca1);
 //        v.salvar(t);
 //        Moto m = new Moto("lmn7894", "honda", 2010, "locada");
 //        v.salvar(m);
