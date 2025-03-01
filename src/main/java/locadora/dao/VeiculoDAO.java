@@ -21,7 +21,7 @@ public class VeiculoDAO implements IPersistencia<Veiculo, Object> {
     private final List<Veiculo> veiculos;
 
     public VeiculoDAO() {
-        veiculos = veiculoCadastrados();
+        this.veiculos = veiculoCadastrados();
     }
 
     @Override

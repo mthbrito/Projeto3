@@ -38,6 +38,33 @@ public class TelaGerente {
      */
     private void initialize() {
 
+//        frame.setBounds(100, 100, 800, 600);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.getContentPane().setLayout(null);
+//
+//        JLabel lblGerarRelatorio = new JLabel("Locadora de veículos");
+//        lblGerarRelatorio.setBounds(100, 10, 200, 20);
+//        lblGerarRelatorio.setFont(new Font("Tahoma", Font.BOLD, 14));
+//        lblGerarRelatorio.setHorizontalAlignment(SwingConstants.CENTER);
+//        frame.add(lblGerarRelatorio);
+//
+//        JButton btnClientes = new JButton("<html><div style='text-align:center'>Clientes</div></html>");
+//        btnClientes.setBounds(140, 50, 120, 40);
+//        frame.add(btnClientes);
+//
+////        JButton btnGerarRelatorioVeiculosLocados = new JButton("<html><div style='text-align:center'>Veículos locados</div></html>");
+////        btnGerarRelatorioVeiculosLocados.setBounds(140, 100, 120, 40);
+////        frame.add(btnGerarRelatorioVeiculosLocados);
+////
+////        JButton btnGerarRelatorioFaturamentoMensal = new JButton("<html><div style='text-align:center'>Faturamento mensal</div></html>");
+////        btnGerarRelatorioFaturamentoMensal.setBounds(140, 150, 120, 40);
+////        frame.add(btnGerarRelatorioFaturamentoMensal);
+//
+//        btnClientes.addActionListener(e -> {
+//            ClientesView subWindowCliente = new ClientesView();
+//            subWindowCliente.frame.setVisible(true);
+//        });
+
         frame.setBounds(100, 100, 400, 350);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);

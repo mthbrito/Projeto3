@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class ClientesView {
 
-    private final JFrame frame = new JFrame();
+    protected final JFrame frame = new JFrame();
 
     /**
      * Launch the application.
@@ -35,10 +35,10 @@ public class ClientesView {
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
+    public void initialize() {
 
         frame.setBounds(100, 100, 335, 205);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
         JLabel lblClientes = new JLabel("Clientes");

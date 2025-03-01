@@ -1,0 +1,17 @@
+[
+  {
+    "tipo": "ADMINISTRADOR",
+    "endereco": "admin",
+    "senha": "admin"
+  },
+  {
+    "tipo": "GERENTE",
+    "endereco": "gerente",
+    "senha": "gerente"
+  },
+  {
+    "tipo": "ATENDENTE",
+    "endereco": "atendente",
+    "senha": "atendente"
+  }
+]

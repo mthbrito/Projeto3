@@ -15,7 +15,7 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
     private List<Pagamento> pagamentos;
 
     public PagamentoDAO() {
-        pagamentos = this.pagamentosCadastrados();
+        this.pagamentos = pagamentosCadastrados();
     }
 
     @Override

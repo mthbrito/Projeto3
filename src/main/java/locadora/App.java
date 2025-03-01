@@ -1,16 +1,27 @@
 package locadora;
 
-import locadora.utils.RelatorioGerencial;
+import locadora.dao.UsuarioDAO;
+import locadora.model.Usuario;
 
+import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App
 {
     public static void main( String[] args ) throws IOException {
 
+
+//        new LoginAdmView().acessarAdm(new JTextField("admin@locadora.com"), new JTextField("admin"));
+//        System.out.println(new JTextField("admin@locadora.com").getText().equals("admin@locadora.com"));
+//
+//        List<Usuario> usuariosCadastrados = new ArrayList<>();
+//        usuariosCadastrados = new UsuarioDAO().getUsuariosAdm();
+//        System.out.println(usuariosCadastrados);
 //        new RelatorioGerencial().gerarRelatorioVeiculosLocados();
 //        new RelatorioGerencial().gerarFaturamentoMensal();
-        new RelatorioGerencial().gerarRelatorioClientesLocacoes();
+//        new RelatorioGerencial().gerarRelatorioClientesLocacoes();
 //        Gson gson = new Gson();
 //        String veiculos = gson.toJson(c);
 //        System.out.println(veiculos);
