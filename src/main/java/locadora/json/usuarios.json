@@ -13,5 +13,10 @@
     "tipo": "ATENDENTE",
     "endereco": "atendente",
     "senha": "atendente"
+  },
+  {
+    "tipo": "ADMINISTRADOR",
+    "endereco": "matheus",
+    "senha": "1234"
   }
 ]

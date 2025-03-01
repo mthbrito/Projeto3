@@ -40,5 +40,11 @@
     "cpf": "110.555.789-20",
     "telefone": "(83)98819-5699",
     "email": "matheus@ifpb.com"
+  },
+  {
+    "nome": "",
+    "cpf": "",
+    "telefone": "",
+    "email": ""
   }
 ]
