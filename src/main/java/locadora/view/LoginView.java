@@ -32,7 +32,7 @@ public abstract class LoginView {
 
         lblTitulo = new JLabel("Login");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Open Sans", Font.BOLD, 24));
+        lblTitulo.setFont(new Font("Roboto", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setBounds(125, 30, 200, 40);
         panel.add(lblTitulo);
@@ -58,7 +58,7 @@ public abstract class LoginView {
 
         txtSenha = new JTextField();
         txtSenha.setFont(new Font("Open Sans", Font.PLAIN, 14));
-        txtSenha.setBounds(160, 160, 200, 30);
+        txtSenha.setBounds(160, 150, 200, 30);
         panel.add(txtSenha);
 
         btnAcessar = new JButton("Acessar");

@@ -82,7 +82,7 @@ public class UsuarioDAO extends JsonHandler implements IPersistencia<Usuario, Ob
 
     private void atualizarJson(List<Usuario> usuariosAtualizado) {
         String usuariosAtualizadoJson = new Gson().toJson(usuariosAtualizado);
-        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/usuario.json")) {
+        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/usuarios.json")) {
             writer.write(usuariosAtualizadoJson);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
