@@ -1,11 +1,10 @@
 package locadora.dao;
 
-import com.google.gson.Gson;
+import locadora.exception.ClienteJaExisteException;
+import locadora.exception.ClienteNaoExisteException;
 import locadora.model.Cliente;
 import locadora.utils.JsonHandler;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,11 +18,10 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
     }
 
     @Override
-    public void salvar(Cliente clienteNovo) {
+    public void salvar(Cliente clienteNovo) throws ClienteJaExisteException {
         for (Cliente clienteListado : clientes) {
             if (clienteListado.getCpf().equals(clienteNovo.getCpf())) {
-                System.out.println("Cliente já existe!");
-                return;
+                throw new ClienteJaExisteException("Cliente já existe: " + clienteNovo.getCpf());
             }
         }
         clientes.add(clienteNovo);
@@ -32,43 +30,41 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
     }
 
     @Override
-    public Cliente ler(Object cpf) {
+    public Cliente ler(Object cpf) throws ClienteNaoExisteException {
         for (Cliente clienteListado : clientes) {
             if (clienteListado.getCpf().equals(cpf)) {
                 return clienteListado;
             }
         }
-        return null;
+        throw new ClienteNaoExisteException("Cliente não existe: " + cpf);
     }
 
     @Override
-    public void atualizar(Cliente clienteAtualizado) {
-        List<Cliente> clientesParaRemover = new ArrayList<>();
-        for (Cliente clienteListado : clientes) {
-            if (clienteListado.getCpf().equals(clienteAtualizado.getCpf())) {
-                clientesParaRemover.add(clienteListado);
-            }
+    public void atualizar(Cliente clienteAtualizado) throws ClienteNaoExisteException {
+        boolean clienteAntigo = clientes.removeIf(cliente -> cliente.getCpf().equals(clienteAtualizado.getCpf()));
+        if (!clienteAntigo) {
+            throw new ClienteNaoExisteException("Cliente não existe: " + clienteAtualizado.getCpf());
         }
-        clientes.removeAll(clientesParaRemover);
         clientes.add(clienteAtualizado);
         atualizarJson(clientes);
         System.out.println("Cliente atualizado!");
     }
 
     @Override
-    public void deletar(Object cpf) {
-        List<Cliente> clientesParaRemover = new ArrayList<>();
-        for (Cliente clienteListado : clientes) {
-            if (clienteListado.getCpf().equals(cpf)) {
-                clientesParaRemover.add(clienteListado);
-            }
+    public void deletar(Object cpf) throws ClienteNaoExisteException {
+        boolean clienteAntigo = clientes.removeIf(cliente -> cliente.getCpf().equals(cpf));
+        if (!clienteAntigo) {
+            throw new ClienteNaoExisteException("Cliente não existe: " + cpf);
         }
-        clientes.removeAll(clientesParaRemover);
         atualizarJson(clientes);
         System.out.println("Cliente excluído!");
     }
 
-    private List<Cliente> clientesCadastrados() {
+    private void atualizarJson(List<Cliente> clientesAtualizado) {
+        atualizarArquivo("src/main/java/locadora/json/clientes.json", clientesAtualizado);
+    }
+
+    public List<Cliente> clientesCadastrados() {
         String arquivo = "src/main/java/locadora/json/clientes.json";
         if (this.isVazio(arquivo, Cliente.class)) {
             clientes = new ArrayList<>();
@@ -76,15 +72,6 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
             clientes = this.getConteudo(arquivo, Cliente.class);
         }
         return clientes;
-    }
-
-    private void atualizarJson(List<Cliente> clientesAtualizado) {
-        String clientesAtualizadoJson = new Gson().toJson(clientesAtualizado);
-        try (FileWriter writer = new FileWriter("src/main/java/locadora/json/clientes.json")) {
-            writer.write(clientesAtualizadoJson);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     public String[] listagemClientesCadastrados() {

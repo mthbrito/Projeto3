@@ -12,12 +12,6 @@
     "email": "jose@ufpa.com"
   },
   {
-    "nome": "João",
-    "cpf": "899.456.789-10",
-    "telefone": "(81)97777-5555",
-    "email": "joao@ufpe.com"
-  },
-  {
     "nome": "Ana",
     "cpf": "555.666.777-98",
     "telefone": "(11)93332-5478",
@@ -42,9 +36,9 @@
     "email": "matheus@ifpb.com"
   },
   {
-    "nome": "",
-    "cpf": "",
-    "telefone": "",
-    "email": ""
+    "nome": "João",
+    "cpf": "899.456.789-10",
+    "telefone": "(83)9888-8888",
+    "email": "joao@gmail.com"
   }
 ]

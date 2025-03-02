@@ -1,11 +1,31 @@
 package locadora;
 
+import locadora.controller.ClienteController;
+import locadora.dao.ClienteDAO;
+import locadora.dao.LocacaoDAO;
+import locadora.model.Cliente;
+
 import java.io.IOException;
 
 public class App
 {
     public static void main( String[] args ) throws IOException {
 
+        ClienteController cc = new ClienteController();
+//        System.out.println(new ClienteController().validarNome("Ads2025"));
+//        System.out.println(new ClienteController().validarNome("Ads"));
+//        System.out.println(new ClienteController().validarCpf("123.255.789-00"));
+//        System.out.println(new ClienteController().validarCpf("157.755.4.88-00"));
+//        System.out.println(new ClienteController().validarCpf("12345678900"));
+//        System.out.println(new ClienteController().validarCpf("123456789-00"));
+
+//        System.out.println(cc.validarEmail("joao@ifpb.com"));
+//        System.out.println(cc.validarEmail("joao97@if.com"));
+
+//        new LocacaoDAO().deletar(5000);
+//        System.out.println(new ClienteDAO().ler("258.147.369-00"));
+//        System.out.println(new ClienteDAO().ler("110.110.789-79"));
+//        new ClienteDAO().atualizar(new Cliente("João", "899.456.789-10", "(83)9888-8888", "joao@gmail.com"));
 
 //        new LoginAdmView().acessarAdm(new JTextField("admin@locadora.com"), new JTextField("admin"));
 //        System.out.println(new JTextField("admin@locadora.com").getText().equals("admin@locadora.com"));
