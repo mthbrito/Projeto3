@@ -57,10 +57,10 @@ public class VeiculosView {
         rdbtnMoto.setBounds(260, 10, 120, 30);
         panelVeiculos.add(rdbtnMoto);
 
-        ButtonGroup group = new ButtonGroup();
-        group.add(rdbtnCaminhao);
-        group.add(rdbtnCarro);
-        group.add(rdbtnMoto);
+        ButtonGroup gpbtnTipo = new ButtonGroup();
+        gpbtnTipo.add(rdbtnCaminhao);
+        gpbtnTipo.add(rdbtnCarro);
+        gpbtnTipo.add(rdbtnMoto);
 
         JTextField txtPlaca = new JTextField();
         txtPlaca.setFont(new Font("Open Sans", Font.PLAIN, 14));
