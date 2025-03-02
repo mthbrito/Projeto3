@@ -2,11 +2,11 @@ package locadora.model;
 
 public abstract class Veiculo {
 
-    protected String tipo;
-    protected String placa;
-    protected String modelo;
-    protected int ano;
-    protected StatusVeiculo status;
+    private String tipo;
+    private String placa;
+    private String modelo;
+    private int ano;
+    private StatusVeiculo status;
 
     public Veiculo(String tipo, String placa, String modelo, int ano, StatusVeiculo status) {
         this.tipo = tipo;
@@ -57,7 +57,6 @@ public abstract class Veiculo {
     public void setStatus(StatusVeiculo status) {
         this.status = status;
     }
-
 
     @Override
     public String toString() {

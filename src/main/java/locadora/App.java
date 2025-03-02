@@ -1,12 +1,6 @@
 package locadora;
 
-import locadora.dao.UsuarioDAO;
-import locadora.model.Usuario;
-
-import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App
 {

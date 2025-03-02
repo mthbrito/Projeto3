@@ -7,11 +7,11 @@ import java.io.*;
 public class Pagamento {
 
     private static int idPagamentoCounter = carregarIdPagamentoCounter();
+    private final MetodosPagamento metodoPagamento;
     private int idPagamento;
     private int idLocacao;
     private double valorPago;
     private String dataPagamento;
-    private final MetodosPagamento metodoPagamento;
 
     public Pagamento(int idLocacao, double valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
         this.idPagamento = idPagamentoCounter++;
@@ -86,7 +86,6 @@ public class Pagamento {
     public MetodosPagamento getMetodoPagamento() {
         return metodoPagamento;
     }
-
 
     @Override
     public String toString() {

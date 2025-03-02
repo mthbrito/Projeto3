@@ -6,7 +6,7 @@ public class Usuario {
     private String endereco;
     private String senha;
 
-    public Usuario(TiposUsuarios tipo, String usuario, String senha){
+    public Usuario(TiposUsuarios tipo, String usuario, String senha) {
         this.tipo = tipo;
         this.endereco = usuario;
         this.senha = senha;
@@ -34,5 +34,14 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "tipo=" + tipo +
+                ", endereco='" + endereco + '\'' +
+                ", senha='" + senha + '\'' +
+                '}';
     }
 }

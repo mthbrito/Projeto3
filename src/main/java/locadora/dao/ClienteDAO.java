@@ -44,7 +44,7 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
     @Override
     public void atualizar(Cliente clienteAtualizado) {
         List<Cliente> clientesParaRemover = new ArrayList<>();
-        for (Cliente clienteListado: clientes) {
+        for (Cliente clienteListado : clientes) {
             if (clienteListado.getCpf().equals(clienteAtualizado.getCpf())) {
                 clientesParaRemover.add(clienteListado);
             }
@@ -99,5 +99,4 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
         }
         return idClientes;
     }
-
 }
