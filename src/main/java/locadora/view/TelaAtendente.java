@@ -56,12 +56,12 @@ public class TelaAtendente {
         panelRegistroLocacao.setBounds(10, 50, 410, 95);
         frame.getContentPane().add(panelRegistroLocacao);
 
-        JComboBox<String> comboBoxClientes = new JComboBox<>(new ClienteDAO().listagemClientesCadastrados());
+        JComboBox<String> comboBoxClientes = new JComboBox<>(new ClienteDAO().listaClientesCadastrados());
         comboBoxClientes.setBounds(75, 11, 90, 20);
         comboBoxClientes.setSelectedIndex(-1);
         panelRegistroLocacao.add(comboBoxClientes);
 
-        JComboBox<String> comboBoxVeiculos = new JComboBox<>(new VeiculoDAO().listagemVeiculosDisponiveis());
+        JComboBox<String> comboBoxVeiculos = new JComboBox<>(new VeiculoDAO().listaVeiculosDisponiveis());
         comboBoxVeiculos.setBounds(75, 36, 90, 20);
         comboBoxVeiculos.setSelectedIndex(-1);
         panelRegistroLocacao.add(comboBoxVeiculos);
@@ -103,7 +103,7 @@ public class TelaAtendente {
         panelRegistroPagamento.setBounds(10, 205, 410, 95);
         frame.getContentPane().add(panelRegistroPagamento);
 
-        JComboBox<String> comboBoxIdLocacoes = new JComboBox<>(new LocacaoDAO().listagemLocacoesCadastradas());
+        JComboBox<Integer> comboBoxIdLocacoes = new JComboBox<>(new LocacaoDAO().listaLocacoesCadastradas());
         comboBoxIdLocacoes.setSelectedIndex(-1);
         comboBoxIdLocacoes.setBounds(75, 11, 90, 20);
         panelRegistroPagamento.add(comboBoxIdLocacoes);
@@ -156,7 +156,7 @@ public class TelaAtendente {
         frame.getContentPane().add(lblRegistroPagamento);
 
         btnRegistrarLocacao.addActionListener(e -> new LocacaoController().registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
-        btnRegistrarPagamento.addActionListener(e -> new PagamentoController().registrarPagamento(comboBoxIdLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento));
+//        btnRegistrarPagamento.addActionListener(e -> new PagamentoController().registrarPagamento(comboBoxIdLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento));
 
     }
 }

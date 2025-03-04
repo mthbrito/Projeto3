@@ -6,7 +6,6 @@ import locadora.model.Cliente;
 import locadora.utils.JsonHandler;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Object> {
@@ -74,16 +73,32 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
         return clientes;
     }
 
-    public String[] listagemClientesCadastrados() {
-        List<Cliente> clientes = this.clientesCadastrados();
-        clientes.sort(Comparator.comparing(Cliente::getNome));
-        String[] idClientes = new String[clientes.size()];
-        for (int i = 0; i < clientes.size(); i++) {
-            idClientes[i] = clientes.get(i).getNome() + "/"
-                    + clientes.get(i).getCpf() + "/"
-                    + clientes.get(i).getTelefone() + "/"
-                    + clientes.get(i).getEmail();
+    public String[] atributosClientesCadastrados() {
+        return new String[]{"Nome", "CPF", "Telefone", "Email"};
+    }
+
+    public String[] listaClientesCadastrados() {
+        List<Cliente> clientesCadastrados = clientesCadastrados();
+        String[] clientes = new String[clientesCadastrados.size()];
+        for (int i = 0; i < clientesCadastrados.size(); i++) {
+            clientes[i] = clientesCadastrados.get(i).getCpf();
         }
-        return idClientes;
+        return clientes;
+    }
+
+    public String[][] dadosClientesCadastrados() {
+        List<Cliente> clientes = clientesCadastrados();
+        int linhas = clientes.size();
+        int colunas = 4;
+        String[][] dadosClientes = new String[linhas][colunas];
+        for (int i = 0; i < linhas; i++) {
+            String[] dados = new String[4];
+            dados[0] = clientes.get(i).getNome();
+            dados[1] = clientes.get(i).getCpf();
+            dados[2] = clientes.get(i).getTelefone();
+            dados[3] = clientes.get(i).getEmail();
+            dadosClientes[i] = dados;
+        }
+        return dadosClientes;
     }
 }

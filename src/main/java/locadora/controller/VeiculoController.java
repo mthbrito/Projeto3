@@ -1,6 +1,7 @@
 package locadora.controller;
 
 import locadora.dao.VeiculoDAO;
+import locadora.exception.ClienteNaoExisteException;
 import locadora.exception.VeiculoJaExisteException;
 import locadora.exception.VeiculoNaoExisteException;
 import locadora.model.*;
@@ -43,18 +44,11 @@ public class VeiculoController {
         }
     }
 
-    private String getTipo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto) {
-        if (rdbtnCaminhao.isSelected()) return "Caminhão";
-        if (rdbtnCarro.isSelected()) return "Carro";
-        if (rdbtnMoto.isSelected()) return "Moto";
-        return "";
-    }
-
     private boolean isTipoValido(String tipo) {
         return !tipo.isEmpty();
     }
 
-    public boolean isPlacaValida(String placa) {
+    private boolean isPlacaValida(String placa) {
         if (placa != null && !placa.isEmpty()) {
             String regex = "^[a-zA-Z]{3}[0-9]{4}$";
             return placa.matches(regex);
@@ -62,7 +56,7 @@ public class VeiculoController {
         return false;
     }
 
-    public boolean isModeloValido(String modelo) {
+    private boolean isModeloValido(String modelo) {
         if (modelo != null && !modelo.isEmpty()) {
             String regex = "^[a-zA-Z0-9]{3,10}$";
             return modelo.matches(regex);
@@ -70,7 +64,7 @@ public class VeiculoController {
         return false;
     }
 
-    public boolean isAnoValido(String ano) {
+    private boolean isAnoValido(String ano) {
         if (ano != null && !ano.isEmpty()) {
             String regex = "^(19[0-9][0-9]|20[0-2][0-9])$";
             return ano.matches(regex);
@@ -78,7 +72,7 @@ public class VeiculoController {
         return false;
     }
 
-    public boolean isStatusValido(StatusVeiculo status) {
+    private boolean isStatusValido(StatusVeiculo status) {
         return status != null;
     }
 
@@ -97,6 +91,13 @@ public class VeiculoController {
         return true;
     }
 
+    private String getTipo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto) {
+        if (rdbtnCaminhao.isSelected()) return "Caminhão";
+        if (rdbtnCarro.isSelected()) return "Carro";
+        if (rdbtnMoto.isSelected()) return "Moto";
+        return "";
+    }
+
     private Veiculo getVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
         Veiculo veiculo = null;
         switch (tipo) {
@@ -113,7 +114,7 @@ public class VeiculoController {
         return veiculo;
     }
 
-    private void salvarVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
+    public void salvarVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
         try {
             Veiculo veiculo = getVeiculo(tipo, placa, modelo, ano, status);
             veiculoDAO.salvar(veiculo);
@@ -123,7 +124,18 @@ public class VeiculoController {
         }
     }
 
-    private void atualizarVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
+    public Veiculo lerVeiculo(String placa) {
+        try {
+            Veiculo veiculo = veiculoDAO.ler(placa);
+            JOptionPane.showMessageDialog(null, "Veículo encontrado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return veiculo;
+        } catch (VeiculoNaoExisteException e) {
+            JOptionPane.showMessageDialog(null, "Veículo não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    public void atualizarVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
         try {
             Veiculo veiculo = getVeiculo(tipo, placa, modelo, ano, status);
             veiculoDAO.atualizar(veiculo);
@@ -133,7 +145,7 @@ public class VeiculoController {
         }
     }
 
-    private void deletarVeiculo(String placa) {
+    public void deletarVeiculo(String placa) {
         try {
             veiculoDAO.deletar(placa);
             JOptionPane.showMessageDialog(null, "Veículo excluído!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

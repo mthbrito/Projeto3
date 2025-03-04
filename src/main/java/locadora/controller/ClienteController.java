@@ -89,7 +89,7 @@ public class ClienteController {
         return true;
     }
 
-    private void salvarCliente(String nome, String cpf, String telefone, String email) {
+    public void salvarCliente(String nome, String cpf, String telefone, String email) {
         try {
             Cliente cliente = new Cliente(nome, cpf, telefone, email);
             clienteDAO.salvar(cliente);
@@ -99,7 +99,18 @@ public class ClienteController {
         }
     }
 
-    private void atualizarCliente(String nome, String cpf, String telefone, String email) {
+    public Cliente lerCliente(String cpf) {
+        try {
+            Cliente cliente = clienteDAO.ler(cpf);
+            JOptionPane.showMessageDialog(null, "Cliente encontrado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            return cliente;
+        } catch (ClienteNaoExisteException e) {
+            JOptionPane.showMessageDialog(null, "Cliente não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
+    public void atualizarCliente(String nome, String cpf, String telefone, String email) {
         try {
             Cliente cliente = new Cliente(nome, cpf, telefone, email);
             clienteDAO.atualizar(cliente);
@@ -109,7 +120,7 @@ public class ClienteController {
         }
     }
 
-    private void deletarCliente(String cpf) {
+    public void deletarCliente(String cpf) {
         try {
             clienteDAO.deletar(cpf);
             JOptionPane.showMessageDialog(null, "Cliente excluído!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);

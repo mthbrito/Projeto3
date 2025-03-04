@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Object> {
@@ -23,7 +22,7 @@ public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Ob
     private List<Veiculo> veiculos;
 
     public VeiculoDAO() {
-        this.veiculos = veiculoCadastrados();
+        this.veiculos = veiculosCadastrados();
     }
 
     @Override
@@ -97,7 +96,7 @@ public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Ob
         }
     }
 
-    public List<Veiculo> veiculoCadastrados() {
+    public List<Veiculo> veiculosCadastrados() {
         String arquivo = "src/main/java/locadora/json/veiculos.json";
         if (this.isVazio(arquivo)) {
             veiculos = new ArrayList<>();
@@ -107,19 +106,48 @@ public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Ob
         return veiculos;
     }
 
-    public String[] listagemVeiculosDisponiveis() {
-        List<Veiculo> veiculos = this.veiculoCadastrados();
-        veiculos.sort(Comparator.comparing(Veiculo::getModelo));
-        String[] idVeiculos = new String[veiculos.size()];
-        for (int i = 0; i < veiculos.size(); i++) {
-            if (veiculos.get(i).getStatus() == StatusVeiculo.DISPONIVEL) {
-                idVeiculos[i] = veiculos.get(i).getTipo() + "/"
-                        + veiculos.get(i).getPlaca() + "/"
-                        + veiculos.get(i).getModelo() + "/"
-                        + veiculos.get(i).getAno() + "/"
-                        + veiculos.get(i).getStatus();
-            }
+    public String[] atributosVeiculosCadastrados() {
+        return new String[]{"Tipo", "Placa", "Modelo", "Ano", "Status"};
+    }
+
+    public String[] listaVeiculosCadastrados() {
+        List<Veiculo> veiculosCadastrados = veiculosCadastrados();
+        String[] veiculos = new String[veiculosCadastrados.size()];
+        for (int i = 0; i < veiculosCadastrados.size(); i++) {
+            veiculos[i] = veiculosCadastrados.get(i).getPlaca();
         }
-        return idVeiculos;
+        return veiculos;
+    }
+
+    public String[] listaVeiculosDisponiveis() {
+        List<Veiculo> veiculosCadastrados = veiculosCadastrados();
+        List<Veiculo> veiculosDisponiveis = new ArrayList<>();
+        veiculosCadastrados.forEach(veiculo -> {
+            if (veiculo.getStatus().equals(StatusVeiculo.DISPONIVEL)) {
+                veiculosDisponiveis.add(veiculo);
+            }
+        });
+        String[] veiculos = new String[veiculosDisponiveis.size()];
+        for (int i = 0; i < veiculosDisponiveis.size(); i++) {
+            veiculos[i] = veiculosDisponiveis.get(i).getPlaca();
+        }
+        return veiculos;
+    }
+
+    public Object[][] dadosVeiculosCadastrados() {
+        List<Veiculo> veiculos = veiculosCadastrados();
+        int linhas = veiculos.size();
+        int colunas = 5;
+        Object[][] dadosVeiculos = new Object[linhas][colunas];
+        for (int i = 0; i < linhas; i++) {
+            Object[] dados = new Object[colunas];
+            dados[0] = veiculos.get(i).getTipo();
+            dados[1] = veiculos.get(i).getPlaca();
+            dados[2] = veiculos.get(i).getModelo();
+            dados[3] = veiculos.get(i).getAno();
+            dados[4] = veiculos.get(i).getStatus();
+            dadosVeiculos[i] = dados;
+        }
+        return dadosVeiculos;
     }
 }

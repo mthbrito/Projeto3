@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Object> {
@@ -108,22 +107,53 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         return locacoes;
     }
 
-
-    public String[] listagemLocacoesCadastradas() {
-        List<Locacao> locacoes = this.locacoesCadastradas();
-        locacoes.sort(Comparator.comparing(Locacao::getIdLocacao));
-        String[] idLocacoes = new String[locacoes.size()];
-        for (int i = 0; i < locacoes.size(); i++) {
-            if (!isLocacaoPaga(locacoes.get(i).getIdLocacao())) {
-                idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
-                        + locacoes.get(i).getCliente().getNome() + "/"
-                        + locacoes.get(i).getVeiculo().getModelo() + "/"
-                        + locacoes.get(i).getDataDeRetirada() + "/"
-                        + locacoes.get(i).getDataDeRetirada();
-            }
-        }
-        return idLocacoes;
+    public String[] atributosLocacoesCadastradas() {
+        return new String[]{"ID Locação", "Nome", "CPF", "Placa", "Status", "Data de retirada", "Data de devolução"};
     }
+
+    public Integer[] listaLocacoesCadastradas() {
+        List<Locacao> locacoesCadastradas = locacoesCadastradas();
+        Integer[] locacoes = new Integer[locacoesCadastradas.size()];
+        for (int i = 0; i < locacoesCadastradas.size(); i++) {
+            locacoes[i] = locacoesCadastradas.get(i).getIdLocacao();
+        }
+        return locacoes;
+    }
+
+    public Object[][] dadosLocacoesCadastradas() {
+        List<Locacao> locacoes = locacoesCadastradas();
+        int linhas = locacoes.size();
+        int colunas = 7;
+        Object[][] dadosLocacoes = new Object[linhas][colunas];
+        for (int i = 0; i < linhas; i++) {
+            Object[] dados = new Object[colunas];
+            dados[0] = locacoes.get(i).getIdLocacao();
+            dados[1] = locacoes.get(i).getCliente().getNome();
+            dados[2] = locacoes.get(i).getCliente().getCpf();
+            dados[3] = locacoes.get(i).getVeiculo().getPlaca();
+            dados[4] = locacoes.get(i).getVeiculo().getStatus();
+            dados[5] = locacoes.get(i).getDataDeRetirada();
+            dados[6] = locacoes.get(i).getDataDeDevolucao();
+            dadosLocacoes[i] = dados;
+        }
+        return dadosLocacoes;
+    }
+
+//    public String[] listagemLocacoesCadastradas() {
+//        List<Locacao> locacoes = this.locacoesCadastradas();
+//        locacoes.sort(Comparator.comparing(Locacao::getIdLocacao));
+//        String[] idLocacoes = new String[locacoes.size()];
+//        for (int i = 0; i < locacoes.size(); i++) {
+//            if (!isLocacaoPaga(locacoes.get(i).getIdLocacao())) {
+//                idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
+//                        + locacoes.get(i).getCliente().getNome() + "/"
+//                        + locacoes.get(i).getVeiculo().getModelo() + "/"
+//                        + locacoes.get(i).getDataDeRetirada() + "/"
+//                        + locacoes.get(i).getDataDeRetirada();
+//            }
+//        }
+//        return idLocacoes;
+//    }
 
     private boolean isLocacaoPaga(int idLocacao) {
         for (Pagamento pagamento : new PagamentoDAO().pagamentosCadastrados()) {
@@ -133,5 +163,6 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         }
         return false;
     }
+
 
 }

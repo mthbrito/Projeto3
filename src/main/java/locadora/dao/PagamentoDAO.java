@@ -73,4 +73,33 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
         }
         return pagamentos;
     }
+
+    public String[] atributosPagamentosCadastrados() {
+        return new String[]{"ID Pagamento", "ID Locacao", "Valor pago", "Data de pagamento"};
+    }
+
+    public Integer[] listaPagamentosCadastrados() {
+        List<Pagamento> pagamentosCadastrados = pagamentosCadastrados();
+        Integer[] pagamentos = new Integer[pagamentosCadastrados.size()];
+        for (int i = 0; i < pagamentosCadastrados.size(); i++) {
+            pagamentos[i] = pagamentosCadastrados.get(i).getIdPagamento();
+        }
+        return pagamentos;
+    }
+
+    public Object[][] dadosPagamentosCadastrados() {
+        List<Pagamento> pagamentos = pagamentosCadastrados();
+        int linhas = pagamentos.size();
+        int colunas = 4;
+        Object[][] dadosPagamentos = new Object[linhas][colunas];
+        for (int i = 0; i < linhas; i++) {
+            Object[] dados = new Object[colunas];
+            dados[0] = pagamentos.get(i).getIdPagamento();
+            dados[1] = pagamentos.get(i).getIdLocacao();
+            dados[2] = pagamentos.get(i).getValorPago();
+            dados[3] = pagamentos.get(i).getMetodoPagamento();
+            dadosPagamentos[i] = dados;
+        }
+        return dadosPagamentos;
+    }
 }

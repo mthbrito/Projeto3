@@ -2,7 +2,9 @@ package locadora.view;
 
 import locadora.controller.LocacaoController;
 import locadora.dao.ClienteDAO;
+import locadora.dao.LocacaoDAO;
 import locadora.dao.VeiculoDAO;
+import locadora.model.TiposObjetos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,29 +42,29 @@ public class LocacoesView {
         panelRegistroLocacao.setBounds(20, 50, 390, 140);
         panel.add(panelRegistroLocacao);
 
-        JLabel lblIdLocacao = new JLabel("ID (Locacão)");
-        lblIdLocacao.setHorizontalAlignment(SwingConstants.CENTER);
-        lblIdLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
-        lblIdLocacao.setVerticalAlignment(SwingConstants.CENTER);
-        lblIdLocacao.setBounds(110, 10, 90, 30);
-        panelRegistroLocacao.add(lblIdLocacao);
+        JComboBox<TiposObjetos> comboBoxTiposObjetos = new JComboBox<>(TiposObjetos.values());
+        comboBoxTiposObjetos.setFont(new Font("Open Sans", Font.PLAIN, 14));
+        comboBoxTiposObjetos.setBounds(62, 10, 120, 30);
+        comboBoxTiposObjetos.setSelectedIndex(-1);
+        panelRegistroLocacao.add(comboBoxTiposObjetos);
 
-        JTextField txtIdLocacao = new JTextField();
-        txtIdLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
-        txtIdLocacao.setBounds(210, 10, 90, 30);
-        panelRegistroLocacao.add(txtIdLocacao);
-
-        JComboBox<String> comboBoxClientes = new JComboBox<>(new ClienteDAO().listagemClientesCadastrados());
+        JComboBox<String> comboBoxClientes = new JComboBox<>(new ClienteDAO().listaClientesCadastrados());
         comboBoxClientes.setFont(new Font("Open Sans", Font.PLAIN, 12));
         comboBoxClientes.setBounds(62, 50, 120, 30);
         comboBoxClientes.setSelectedIndex(-1);
         panelRegistroLocacao.add(comboBoxClientes);
 
-        JComboBox<String> comboBoxVeiculos = new JComboBox<>(new VeiculoDAO().listagemVeiculosDisponiveis());
+        JComboBox<String> comboBoxVeiculos = new JComboBox<>(new VeiculoDAO().listaVeiculosDisponiveis());
         comboBoxVeiculos.setFont(new Font("Open Sans", Font.PLAIN, 12));
         comboBoxVeiculos.setBounds(62, 95, 120, 30);
         comboBoxVeiculos.setSelectedIndex(-1);
         panelRegistroLocacao.add(comboBoxVeiculos);
+
+        JComboBox<Integer> comboBoxIdLocacoes = new JComboBox<>(new LocacaoDAO().listaLocacoesCadastradas());
+        comboBoxIdLocacoes.setFont(new Font("Open Sans", Font.PLAIN, 14));
+        comboBoxIdLocacoes.setBounds(315, 10, 70, 30);
+        comboBoxIdLocacoes.setSelectedIndex(-1);
+        panelRegistroLocacao.add(comboBoxIdLocacoes);
 
         JTextField txtDataRetirada = new JTextField();
         txtDataRetirada.setFont(new Font("Open Sans", Font.PLAIN, 14));
@@ -73,6 +75,13 @@ public class LocacoesView {
         txtDataDevolucao.setFont(new Font("Open Sans", Font.PLAIN, 14));
         txtDataDevolucao.setBounds(315, 95, 70, 30);
         panelRegistroLocacao.add(txtDataDevolucao);
+
+        JLabel lblListas = new JLabel("Listas");
+        lblListas.setHorizontalAlignment(SwingConstants.CENTER);
+        lblListas.setFont(new Font("Open Sans", Font.PLAIN, 14));
+        lblListas.setVerticalAlignment(SwingConstants.CENTER);
+        lblListas.setBounds(10, 10, 60, 30);
+        panelRegistroLocacao.add(lblListas);
 
         JLabel lblCliente = new JLabel("Cliente");
         lblCliente.setFont(new Font("Open Sans", Font.PLAIN, 14));
@@ -85,6 +94,13 @@ public class LocacoesView {
         lblVeiculo.setBounds(10, 95, 60, 30);
         lblVeiculo.setVerticalAlignment(SwingConstants.CENTER);
         panelRegistroLocacao.add(lblVeiculo);
+
+        JLabel lblIdLocacao = new JLabel("ID (Locacão)");
+        lblIdLocacao.setHorizontalAlignment(SwingConstants.CENTER);
+        lblIdLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
+        lblIdLocacao.setVerticalAlignment(SwingConstants.CENTER);
+        lblIdLocacao.setBounds(188, 10, 120, 30);
+        panelRegistroLocacao.add(lblIdLocacao);
 
         JLabel lblDataRetirada = new JLabel("Data de retirada");
         lblDataRetirada.setFont(new Font("Open Sans", Font.PLAIN, 14));
@@ -113,91 +129,59 @@ public class LocacoesView {
         btnExcluirLocacao.setBounds(320, 200, 90, 50);
         panel.add(btnExcluirLocacao);
 
-//        frame.setBounds(100, 100, 430, 240);
-//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        frame.getContentPane().setLayout(null);
+//        comboBoxTiposObjetos.addActionListener(e -> {
 //
-//        JLabel lblLocacoes = new JLabel("Locações");
-//        lblLocacoes.setHorizontalAlignment(SwingConstants.CENTER);
-//        lblLocacoes.setVerticalAlignment(SwingConstants.CENTER);
-//        lblLocacoes.setFont(new Font("Tahoma", Font.BOLD, 14));
-//        lblLocacoes.setBounds(165, 10, 70, 20);
-//        frame.getContentPane().add(lblLocacoes);
-//
-//        JPanel panelRegistroLocacao = new JPanel();
-//        panelRegistroLocacao.setLayout(null);
-//        panelRegistroLocacao.setBackground(new Color(255, 255, 255));
-//        panelRegistroLocacao.setBounds(10, 40, 395, 100);
-//        frame.getContentPane().add(panelRegistroLocacao);
-//
-//        JLabel lblIdLocacao = new JLabel("ID (Locacão)");
-//        lblIdLocacao.setVerticalAlignment(SwingConstants.CENTER);
-//        lblIdLocacao.setBounds(120, 10, 80, 20);
-//        panelRegistroLocacao.add(lblIdLocacao);
-//
-//        JTextField txtIdLocacao = new JTextField();
-//        txtIdLocacao.setBounds(210, 10, 70, 20);
-//        panelRegistroLocacao.add(txtIdLocacao);
-//
-//        JComboBox<String> comboBoxClientes = new JComboBox<>(new ClienteDAO().listagemClientesCadastrados());
-//        comboBoxClientes.setBounds(65, 40, 125, 20);
-//        comboBoxClientes.setSelectedIndex(-1);
-//        panelRegistroLocacao.add(comboBoxClientes);
-//
-//        JComboBox<String> comboBoxVeiculos = new JComboBox<>(new VeiculoDAO().listagemVeiculosDisponiveis());
-//        comboBoxVeiculos.setBounds(65, 70, 125, 20);
-//        comboBoxVeiculos.setSelectedIndex(-1);
-//        panelRegistroLocacao.add(comboBoxVeiculos);
-//
-//        JTextField txtDataRetirada = new JTextField();
-//        txtDataRetirada.setBounds(315, 40, 70, 20);
-//        panelRegistroLocacao.add(txtDataRetirada);
-//
-//        JTextField txtDataDevolucao = new JTextField();
-//        txtDataDevolucao.setBounds(315, 70, 70, 20);
-//        panelRegistroLocacao.add(txtDataDevolucao);
-//
-//        JLabel lblCliente = new JLabel("Cliente");
-//        lblCliente.setBounds(10, 40, 45, 15);
-//        lblCliente.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroLocacao.add(lblCliente);
-//
-//        JLabel lblVeiculo = new JLabel("Veículo");
-//        lblVeiculo.setBounds(10, 70, 45, 15);
-//        lblVeiculo.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroLocacao.add(lblVeiculo);
-//
-//        JLabel lblDataRetirada = new JLabel("Data de retirada");
-//        lblDataRetirada.setBounds(200, 40, 120, 15);
-//        lblDataRetirada.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroLocacao.add(lblDataRetirada);
-//
-//        JLabel lblDataDevolucao = new JLabel("Data de devolução");
-//        lblDataDevolucao.setBounds(200, 70, 120, 15);
-//        lblDataRetirada.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroLocacao.add(lblDataDevolucao);
-//
-//        JButton btnRegistrarLocacao = new JButton("<html><div style='text-align:center'>Registrar Locação</div></html>");
-//        btnRegistrarLocacao.setBounds(10, 150, 90, 40);
-//        frame.add(btnRegistrarLocacao);
-//
-//        JButton btnEditarLocacao = new JButton("<html><div style='text-align:center'>Editar Locação</div></html>");
-//        btnEditarLocacao.setBounds(165, 150, 90, 40);
-//        frame.add(btnEditarLocacao);
-//
-//        JButton btnExcluirLocacao = new JButton("<html><div style='text-align:center'>Excluir Locação</div></html>");
-//        btnExcluirLocacao.setBounds(315, 150, 90, 40);
-//        frame.add(btnExcluirLocacao);
+//            JTable tableObjetos = new JTable()
+//        });
+
+
+        comboBoxClientes.addActionListener(e -> {
+            JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
+            JScrollPane scrollpaneClientes = new JScrollPane(tableClientes);
+            scrollpaneClientes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            JOptionPane optionPane = new JOptionPane(scrollpaneClientes, JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Clientes");
+            dialog.setSize(new Dimension(600, 300));
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+        });
+
+        comboBoxVeiculos.addActionListener(e -> {
+            JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
+            JScrollPane scrollpaneVeiculos = new JScrollPane(tableVeiculos);
+            scrollpaneVeiculos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            JOptionPane optionPane = new JOptionPane(scrollpaneVeiculos, JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Veículos");
+            dialog.setSize(new Dimension(600, 300));
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+        });
+
+        comboBoxIdLocacoes.addActionListener(e -> {
+            JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
+            JScrollPane scrollpaneLocacoes = new JScrollPane(tableLocacoes);
+            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            JOptionPane optionPane = new JOptionPane(scrollpaneLocacoes, JOptionPane.INFORMATION_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Locações");
+            dialog.setSize(new Dimension(600, 300));
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+        });
 
         btnRegistrarLocacao.addActionListener(e -> {
             new LocacaoController().registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
-            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listagemVeiculosDisponiveis()));
-
+            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesCadastradas()));
+            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
         });
-        btnEditarLocacao.addActionListener(e -> new LocacaoController().editarLocacao(txtIdLocacao, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
-        btnExcluirLocacao.addActionListener(e -> new LocacaoController().excluirLocacao(txtIdLocacao));
-
+        btnEditarLocacao.addActionListener(e -> new LocacaoController().editarLocacao(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
+        btnExcluirLocacao.addActionListener(e -> {
+            new LocacaoController().excluirLocacao(comboBoxIdLocacoes);
+            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesCadastradas()));
+            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+        });
     }
+
     public JFrame getFrame() {
         return frame;
     }
