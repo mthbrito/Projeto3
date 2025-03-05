@@ -11,8 +11,8 @@ import locadora.exception.VeiculoNaoExisteException;
 import locadora.model.*;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static locadora.utils.DataHandler.converterDataInserida;
 
@@ -75,11 +75,12 @@ public class LocacaoController {
         return false;
     }
 
-    public boolean isDataDevolucaoValida(String dataDevolucao) {
-        if (dataDevolucao != null && !dataDevolucao.isEmpty()) {
+    public boolean isDataDevolucaoValida(String dataRetirada, String dataDevolucao) {
+        if (isDataRetiradaValida(dataRetirada) && dataDevolucao != null && !dataDevolucao.isEmpty()) {
             try {
-                converterDataInserida(dataDevolucao);
-                return true;
+                LocalDate retirada = converterDataInserida(dataRetirada);
+                LocalDate devolucao = converterDataInserida(dataDevolucao);
+                return !devolucao.isBefore(retirada);
             } catch (RuntimeException e) {
                 return false;
             }
@@ -92,7 +93,7 @@ public class LocacaoController {
         if (!isClienteValido(cliente)) erros.append("- Cliente inválido!\n");
         if (!isVeiculoValido(veiculo)) erros.append("- Veículo inválido!\n");
         if (!isDataRetiradaValida(dataRetirada)) erros.append("- Data de retirada inválida!\n");
-        if (!isDataDevolucaoValida(dataDevolucao)) erros.append("- Data de devolução inválida!\n");
+        if (!isDataDevolucaoValida(dataRetirada, dataDevolucao)) erros.append("- Data de devolução inválida!\n");
 
         if (erros.length() > 0) {
             JOptionPane.showMessageDialog(null, "Erros encontrados:\n" + erros, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -144,12 +145,19 @@ public class LocacaoController {
 
     public void atualizarLocacao(String idLocacao, Cliente cliente, Veiculo veiculo, String dataRetirada, String dataDevolucao) {
         try {
-            Veiculo veiculoAntigo = new VeiculoController().lerVeiculo(idLocacao);
+            Locacao locacaoAntiga = lerLocacao(idLocacao);
+            Veiculo veiculoAntigo = locacaoAntiga.getVeiculo();
             if (veiculoAntigo.getStatus() == StatusVeiculo.LOCADO) {
                 veiculoAntigo.setStatus(StatusVeiculo.DISPONIVEL);
+                locacaoDAO.atualizar(locacaoAntiga);
+                new VeiculoDAO().atualizar(veiculoAntigo);
             }
+            veiculo.setStatus(StatusVeiculo.LOCADO);
             Locacao locacao = new Locacao(Integer.parseInt(idLocacao), cliente, veiculo, dataRetirada, dataDevolucao);
             locacaoDAO.atualizar(locacao);
+            new VeiculoDAO().atualizar(veiculo);
+
+
             JOptionPane.showMessageDialog(null, "Locação atualizada!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (LocacaoNaoExisteException e) {
             JOptionPane.showMessageDialog(null, "Locação não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -158,6 +166,12 @@ public class LocacaoController {
 
     public void deletarLocacao(String idLocacao) {
         try {
+            Locacao locacaoAntiga = lerLocacao(idLocacao);
+            Veiculo veiculoAntigo = locacaoAntiga.getVeiculo();
+            if (veiculoAntigo.getStatus() == StatusVeiculo.LOCADO) {
+                veiculoAntigo.setStatus(StatusVeiculo.DISPONIVEL);
+                new VeiculoDAO().atualizar(veiculoAntigo);
+            }
             locacaoDAO.deletar(Integer.parseInt(idLocacao));
             JOptionPane.showMessageDialog(null, "Locação excluída!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (LocacaoNaoExisteException e) {
@@ -165,22 +179,22 @@ public class LocacaoController {
         }
     }
 
-    public List<?> getListaObjeto(JComboBox<TiposObjetos> comboBoxTiposObjetos) {
+    public Object[] getListaObjeto(JComboBox<TiposObjetos> comboBoxTiposObjetos) {
         TiposObjetos objeto = (TiposObjetos) comboBoxTiposObjetos.getSelectedItem();
         if (objeto != null) {
             switch (objeto) {
                 case CLIENTE:
-                    return new ClienteDAO().clientesCadastrados();
+                    return new ClienteDAO().listaClientesCadastrados();
                 case VEICULO:
-                    return new VeiculoDAO().veiculosCadastrados();
+                    return new VeiculoDAO().listaVeiculosCadastrados();
                 case LOCACAO:
-                    return new LocacaoDAO().locacoesCadastradas();
+                    return new LocacaoDAO().listaLocacoesCadastradas();
                 case PAGAMENTO:
-                    return new PagamentoDAO().pagamentosCadastrados();
+                    return new PagamentoDAO().listaPagamentosCadastrados();
                 default:
-                    return new ArrayList<>();
+                    return new Object[0];
             }
         }
-        return new ArrayList<>();
+        return new Object[0];
     }
 }

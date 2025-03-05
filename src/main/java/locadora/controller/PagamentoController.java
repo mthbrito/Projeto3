@@ -3,7 +3,6 @@ package locadora.controller;
 import locadora.dao.LocacaoDAO;
 import locadora.dao.PagamentoDAO;
 import locadora.dao.VeiculoDAO;
-import locadora.exception.LocacaoNaoExisteException;
 import locadora.exception.PagamentoJaExisteException;
 import locadora.exception.PagamentoNaoExisteException;
 import locadora.model.*;
@@ -33,24 +32,21 @@ public class PagamentoController {
         }
     }
 
-    public void editarPagamento(JTextField txtIdPagamento, JComboBox<String> comboBoxLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
+    public void editarPagamento(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
+        String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
         String idLocacao = String.valueOf(comboBoxLocacoes.getSelectedItem());
         String valorPago = txtValorPago.getText().trim();
         String dataPagamento = txtDataPagamento.getText().trim();
         MetodosPagamento metodoPagamento = (MetodosPagamento) comboBoxMetodoPagamento.getSelectedItem();
+
+        if (isIdPagamentoValido(idPagamento) && isEntradasValidas(idLocacao, valorPago, dataPagamento, metodoPagamento)) {
+            atualizarPagamento(idPagamento, idPagamento, valorPago, dataPagamento, metodoPagamento);
+        }
     }
 
-
-//    public void editarPagamento(JTextField txtIdPagamento, JComboBox<String> comboBoxLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
-//        String dadosLocacoes = (String) comboBoxLocacoes.getSelectedItem();
-//        int idLocacao = dadosLocacoes != null ? Integer.parseInt(dadosLocacoes.split("/")[0]) : 0;
-//        MetodosPagamento metodoPagamento = (MetodosPagamento) comboBoxMetodoPagamento.getSelectedItem();
-//        Pagamento pagamento = new Pagamento(Integer.parseInt(txtIdPagamento.getText()), idLocacao, Double.parseDouble(txtValorPago.getText()), txtDataPagamento.getText(), metodoPagamento);
-//        pagamentoDAO.atualizar(pagamento);
-//    }
-
-    public void excluirPagamento(JTextField txtIdPagamento) {
-        pagamentoDAO.deletar(Integer.parseInt(txtIdPagamento.getText()));
+    public void excluirPagamento(JComboBox<Integer> comboBoxIdPagamento) {
+        String idPagamento = String.valueOf(comboBoxIdPagamento);
+        deletarPagamento(idPagamento);
     }
 
     public boolean isIdPagamentoValido(String idPagamento) {
@@ -63,17 +59,21 @@ public class PagamentoController {
 
     public boolean isValorPagoValido(String valorPago) {
         if (valorPago != null && !valorPago.isEmpty()) {
-            String regex = "^[0-9]+$";
+            String regex = "^[0-9]+.[0-9]{0,2}$";
             return valorPago.matches(regex);
         }
         return false;
     }
 
-    public boolean isDataPagamentoValida(String dataPagamento) {
+    public boolean isDataPagamentoValida(String idLocacao, String dataPagamento) {
+        Locacao locacao = new LocacaoDAO().ler(idLocacao);
+        String dataRetirada = locacao.getDataDeRetirada();
+
         if (dataPagamento != null && !dataPagamento.isEmpty()) {
             try {
-                converterDataInserida(dataPagamento);
-                return true;
+                LocalDate retirada = converterDataArmazenada(dataRetirada);
+                LocalDate pagamento = converterDataInserida(dataPagamento);
+                return !pagamento.isBefore(retirada);
             } catch (RuntimeException e) {
                 return false;
             }
@@ -89,7 +89,7 @@ public class PagamentoController {
         StringBuilder erros = new StringBuilder();
         if (!isIdLocacaoValido(idLocacao)) erros.append("- ID de locação inválido!\n");
         if (!isValorPagoValido(valorPago)) erros.append("- Valor pago inválido!\n");
-        if (!isDataPagamentoValida(dataPagamento)) erros.append("- Data de pagamento inválida!\n");
+        if (!isDataPagamentoValida(idLocacao, dataPagamento)) erros.append("- Data de pagamento inválida!\n");
         if (!isMetodoPagamentoValido(metodoPagamento)) erros.append("- Método de pagamento inválido!\n");
 
         if (erros.length() > 0) {
@@ -105,13 +105,13 @@ public class PagamentoController {
             pagamentoDAO.salvar(pagamento);
             Veiculo veiculo = new LocacaoDAO().ler(idLocacao).getVeiculo();
             veiculo.setStatus(StatusVeiculo.DISPONIVEL);
-            new VeiculoDAO().salvar(veiculo);
+            new VeiculoDAO().atualizar(veiculo);
         } catch (PagamentoJaExisteException e) {
             JOptionPane.showMessageDialog(null, "Pagamento já existe!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public Pagamento lerPagamento(String idPagamento){
+    public Pagamento lerPagamento(String idPagamento) {
         try {
             Pagamento pagamento = pagamentoDAO.ler(Integer.parseInt(idPagamento));
             JOptionPane.showMessageDialog(null, "Pagamento encontrado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -121,12 +121,25 @@ public class PagamentoController {
             return null;
         }
     }
-
-    public void atualizarPagamento(String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento){
-
+/
+    public void atualizarPagamento(String idPagamento, String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
+        try {
+            Pagamento pagamentoAntigo = lerPagamento(idPagamento);
+            Pagamento pagamento = new Pagamento(Integer.parseInt(idPagamento), Integer.parseInt(idLocacao), Double.parseDouble(valorPago), dataPagamento, metodoPagamento);
+            if (pagamentoAntigo.getIdLocacao() != Integer.parseInt(idLocacao)) {
+                Locacao locacaoAntiga = new LocacaoDAO().ler(pagamentoAntigo.getIdLocacao());
+                Veiculo veiculoAntigo = locacaoAntiga.getVeiculo();
+                veiculoAntigo.setStatus(StatusVeiculo.LOCADO);
+                new LocacaoDAO().atualizar(locacaoAntiga);
+            }
+            pagamentoDAO.atualizar(pagamento);
+            JOptionPane.showMessageDialog(null, "Pagamento atualizado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (PagamentoNaoExisteException e) {
+            JOptionPane.showMessageDialog(null, "Pagamento não existe!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    public void deletarPagamento(String idPagamento){
+    public void deletarPagamento(String idPagamento) {
         try {
             pagamentoDAO.deletar(Integer.parseInt(idPagamento));
             JOptionPane.showMessageDialog(null, "Pagamento excluído!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
@@ -136,37 +149,54 @@ public class PagamentoController {
     }
 
     public double calcularPagamento(JComboBox<Integer> comboBoxLocacoes, JTextField txtDataPagamento) {
-        String dadosLocacoes = (String) comboBoxLocacoes.getSelectedItem();
-        int idLocacao = dadosLocacoes != null ? Integer.parseInt(dadosLocacoes.split("/")[0]) : 0;
-        Locacao locacao = new LocacaoDAO().ler(idLocacao);
-        String dataRetirada = locacao.getDataDeRetirada();
-        String dataDevolucao = locacao.getDataDeDevolucao();
-        LocalDate retirada = converterDataArmazenada(dataRetirada);
-        LocalDate devolucao = converterDataArmazenada(dataDevolucao);
-        long numeroDias = ChronoUnit.DAYS.between(retirada, devolucao);
-        double diariaCaminhao = 600.00;
-        double diariaCarro = 250.00;
-        double diariaMoto = 125.00;
+        String idLocacao = String.valueOf(comboBoxLocacoes.getSelectedItem());
+        String dataPagamento = txtDataPagamento.getText().trim();
+
         double valorPago = 0;
-        switch (locacao.getVeiculo().getTipo()) {
-            case "Caminhão":
-                valorPago = diariaCaminhao * numeroDias;
-                break;
-            case "Carro":
-                valorPago = diariaCarro * numeroDias;
-                break;
-            case "Moto":
-                valorPago = diariaMoto * numeroDias;
-                break;
-        }
-        String dataPagamento = txtDataPagamento.getText();
-        LocalDate pagamento = converterDataInserida(dataPagamento);
-        if (pagamento.isAfter(devolucao)) {
-            long numeroDiasAtrasado = ChronoUnit.DAYS.between(devolucao, pagamento);
-            valorPago = valorPago + (100 * numeroDiasAtrasado);
-            String valor = "Devolução atrasada! O novo valor incidido de multa é R$" + valorPago;
-            JOptionPane.showMessageDialog(null, valor, "Multa de Atraso", JOptionPane.INFORMATION_MESSAGE);
+        if (isIdLocacaoValido(idLocacao) && isDataPagamentoValida(idLocacao, dataPagamento)) {
+            try {
+                valorPago = 0;
+                Locacao locacao = new LocacaoDAO().ler(idLocacao);
+                LocalDate retirada = converterDataArmazenada(locacao.getDataDeRetirada());
+                LocalDate devolucao = converterDataArmazenada(locacao.getDataDeDevolucao());
+                LocalDate pagamento = converterDataInserida(dataPagamento);
+                long numeroDias = ChronoUnit.DAYS.between(retirada, devolucao);
+                double diariaCaminhao = 80.00;
+                double diariaCarro = 50.00;
+                double diariaMoto = 25.00;
+
+                switch (locacao.getVeiculo().getTipo()) {
+                    case "Caminhão":
+                        valorPago = diariaCaminhao * numeroDias;
+                        break;
+                    case "Carro":
+                        valorPago = diariaCarro * numeroDias;
+                        break;
+                    case "Moto":
+                        valorPago = diariaMoto * numeroDias;
+                        break;
+                }
+                if (pagamento.isAfter(devolucao)) {
+                    long numeroDiasAtrasado = ChronoUnit.DAYS.between(devolucao, pagamento);
+                    valorPago = valorPago + (100 * numeroDiasAtrasado);
+                    String valor = "Devolução atrasada! O novo valor incidido de multa é R$" + valorPago;
+                    JOptionPane.showMessageDialog(null, valor, "Multa de Atraso", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao calcular valor pago!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
         return valorPago;
     }
+
+    public static void setComboBoxIdLocacao(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes){
+        try {
+            String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
+            int idLocacao = new PagamentoController().lerPagamento(idPagamento).getIdLocacao();
+            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new Integer[]{idLocacao}));
+        } catch (RuntimeException e) {
+            System.out.println("Erro: "+ e.getMessage());
+        }
+    }
+
 }

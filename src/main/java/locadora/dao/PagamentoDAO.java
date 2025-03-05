@@ -31,7 +31,7 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
     @Override
     public Pagamento ler(Object idPagamento) throws PagamentoNaoExisteException {
         for (Pagamento pagamentoListado : pagamentos) {
-            if (pagamentoListado.getIdPagamento() == (Integer) idPagamento) {
+            if (pagamentoListado.getIdPagamento() == Integer.parseInt(String.valueOf(idPagamento))) {
                 return pagamentoListado;
             }
         }

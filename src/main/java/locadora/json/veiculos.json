@@ -1,1 +1,121 @@
-[{"tipo":"Moto","placa":"fgv2005","modelo":"Bis","ano":2014,"status":"LOCADO"},{"tipo":"Carro","placa":"cvv1234","modelo":"Fusca","ano":1990,"status":"LOCADO"},{"tipo":"Caminhão","placa":"rtg4000","modelo":"carreta","ano":1970,"status":"LOCADO"},{"tipo":"Carro","placa":"fgv2000","modelo":"Ford ka","ano":2004,"status":"LOCADO"},{"tipo":"Moto","placa":"ijk2000","modelo":"honda","ano":2021,"status":"DISPONIVEL"},{"tipo":"Moto","placa":"ijk1999","modelo":"honda","ano":1999,"status":"DISPONIVEL"},{"tipo":"Caminhão","placa":"xyz2024","modelo":"f4000","ano":1989,"status":"DISPONIVEL"},{"tipo":"Carro","placa":"web2040","modelo":"palio","ano":2024,"status":"DISPONIVEL"},{"tipo":"Moto","placa":"pov1598","modelo":"kawasaki","ano":2021,"status":"DISPONIVEL"},{"tipo":"Carro","placa":"uti2010","modelo":"corsa","ano":2011,"status":"DISPONIVEL"},{"tipo":"Moto","placa":"axo4644","modelo":"titan","ano":2008,"status":"DISPONIVEL"},{"tipo":"Caminhão","placa":"xyz2025","modelo":"gol","ano":2020,"status":"DISPONIVEL"},{"tipo":"Carro","placa":"lmn2025","modelo":"mob","ano":2020,"status":"DISPONIVEL"},{"tipo":"Moto","placa":"fro4561","modelo":"yamaha","ano":2001,"status":"DISPONIVEL"},{"tipo":"Moto","placa":"rst2025","modelo":"yamaha","ano":2020,"status":"LOCADO"},{"tipo":"Carro","placa":"mob2018","modelo":"mob","ano":2017,"status":"LOCADO"}]
+[
+  {
+    "tipo": "Caminhão",
+    "placa": "xyz2025",
+    "modelo": "gol",
+    "ano": 2020,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "lmn2025",
+    "modelo": "mob",
+    "ano": 2020,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "rst2025",
+    "modelo": "yamaha",
+    "ano": 2020,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "mob2018",
+    "modelo": "mob",
+    "ano": 2017,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "uti2010",
+    "modelo": "corsa",
+    "ano": 2011,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "cvv1234",
+    "modelo": "Fusca",
+    "ano": 1990,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Caminhão",
+    "placa": "rtg4000",
+    "modelo": "carreta",
+    "ano": 1970,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "fgv2000",
+    "modelo": "Ford ka",
+    "ano": 2004,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "ijk1999",
+    "modelo": "honda",
+    "ano": 1999,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "ijk2000",
+    "modelo": "honda",
+    "ano": 2021,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Caminhão",
+    "placa": "aaa0000",
+    "modelo": "f1000",
+    "ano": 1988,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Caminhão",
+    "placa": "xyz2024",
+    "modelo": "f4000",
+    "ano": 1989,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "fgv2005",
+    "modelo": "Bis",
+    "ano": 2014,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Carro",
+    "placa": "web2040",
+    "modelo": "palio",
+    "ano": 2024,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "fro4561",
+    "modelo": "yamaha",
+    "ano": 2001,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "axo4644",
+    "modelo": "titan",
+    "ano": 2008,
+    "status": "DISPONIVEL"
+  },
+  {
+    "tipo": "Moto",
+    "placa": "pov1598",
+    "modelo": "kawasaki",
+    "ano": 2021,
+    "status": "LOCADO"
+  }
+]

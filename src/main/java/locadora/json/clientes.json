@@ -70,5 +70,11 @@
     "cpf": "123.456.789-13",
     "telefone": "(81)98888-3001",
     "email": "miguel@upe.com"
+  },
+  {
+    "nome": "Mário",
+    "cpf": "999.888.111-00",
+    "telefone": "(11)98787-8787",
+    "email": "mario@gmail.com"
   }
 ]

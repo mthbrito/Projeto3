@@ -41,7 +41,7 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
     @Override
     public Locacao ler(Object idLocacao) throws LocacaoNaoExisteException {
         for (Locacao locacaoListada : locacoes) {
-            if (locacaoListada.getIdLocacao() == (Integer) idLocacao) {
+            if (locacaoListada.getIdLocacao() == Integer.parseInt(String.valueOf(idLocacao))) {
                 return locacaoListada;
             }
         }
@@ -116,6 +116,21 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         Integer[] locacoes = new Integer[locacoesCadastradas.size()];
         for (int i = 0; i < locacoesCadastradas.size(); i++) {
             locacoes[i] = locacoesCadastradas.get(i).getIdLocacao();
+        }
+        return locacoes;
+    }
+
+    public Integer[] listaLocacoesNaoPagas() {
+        List<Locacao> locacoesCadastradas = locacoesCadastradas();
+        List<Locacao> locacoesNaoPagas = new ArrayList<>();
+        locacoesCadastradas.forEach(locacao -> {
+            if(!isLocacaoPaga(locacao.getIdLocacao())) {
+                locacoesNaoPagas.add(locacao);
+            }
+        });
+        Integer[] locacoes = new Integer[locacoesNaoPagas.size()];
+        for(int i = 0; i < locacoesNaoPagas.size(); i++) {
+            locacoes[i] = locacoesNaoPagas.get(i).getIdLocacao();
         }
         return locacoes;
     }
