@@ -6,7 +6,6 @@ public class Carro extends Veiculo {
         super("Carro", placa, modelo, ano, status);
     }
 
-
     @Override
     double calcularCustoLocacao() {
         return 0;

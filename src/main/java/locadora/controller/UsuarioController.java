@@ -82,11 +82,11 @@ public class UsuarioController {
         }
     }
 
-    public boolean isTipoUsuarioValido(TiposUsuarios tipoUsuario) {
+    private boolean isTipoUsuarioValido(TiposUsuarios tipoUsuario) {
         return tipoUsuario != null;
     }
 
-    public boolean isEnderecoValido(String endereco) {
+    private boolean isEnderecoValido(String endereco) {
         if (endereco != null && !endereco.isEmpty()) {
             String regex = "^[a-zA-Z][a-zA-Z0-9]{2,9}$";
             return endereco.matches(regex);
@@ -94,7 +94,7 @@ public class UsuarioController {
         return false;
     }
 
-    public boolean isSenhaValida(String senha) {
+    private boolean isSenhaValida(String senha) {
         if (senha != null && !senha.isEmpty()) {
             String regex = "^[a-zA_Z0-9]{3,10}";
             return senha.matches(regex);
@@ -102,7 +102,7 @@ public class UsuarioController {
         return false;
     }
 
-    public boolean isEntradasValidas(TiposUsuarios tipoUsuario, String endereco, String senha) {
+    private boolean isEntradasValidas(TiposUsuarios tipoUsuario, String endereco, String senha) {
         StringBuilder erros = new StringBuilder();
         if (!isTipoUsuarioValido(tipoUsuario)) erros.append("-Tipo de usuário inválido!\n");
         if (!isEnderecoValido(endereco)) erros.append("-Endereço inválido!\n");

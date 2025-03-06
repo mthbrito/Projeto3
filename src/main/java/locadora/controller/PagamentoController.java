@@ -17,6 +17,8 @@ import static locadora.utils.DataHandler.converterDataInserida;
 public class PagamentoController {
 
     private final PagamentoDAO pagamentoDAO = new PagamentoDAO();
+    private final LocacaoDAO locacaoDAO = new LocacaoDAO();
+    private final VeiculoDAO veiculoDAO = new VeiculoDAO();
 
     public static void resetarEntradas(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
         comboBoxIdPagamento.setSelectedIndex(-1);
@@ -26,15 +28,6 @@ public class PagamentoController {
         comboBoxMetodoPagamento.setSelectedIndex(-1);
     }
 
-//    public Integer[] getIdLocacaoDeIdPagamento(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes) {
-//        if(comboBoxIdPagamento != null && comboBoxIdLocacoes != null){
-//            String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
-//            String idLocacao = String.valueOf(lerPagamento(idPagamento).getIdLocacao());
-//            return new Integer[]{Integer.parseInt(idLocacao)};
-//        }
-//        return new Integer[0];
-//    }
-
     public void registrarPagamento(JComboBox<Integer> comboBoxLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
         String idLocacao = String.valueOf(comboBoxLocacoes.getSelectedItem());
         String valorPago = txtValorPago.getText().trim();
@@ -43,9 +36,9 @@ public class PagamentoController {
 
         if (isEntradasValidas(idLocacao, valorPago, dataPagamento, metodoPagamento)) {
             salvarPagamento(idLocacao, valorPago, dataPagamento, metodoPagamento);
-            Veiculo veiculo = new LocacaoDAO().ler(idLocacao).getVeiculo();
+            Veiculo veiculo = locacaoDAO.ler(idLocacao).getVeiculo();
             veiculo.setStatus(StatusVeiculo.DISPONIVEL);
-            new VeiculoDAO().atualizar(veiculo);
+            veiculoDAO.atualizar(veiculo);
         }
     }
 
@@ -66,15 +59,15 @@ public class PagamentoController {
         deletarPagamento(idPagamento);
     }
 
-    public boolean isIdPagamentoValido(String idPagamento) {
+    private boolean isIdPagamentoValido(String idPagamento) {
         return idPagamento != null;
     }
 
-    public boolean isIdLocacaoValido(String idLocacao) {
+    private boolean isIdLocacaoValido(String idLocacao) {
         return idLocacao != null;
     }
 
-    public boolean isValorPagoValido(String valorPago) {
+    private boolean isValorPagoValido(String valorPago) {
         if (valorPago != null && !valorPago.isEmpty()) {
             String regex = "^[0-9]+.[0-9]{0,2}$";
             return valorPago.matches(regex);
@@ -82,8 +75,8 @@ public class PagamentoController {
         return false;
     }
 
-    public boolean isDataPagamentoValida(String idLocacao, String dataPagamento) {
-        Locacao locacao = new LocacaoDAO().ler(idLocacao);
+    private boolean isDataPagamentoValida(String idLocacao, String dataPagamento) {
+        Locacao locacao = locacaoDAO.ler(idLocacao);
         String dataRetirada = locacao.getDataDeRetirada();
 
         if (dataPagamento != null && !dataPagamento.isEmpty()) {
@@ -98,11 +91,11 @@ public class PagamentoController {
         return false;
     }
 
-    public boolean isMetodoPagamentoValido(MetodosPagamento metodosPagamento) {
+    private boolean isMetodoPagamentoValido(MetodosPagamento metodosPagamento) {
         return metodosPagamento != null;
     }
 
-    public boolean isEntradasValidas(String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
+    private boolean isEntradasValidas(String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
         StringBuilder erros = new StringBuilder();
         if (!isIdLocacaoValido(idLocacao)) erros.append("- ID de locação inválido!\n");
         if (!isValorPagoValido(valorPago)) erros.append("- Valor pago inválido!\n");
@@ -120,9 +113,9 @@ public class PagamentoController {
         try {
             Pagamento pagamento = new Pagamento(Integer.parseInt(idLocacao), Double.parseDouble(valorPago), dataPagamento, metodoPagamento);
             pagamentoDAO.salvar(pagamento);
-            Veiculo veiculo = new LocacaoDAO().ler(idLocacao).getVeiculo();
+            Veiculo veiculo = locacaoDAO.ler(idLocacao).getVeiculo();
             veiculo.setStatus(StatusVeiculo.DISPONIVEL);
-            new VeiculoDAO().atualizar(veiculo);
+            veiculoDAO.atualizar(veiculo);
         } catch (PagamentoJaExisteException e) {
             JOptionPane.showMessageDialog(null, "Pagamento já existe!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -142,9 +135,9 @@ public class PagamentoController {
     public void atualizarPagamento(String idPagamento, String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
         try {
             Pagamento pagamento = new Pagamento(Integer.parseInt(idPagamento), Integer.parseInt(idLocacao), Double.parseDouble(valorPago), dataPagamento, metodoPagamento);
-            Veiculo veiculo = new LocacaoDAO().ler(pagamento.getIdLocacao()).getVeiculo();
+            Veiculo veiculo = locacaoDAO.ler(pagamento.getIdLocacao()).getVeiculo();
             veiculo.setStatus(StatusVeiculo.DISPONIVEL);
-            new VeiculoDAO().atualizar(veiculo);
+            veiculoDAO.atualizar(veiculo);
             pagamentoDAO.atualizar(pagamento);
             JOptionPane.showMessageDialog(null, "Pagamento atualizado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (PagamentoNaoExisteException e) {
@@ -169,7 +162,7 @@ public class PagamentoController {
         if (isIdLocacaoValido(idLocacao) && isDataPagamentoValida(idLocacao, dataPagamento)) {
             try {
                 valorPago = 0;
-                Locacao locacao = new LocacaoDAO().ler(idLocacao);
+                Locacao locacao = locacaoDAO.ler(idLocacao);
                 LocalDate retirada = converterDataArmazenada(locacao.getDataDeRetirada());
                 LocalDate devolucao = converterDataArmazenada(locacao.getDataDeDevolucao());
                 LocalDate pagamento = converterDataInserida(dataPagamento);

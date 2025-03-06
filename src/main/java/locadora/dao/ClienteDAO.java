@@ -73,10 +73,6 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
         return clientes;
     }
 
-    public String[] atributosClientesCadastrados() {
-        return new String[]{"Nome", "CPF", "Telefone", "Email"};
-    }
-
     public String[] listaClientesCadastrados() {
         List<Cliente> clientesCadastrados = clientesCadastrados();
         String[] clientes = new String[clientesCadastrados.size()];
@@ -84,6 +80,10 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
             clientes[i] = clientesCadastrados.get(i).getCpf();
         }
         return clientes;
+    }
+
+    public String[] atributosClientesCadastrados() {
+        return new String[]{"Nome", "CPF", "Telefone", "Email"};
     }
 
     public String[][] dadosClientesCadastrados() {

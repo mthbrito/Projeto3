@@ -1,6 +1,9 @@
 package locadora.utils;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import locadora.model.Caminhao;
 import locadora.model.Carro;
 import locadora.model.Moto;
@@ -25,5 +28,4 @@ public class VeiculoDeserializer implements JsonDeserializer<Veiculo> {
         }
         return null;
     }
-
 }

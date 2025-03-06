@@ -1,9 +1,7 @@
 package locadora.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
-import locadora.model.Veiculo;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -45,7 +43,4 @@ public abstract class JsonHandler {
             return new ArrayList<>();
         }
     }
-
-
-
 }

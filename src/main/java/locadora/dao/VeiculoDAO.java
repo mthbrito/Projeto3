@@ -106,10 +106,6 @@ public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Ob
         return veiculos;
     }
 
-    public String[] atributosVeiculosCadastrados() {
-        return new String[]{"Tipo", "Placa", "Modelo", "Ano", "Status"};
-    }
-
     public String[] listaVeiculosCadastrados() {
         List<Veiculo> veiculosCadastrados = veiculosCadastrados();
         String[] veiculos = new String[veiculosCadastrados.size()];
@@ -132,6 +128,10 @@ public class VeiculoDAO extends JsonHandler implements IPersistencia<Veiculo, Ob
             veiculos[i] = veiculosDisponiveis.get(i).getPlaca();
         }
         return veiculos;
+    }
+
+    public String[] atributosVeiculosCadastrados() {
+        return new String[]{"Tipo", "Placa", "Modelo", "Ano", "Status"};
     }
 
     public Object[][] dadosVeiculosCadastrados() {

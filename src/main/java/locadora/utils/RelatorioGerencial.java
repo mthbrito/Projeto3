@@ -4,7 +4,6 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 import locadora.dao.LocacaoDAO;
 import locadora.dao.PagamentoDAO;
-import locadora.model.Cliente;
 import locadora.model.Locacao;
 import locadora.model.Pagamento;
 
@@ -74,7 +73,7 @@ public class RelatorioGerencial {
 
             double total = 0;
             // Adicionando informações sobre as locações
-            for (Pagamento pagamento: pagamentos) {
+            for (Pagamento pagamento : pagamentos) {
                 documento.add(new Paragraph("ID (Pagamento): " + pagamento.getIdPagamento(), fonteNegrito));
                 documento.add(new Paragraph("Valor pago: R$" + pagamento.getValorPago(), fonteNormal));
                 total += pagamento.getValorPago();
@@ -131,8 +130,6 @@ public class RelatorioGerencial {
             }
         }
     }
-
-
 }
 
 

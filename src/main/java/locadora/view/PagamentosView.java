@@ -5,7 +5,6 @@ import locadora.dao.ClienteDAO;
 import locadora.dao.LocacaoDAO;
 import locadora.dao.PagamentoDAO;
 import locadora.dao.VeiculoDAO;
-import locadora.model.Locacao;
 import locadora.model.MetodosPagamento;
 import locadora.model.Pagamento;
 import locadora.model.TiposObjetos;
@@ -154,7 +153,7 @@ public class PagamentosView {
 
         comboBoxListas.addActionListener(e -> {
             TiposObjetos lista = (TiposObjetos) comboBoxListas.getSelectedItem();
-            if(lista != null) {
+            if (lista != null) {
                 JScrollPane scrollpane;
                 JOptionPane optionPane;
                 JDialog dialog;
@@ -222,8 +221,7 @@ public class PagamentosView {
                     btnGerarValor.setVisible(true);
                     btnConfirmar.setVisible(true);
                     comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
-//                    comboBoxLocacoes.setSelectedIndex(-1);
-                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EDITAR":
                     lblIdPagamento.setVisible(true);
@@ -238,10 +236,7 @@ public class PagamentosView {
                     comboBoxMetodoPagamento.setVisible(true);
                     btnGerarValor.setVisible(true);
                     btnConfirmar.setVisible(true);
-                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
-//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento,comboBoxLocacoes)));
-//                    comboBoxIdPagamento.setSelectedIndex(-1);
-//                    comboBoxLocacoes.setSelectedIndex(-1);
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EXCLUIR":
                     lblIdPagamento.setVisible(true);
@@ -256,27 +251,22 @@ public class PagamentosView {
                     comboBoxMetodoPagamento.setVisible(false);
                     btnGerarValor.setVisible(false);
                     btnConfirmar.setVisible(true);
-//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento,comboBoxLocacoes)));
-                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 default:
                     break;
             }
         });
 
-        comboBoxIdPagamento.addItemListener(e-> {
+        comboBoxIdPagamento.addItemListener(e -> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
-            if(acao.equals("EDITAR")){
+            if (acao.equals("EDITAR")) {
                 String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
                 Pagamento pagamento = new PagamentoDAO().ler(idPagamento);
                 int idlocacao = pagamento.getIdLocacao();
                 comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new Integer[]{idlocacao}));
             }
         });
-
-//        comboBoxLocacoes.addActionListener(e -> new PagamentoController().setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes));
-//
-//        comboBoxIdPagamento.addActionListener(e -> new PagamentoController().setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes));
 
         btnGerarValor.addActionListener(e -> {
             double valor = new PagamentoController().calcularPagamento(comboBoxLocacoes, txtDataPagamento);
@@ -289,19 +279,14 @@ public class PagamentosView {
             switch (acao) {
                 case "REGISTRAR":
                     pagamentoController.registrarPagamento(comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
-//                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));
-//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
                     resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EDITAR":
                     pagamentoController.editarPagamento(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
-//                    new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento, comboBoxLocacoes);
                     resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EXCLUIR":
                     pagamentoController.excluirPagamento(comboBoxIdPagamento);
-//                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));
-//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
                     resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 default:

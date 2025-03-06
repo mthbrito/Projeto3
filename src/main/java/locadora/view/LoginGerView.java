@@ -6,7 +6,7 @@ import locadora.model.Usuario;
 import javax.swing.*;
 import java.util.List;
 
-public class LoginGerView extends LoginView{
+public class LoginGerView extends LoginView {
 
     public LoginGerView() {
         super();
@@ -14,21 +14,21 @@ public class LoginGerView extends LoginView{
         call();
     }
 
-    private void call(){
+    private void call() {
         getBtnAcessar().addActionListener(e -> acessarGer(getTxtUsuario(), getTxtSenha()));
     }
 
-    public void acessarGer(JTextField txtUsuario, JTextField txtSenha){
+    public void acessarGer(JTextField txtUsuario, JTextField txtSenha) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         List<Usuario> usuariosCadastrados = usuarioDAO.getUsuariosGer();
         boolean acesso = false;
-        for(Usuario usuario: usuariosCadastrados) {
-            if(usuario.getEndereco().equals(txtUsuario.getText()) && usuario.getSenha().equals(txtSenha.getText())) {
+        for (Usuario usuario : usuariosCadastrados) {
+            if (usuario.getEndereco().equals(txtUsuario.getText()) && usuario.getSenha().equals(txtSenha.getText())) {
                 acesso = true;
                 break;
             }
         }
-        if(acesso) {
+        if (acesso) {
             getFrame().dispose();
             GerenteView gerenteView = new GerenteView();
             gerenteView.getFrame().setVisible(true);

@@ -7,11 +7,11 @@ public class AtendenteView {
 
     private JFrame frame;
 
-    public AtendenteView(){
+    public AtendenteView() {
         initialize();
     }
 
-    private void initialize(){
+    private void initialize() {
 
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);
@@ -39,7 +39,7 @@ public class AtendenteView {
 
         JPanel subPanelOperacoes = new JPanel();
         subPanelOperacoes.setBackground(Color.WHITE);
-        subPanelOperacoes.setBounds(120,120, 190,120);
+        subPanelOperacoes.setBounds(120, 120, 190, 120);
         subPanelOperacoes.setLayout(null);
         panel.add(subPanelOperacoes);
 
@@ -55,7 +55,7 @@ public class AtendenteView {
         subPanelOperacoes.add(btnGerenciarOperacoes);
 
         btnGerenciarOperacoes.addActionListener(e -> {
-            String opcao = comboBoxOperacoes.getSelectedItem() != null? (String)comboBoxOperacoes.getSelectedItem() : "";
+            String opcao = comboBoxOperacoes.getSelectedItem() != null ? (String) comboBoxOperacoes.getSelectedItem() : "";
             switch (opcao) {
                 case "Locação":
                     LocacoesView telaLocacoes = new LocacoesView();

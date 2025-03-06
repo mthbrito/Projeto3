@@ -10,5 +10,4 @@ public class Caminhao extends Veiculo {
     double calcularCustoLocacao() {
         return 0;
     }
-
 }

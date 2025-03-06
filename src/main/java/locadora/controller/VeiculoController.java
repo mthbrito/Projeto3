@@ -43,6 +43,29 @@ public class VeiculoController {
         }
     }
 
+    private String getTipo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto) {
+        if (rdbtnCaminhao.isSelected()) return "Caminhão";
+        if (rdbtnCarro.isSelected()) return "Carro";
+        if (rdbtnMoto.isSelected()) return "Moto";
+        return "";
+    }
+
+    private Veiculo getVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
+        Veiculo veiculo = null;
+        switch (tipo) {
+            case "Caminhão":
+                veiculo = new Caminhao(placa, modelo, Integer.parseInt(ano), status);
+                break;
+            case "Carro":
+                veiculo = new Carro(placa, modelo, Integer.parseInt(ano), status);
+                break;
+            case "Moto":
+                veiculo = new Moto(placa, modelo, Integer.parseInt(ano), status);
+                break;
+        }
+        return veiculo;
+    }
+
     private boolean isTipoValido(String tipo) {
         return !tipo.isEmpty();
     }
@@ -88,29 +111,6 @@ public class VeiculoController {
             return false;
         }
         return true;
-    }
-
-    private String getTipo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto) {
-        if (rdbtnCaminhao.isSelected()) return "Caminhão";
-        if (rdbtnCarro.isSelected()) return "Carro";
-        if (rdbtnMoto.isSelected()) return "Moto";
-        return "";
-    }
-
-    private Veiculo getVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {
-        Veiculo veiculo = null;
-        switch (tipo) {
-            case "Caminhão":
-                veiculo = new Caminhao(placa, modelo, Integer.parseInt(ano), status);
-                break;
-            case "Carro":
-                veiculo = new Carro(placa, modelo, Integer.parseInt(ano), status);
-                break;
-            case "Moto":
-                veiculo = new Moto(placa, modelo, Integer.parseInt(ano), status);
-                break;
-        }
-        return veiculo;
     }
 
     public void salvarVeiculo(String tipo, String placa, String modelo, String ano, StatusVeiculo status) {

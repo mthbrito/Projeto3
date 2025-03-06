@@ -41,7 +41,6 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
         } catch (RuntimeException e) {
             return null;
         }
-
     }
 
     @Override
@@ -80,10 +79,6 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
         return pagamentos;
     }
 
-    public String[] atributosPagamentosCadastrados() {
-        return new String[]{"ID Pagamento", "ID Locacao", "Valor pago", "Data de pagamento"};
-    }
-
     public Integer[] listaPagamentosCadastrados() {
         List<Pagamento> pagamentosCadastrados = pagamentosCadastrados();
         Integer[] pagamentos = new Integer[pagamentosCadastrados.size()];
@@ -91,6 +86,10 @@ public class PagamentoDAO extends JsonHandler implements IPersistencia<Pagamento
             pagamentos[i] = pagamentosCadastrados.get(i).getIdPagamento();
         }
         return pagamentos;
+    }
+
+    public String[] atributosPagamentosCadastrados() {
+        return new String[]{"ID Pagamento", "ID Locacao", "Valor pago", "Data de pagamento"};
     }
 
     public Object[][] dadosPagamentosCadastrados() {

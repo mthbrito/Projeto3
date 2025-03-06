@@ -45,7 +45,7 @@ public class LocacoesView {
         panelRegistroLocacao.setBounds(20, 50, 390, 140);
         panel.add(panelRegistroLocacao);
 
-        JComboBox<String> comboBoxAcao = new JComboBox<>(new String[]{"REGISTRAR","EDITAR","EXCLUIR"});
+        JComboBox<String> comboBoxAcao = new JComboBox<>(new String[]{"REGISTRAR", "EDITAR", "EXCLUIR"});
         comboBoxAcao.setFont(new Font("Open Sans", Font.PLAIN, 12));
         comboBoxAcao.setBounds(62, 10, 120, 30);
         comboBoxAcao.setSelectedIndex(-1);
@@ -147,7 +147,7 @@ public class LocacoesView {
 
         comboBoxListas.addActionListener(e -> {
             TiposObjetos lista = (TiposObjetos) comboBoxListas.getSelectedItem();
-            if(lista != null) {
+            if (lista != null) {
                 JScrollPane scrollpane;
                 JOptionPane optionPane;
                 JDialog dialog;
@@ -198,7 +198,7 @@ public class LocacoesView {
             }
         });
 
-        comboBoxAcao.addItemListener(e-> {
+        comboBoxAcao.addItemListener(e -> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
             switch (acao) {
                 case "REGISTRAR":
@@ -213,7 +213,7 @@ public class LocacoesView {
                     lblDataRetirada.setVisible(true);
                     txtDataRetirada.setVisible(true);
                     btnConfirmar.setVisible(true);
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 case "EDITAR":
                     lblIdLocacao.setVisible(true);
@@ -227,7 +227,7 @@ public class LocacoesView {
                     lblDataRetirada.setVisible(true);
                     txtDataRetirada.setVisible(true);
                     btnConfirmar.setVisible(true);
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 case "EXCLUIR":
                     lblIdLocacao.setVisible(true);
@@ -238,71 +238,37 @@ public class LocacoesView {
                     comboBoxVeiculos.setVisible(false);
                     lblDataDevolucao.setVisible(false);
                     txtDataDevolucao.setVisible(false);
-                    lblDataRetirada.setVisible(false);;
+                    lblDataRetirada.setVisible(false);
                     txtDataRetirada.setVisible(false);
                     btnConfirmar.setVisible(true);
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 default:
                     break;
-
             }
         });
-
-//        comboBoxClientes.addActionListener(e -> {
-//            JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
-//            JScrollPane scrollpaneClientes = new JScrollPane(tableClientes);
-//            scrollpaneClientes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//            JOptionPane optionPane = new JOptionPane(scrollpaneClientes, JOptionPane.INFORMATION_MESSAGE);
-//            JDialog dialog = optionPane.createDialog("Clientes");
-//            dialog.setSize(new Dimension(600, 300));
-//            dialog.setLocationRelativeTo(null);
-//            dialog.setVisible(true);
-//        });
-
-//        comboBoxVeiculos.addActionListener(e -> {
-//            JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
-//            JScrollPane scrollpaneVeiculos = new JScrollPane(tableVeiculos);
-//            scrollpaneVeiculos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//            JOptionPane optionPane = new JOptionPane(scrollpaneVeiculos, JOptionPane.INFORMATION_MESSAGE);
-//            JDialog dialog = optionPane.createDialog("Veículos");
-//            dialog.setSize(new Dimension(600, 300));
-//            dialog.setLocationRelativeTo(null);
-//            dialog.setVisible(true);
-//        });
-
-//        comboBoxIdLocacoes.addActionListener(e -> {
-//            JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
-//            JScrollPane scrollpaneLocacoes = new JScrollPane(tableLocacoes);
-//            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//            JOptionPane optionPane = new JOptionPane(scrollpaneLocacoes, JOptionPane.INFORMATION_MESSAGE);
-//            JDialog dialog = optionPane.createDialog("Locações");
-//            dialog.setSize(new Dimension(600, 300));
-//            dialog.setLocationRelativeTo(null);
-//            dialog.setVisible(true);
-//        });
 
         btnConfirmar.addActionListener(e -> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
             LocacaoController locacaoController = new LocacaoController();
             switch (acao) {
                 case "REGISTRAR":
-                    locacaoController.registrarLocacao(comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    locacaoController.registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
                     comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 case "EDITAR":
-                    locacaoController.editarLocacao(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    locacaoController.editarLocacao(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
                     comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 case "EXCLUIR":
                     locacaoController.excluirLocacao(comboBoxIdLocacoes);
                     comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
                     comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
-                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
+                    resetarEntradas(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
                     break;
                 default:
                     break;

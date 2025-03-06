@@ -6,30 +6,30 @@ import locadora.model.Usuario;
 import javax.swing.*;
 import java.util.List;
 
-public class LoginAdmView extends LoginView{
+public class LoginAdmView extends LoginView {
 
     public LoginAdmView() {
         super();
         this.getLblTitulo().setText("Login Administrador");
-        this.getLblTitulo().setBounds(95, 30,260, 40);
+        this.getLblTitulo().setBounds(95, 30, 260, 40);
         call();
     }
 
-    private void call(){
+    private void call() {
         getBtnAcessar().addActionListener(e -> acessarAdm(getTxtUsuario(), getTxtSenha()));
     }
 
-    public void acessarAdm(JTextField txtUsuario, JTextField txtSenha){
+    public void acessarAdm(JTextField txtUsuario, JTextField txtSenha) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         List<Usuario> usuariosCadastrados = usuarioDAO.getUsuariosAdm();
         boolean acesso = false;
-        for(Usuario usuario: usuariosCadastrados) {
-            if(usuario.getEndereco().equals(txtUsuario.getText()) && usuario.getSenha().equals(txtSenha.getText())) {
+        for (Usuario usuario : usuariosCadastrados) {
+            if (usuario.getEndereco().equals(txtUsuario.getText()) && usuario.getSenha().equals(txtSenha.getText())) {
                 acesso = true;
                 break;
             }
         }
-        if(acesso) {
+        if (acesso) {
             getFrame().dispose();
             AdministradorView administradorView = new AdministradorView();
             administradorView.getFrame().setVisible(true);

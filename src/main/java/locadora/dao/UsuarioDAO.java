@@ -19,7 +19,7 @@ public class UsuarioDAO extends JsonHandler {
 
     public void salvar(Usuario usuarioNovo) throws UsuarioJaExisteException {
         for (Usuario usuarioListado : usuarios) {
-            if(usuarioListado.getTipo().equals(usuarioNovo.getTipo()) && usuarioListado.getEndereco().equals(usuarioNovo.getEndereco())){
+            if (usuarioListado.getTipo().equals(usuarioNovo.getTipo()) && usuarioListado.getEndereco().equals(usuarioNovo.getEndereco())) {
                 throw new UsuarioJaExisteException("Usuário já existe: " + usuarioNovo.getEndereco());
             }
         }
@@ -30,7 +30,7 @@ public class UsuarioDAO extends JsonHandler {
 
     public Usuario ler(TiposUsuarios tipo, String endereco) throws UsuarioNaoExisteException {
         for (Usuario usuarioListado : usuarios) {
-            if(usuarioListado.getTipo().equals(tipo) && usuarioListado.getEndereco().equals(endereco)){
+            if (usuarioListado.getTipo().equals(tipo) && usuarioListado.getEndereco().equals(endereco)) {
                 return usuarioListado;
             }
         }
@@ -102,5 +102,4 @@ public class UsuarioDAO extends JsonHandler {
         }
         return usuariosAtend;
     }
-
 }

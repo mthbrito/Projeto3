@@ -63,7 +63,7 @@ public abstract class LoginView {
 
         btnAcessar = new JButton("Acessar");
         btnAcessar.setFont(new Font("Opens Sans", Font.PLAIN, 14));
-        btnAcessar.setBounds(175,210,100,30);
+        btnAcessar.setBounds(175, 210, 100, 30);
         panel.add(btnAcessar);
     }
 

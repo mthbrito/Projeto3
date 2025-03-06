@@ -107,10 +107,6 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         return locacoes;
     }
 
-    public String[] atributosLocacoesCadastradas() {
-        return new String[]{"ID Locação", "Nome", "CPF", "Placa", "Status", "Data de retirada", "Data de devolução"};
-    }
-
     public Integer[] listaLocacoesCadastradas() {
         List<Locacao> locacoesCadastradas = locacoesCadastradas();
         Integer[] locacoes = new Integer[locacoesCadastradas.size()];
@@ -120,19 +116,32 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         return locacoes;
     }
 
+    private boolean isLocacaoPaga(int idLocacao) {
+        for (Pagamento pagamento : new PagamentoDAO().pagamentosCadastrados()) {
+            if (pagamento.getIdLocacao() == idLocacao) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Integer[] listaLocacoesNaoPagas() {
         List<Locacao> locacoesCadastradas = locacoesCadastradas();
         List<Locacao> locacoesNaoPagas = new ArrayList<>();
         locacoesCadastradas.forEach(locacao -> {
-            if(!isLocacaoPaga(locacao.getIdLocacao())) {
+            if (!isLocacaoPaga(locacao.getIdLocacao())) {
                 locacoesNaoPagas.add(locacao);
             }
         });
         Integer[] locacoes = new Integer[locacoesNaoPagas.size()];
-        for(int i = 0; i < locacoesNaoPagas.size(); i++) {
+        for (int i = 0; i < locacoesNaoPagas.size(); i++) {
             locacoes[i] = locacoesNaoPagas.get(i).getIdLocacao();
         }
         return locacoes;
+    }
+
+    public String[] atributosLocacoesCadastradas() {
+        return new String[]{"ID Locação", "Nome", "CPF", "Placa", "Status", "Data de retirada", "Data de devolução"};
     }
 
     public Object[][] dadosLocacoesCadastradas() {
@@ -153,31 +162,4 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
         }
         return dadosLocacoes;
     }
-
-//    public String[] listagemLocacoesCadastradas() {
-//        List<Locacao> locacoes = this.locacoesCadastradas();
-//        locacoes.sort(Comparator.comparing(Locacao::getIdLocacao));
-//        String[] idLocacoes = new String[locacoes.size()];
-//        for (int i = 0; i < locacoes.size(); i++) {
-//            if (!isLocacaoPaga(locacoes.get(i).getIdLocacao())) {
-//                idLocacoes[i] = locacoes.get(i).getIdLocacao() + "/"
-//                        + locacoes.get(i).getCliente().getNome() + "/"
-//                        + locacoes.get(i).getVeiculo().getModelo() + "/"
-//                        + locacoes.get(i).getDataDeRetirada() + "/"
-//                        + locacoes.get(i).getDataDeRetirada();
-//            }
-//        }
-//        return idLocacoes;
-//    }
-
-    private boolean isLocacaoPaga(int idLocacao) {
-        for (Pagamento pagamento : new PagamentoDAO().pagamentosCadastrados()) {
-            if (pagamento.getIdLocacao() == idLocacao) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 }

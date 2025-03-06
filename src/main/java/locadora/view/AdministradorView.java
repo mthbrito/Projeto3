@@ -10,11 +10,11 @@ public class AdministradorView {
 
     private JFrame frame;
 
-    public AdministradorView(){
+    public AdministradorView() {
         initialize();
     }
 
-    private void initialize(){
+    private void initialize() {
 
         frame = new JFrame();
         frame.setBounds(100, 100, 450, 300);

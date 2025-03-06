@@ -7,6 +7,10 @@ public class PrincipalView {
 
     private final JFrame frame = new JFrame();
 
+    public PrincipalView() {
+        initialize();
+    }
+
     /**
      * Launch the application.
      */
@@ -21,10 +25,6 @@ public class PrincipalView {
                 }
             }
         });
-    }
-
-    public PrincipalView() {
-        initialize();
     }
 
     /**
