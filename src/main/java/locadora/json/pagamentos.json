@@ -1,1 +1,23 @@
-[{"metodoPagamento":"A_VISTA","idPagamento":1001,"idLocacao":1001,"valorPago":7920.0,"dataPagamento":"2024-3-25"}]
+[
+  {
+    "metodoPagamento": "A_VISTA",
+    "idPagamento": 1004,
+    "idLocacao": 1011,
+    "valorPago": 825.0,
+    "dataPagamento": "2025-3-2"
+  },
+  {
+    "metodoPagamento": "DEBITO",
+    "idPagamento": 1005,
+    "idLocacao": 1010,
+    "valorPago": 3825.0,
+    "dataPagamento": "2025-4-1"
+  },
+  {
+    "metodoPagamento": "DEBITO",
+    "idPagamento": 1006,
+    "idLocacao": 1007,
+    "valorPago": 3720.0,
+    "dataPagamento": "2024-2-12"
+  }
+]

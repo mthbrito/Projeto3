@@ -18,6 +18,23 @@ public class PagamentoController {
 
     private final PagamentoDAO pagamentoDAO = new PagamentoDAO();
 
+    public static void resetarEntradas(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
+        comboBoxIdPagamento.setSelectedIndex(-1);
+        comboBoxIdLocacoes.setSelectedIndex(-1);
+        txtValorPago.setText(null);
+        txtDataPagamento.setText(null);
+        comboBoxMetodoPagamento.setSelectedIndex(-1);
+    }
+
+//    public Integer[] getIdLocacaoDeIdPagamento(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes) {
+//        if(comboBoxIdPagamento != null && comboBoxIdLocacoes != null){
+//            String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
+//            String idLocacao = String.valueOf(lerPagamento(idPagamento).getIdLocacao());
+//            return new Integer[]{Integer.parseInt(idLocacao)};
+//        }
+//        return new Integer[0];
+//    }
+
     public void registrarPagamento(JComboBox<Integer> comboBoxLocacoes, JTextField txtValorPago, JTextField txtDataPagamento, JComboBox<MetodosPagamento> comboBoxMetodoPagamento) {
         String idLocacao = String.valueOf(comboBoxLocacoes.getSelectedItem());
         String valorPago = txtValorPago.getText().trim();
@@ -40,7 +57,7 @@ public class PagamentoController {
         MetodosPagamento metodoPagamento = (MetodosPagamento) comboBoxMetodoPagamento.getSelectedItem();
 
         if (isIdPagamentoValido(idPagamento) && isEntradasValidas(idLocacao, valorPago, dataPagamento, metodoPagamento)) {
-            atualizarPagamento(idPagamento, idPagamento, valorPago, dataPagamento, metodoPagamento);
+            atualizarPagamento(idPagamento, idLocacao, valorPago, dataPagamento, metodoPagamento);
         }
     }
 
@@ -121,17 +138,13 @@ public class PagamentoController {
             return null;
         }
     }
-/
+
     public void atualizarPagamento(String idPagamento, String idLocacao, String valorPago, String dataPagamento, MetodosPagamento metodoPagamento) {
         try {
-            Pagamento pagamentoAntigo = lerPagamento(idPagamento);
             Pagamento pagamento = new Pagamento(Integer.parseInt(idPagamento), Integer.parseInt(idLocacao), Double.parseDouble(valorPago), dataPagamento, metodoPagamento);
-            if (pagamentoAntigo.getIdLocacao() != Integer.parseInt(idLocacao)) {
-                Locacao locacaoAntiga = new LocacaoDAO().ler(pagamentoAntigo.getIdLocacao());
-                Veiculo veiculoAntigo = locacaoAntiga.getVeiculo();
-                veiculoAntigo.setStatus(StatusVeiculo.LOCADO);
-                new LocacaoDAO().atualizar(locacaoAntiga);
-            }
+            Veiculo veiculo = new LocacaoDAO().ler(pagamento.getIdLocacao()).getVeiculo();
+            veiculo.setStatus(StatusVeiculo.DISPONIVEL);
+            new VeiculoDAO().atualizar(veiculo);
             pagamentoDAO.atualizar(pagamento);
             JOptionPane.showMessageDialog(null, "Pagamento atualizado!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (PagamentoNaoExisteException e) {
@@ -188,15 +201,4 @@ public class PagamentoController {
         }
         return valorPago;
     }
-
-    public static void setComboBoxIdLocacao(JComboBox<Integer> comboBoxIdPagamento, JComboBox<Integer> comboBoxIdLocacoes){
-        try {
-            String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
-            int idLocacao = new PagamentoController().lerPagamento(idPagamento).getIdLocacao();
-            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new Integer[]{idLocacao}));
-        } catch (RuntimeException e) {
-            System.out.println("Erro: "+ e.getMessage());
-        }
-    }
-
 }

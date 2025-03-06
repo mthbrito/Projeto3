@@ -4,7 +4,7 @@ import locadora.controller.LocacaoController;
 import locadora.controller.PagamentoController;
 import locadora.dao.ClienteDAO;
 import locadora.dao.LocacaoDAO;
-import locadora.model.Cliente;
+import locadora.model.*;
 import locadora.utils.DataHandler;
 
 import javax.swing.*;
@@ -18,12 +18,20 @@ import static locadora.utils.DataHandler.converterDataInserida;
 public class App {
     public static void main(String[] args) throws IOException {
 
-        System.out.println(new PagamentoController().isDataPagamentoValida("1011", "25/03/2025"));
-        System.out.println(new LocacaoDAO().ler("1011").getDataDeRetirada());
-        System.out.println(converterDataInserida("25/03/2025"));
-        System.out.println(new PagamentoController().isIdLocacaoValido("1011"));
-        System.out.println(new PagamentoController().isDataPagamentoValida("1011","25/03/2025"));
-        System.out.println(new LocacaoDAO().ler("1011").getDataDeRetirada());
+
+        Pagamento pagamento = new Pagamento(1005, 1010, 825.0, "02/03/2025", MetodosPagamento.A_VISTA);
+        System.out.println(pagamento);
+        Locacao locacao = new LocacaoDAO().ler(pagamento.getIdLocacao());
+        System.out.println(locacao);
+        Veiculo veiculo = locacao.getVeiculo();
+        System.out.println(veiculo);
+
+//        System.out.println(new PagamentoController().isDataPagamentoValida("1011", "25/03/2025"));
+//        System.out.println(new LocacaoDAO().ler("1011").getDataDeRetirada());
+//        System.out.println(converterDataInserida("25/03/2025"));
+//        System.out.println(new PagamentoController().isIdLocacaoValido("1011"));
+//        System.out.println(new PagamentoController().isDataPagamentoValida("1011","25/03/2025"));
+//        System.out.println(new LocacaoDAO().ler("1011").getDataDeRetirada());
 //        System.out.println(new LocacaoController().isDataDevolucaoValida("29/02/2024"));
 //
 //        ClienteDAO cd = new ClienteDAO();

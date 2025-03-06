@@ -12,7 +12,6 @@ import locadora.model.*;
 
 import javax.swing.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static locadora.utils.DataHandler.converterDataInserida;
 
@@ -196,5 +195,13 @@ public class LocacaoController {
             }
         }
         return new Object[0];
+    }
+
+    public static void resetarEntradas(JComboBox<Integer> comboBoxIdLocacoes, JComboBox<String> comboBoxClientes , JComboBox<String> comboBoxVeiculos, JTextField txtDataRetirada, JTextField txtDataDevolucao) {
+        comboBoxIdLocacoes.setSelectedIndex(-1);
+        comboBoxClientes.setSelectedIndex(-1);
+        comboBoxVeiculos.setSelectedIndex(-1);
+        txtDataRetirada.setText(null);
+        txtDataDevolucao.setText(null);
     }
 }

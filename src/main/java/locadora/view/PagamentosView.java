@@ -1,14 +1,19 @@
 package locadora.view;
 
 import locadora.controller.PagamentoController;
+import locadora.dao.ClienteDAO;
 import locadora.dao.LocacaoDAO;
 import locadora.dao.PagamentoDAO;
+import locadora.dao.VeiculoDAO;
+import locadora.model.Locacao;
 import locadora.model.MetodosPagamento;
+import locadora.model.Pagamento;
+import locadora.model.TiposObjetos;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static locadora.controller.PagamentoController.setComboBoxIdLocacao;
+import static locadora.controller.PagamentoController.resetarEntradas;
 
 public class PagamentosView {
 
@@ -69,11 +74,6 @@ public class PagamentosView {
         comboBoxIdPagamento.setVisible(false);
         panelRegistroPagamento.add(comboBoxIdPagamento);
 
-//        JTextField txtIdPagamento = new JTextField();
-//        txtIdPagamento.setFont(new Font("Open Sans", Font.BOLD, 12));
-//        txtIdPagamento.setBounds(150, 10, 95, 30);
-//        panelRegistroPagamento.add(txtIdPagamento);
-
         JComboBox<Integer> comboBoxLocacoes = new JComboBox<>(new LocacaoDAO().listaLocacoesNaoPagas());
         comboBoxLocacoes.setFont(new Font("Open Sans", Font.PLAIN, 12));
         comboBoxLocacoes.setBounds(75, 50, 95, 30);
@@ -128,29 +128,82 @@ public class PagamentosView {
         lblMetodoPagamento.setVisible(false);
         panelRegistroPagamento.add(lblMetodoPagamento);
 
-//        JButton btnGerarValorPago = new JButton("<html><div style='text-align:center'>Gerar valor</div></html>");
-//        btnGerarValorPago.setFont(new Font("Open Sans", Font.PLAIN, 12));
-//        btnGerarValorPago.setBounds(305, 10, 80, 30);
-//        panelRegistroPagamento.add(btnGerarValorPago);
-
-//        JButton btnRegistrarPagamento = new JButton("<html><div style='text-align:center'>Registrar Pagamento</div></html>");
-//        btnRegistrarPagamento.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnRegistrarPagamento.setBounds(20, 200, 100, 50);
-//        panel.add(btnRegistrarPagamento);
         JButton btnGerarValor = new JButton("<html><div style='text-align:center'>Gerar valor</div></html>");
         btnGerarValor.setFont(new Font("Open Sans", Font.PLAIN, 12));
         btnGerarValor.setBounds(20, 200, 100, 50);
         btnGerarValor.setVisible(false);
         panel.add(btnGerarValor);
 
-//        JButton btnEditarPagamento = new JButton("<html><div style='text-align:center'>Editar Pagamento</div></html>");
-//        btnEditarPagamento.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnEditarPagamento.setBounds(165, 200, 100, 50);
-//        panel.add(btnEditarPagamento);
         JButton btnConfirmar = new JButton("<html><div style='text-align:center'>Confirmar</div></html>");
         btnConfirmar.setFont(new Font("Open Sans", Font.PLAIN, 12));
         btnConfirmar.setBounds(165, 200, 100, 50);
         panel.add(btnConfirmar);
+
+        JLabel lblListas = new JLabel("Listas");
+        lblListas.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lblListas.setBounds(320, 200, 80, 20);
+        lblListas.setForeground(Color.WHITE);
+        lblListas.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblListas);
+
+        JComboBox<TiposObjetos> comboBoxListas = new JComboBox<>(TiposObjetos.values());
+        comboBoxListas.setFont(new Font("Open Sans", Font.PLAIN, 12));
+        comboBoxListas.setBounds(320, 220, 80, 30);
+        comboBoxListas.setSelectedIndex(-1);
+        panel.add(comboBoxListas);
+
+        comboBoxListas.addActionListener(e -> {
+            TiposObjetos lista = (TiposObjetos) comboBoxListas.getSelectedItem();
+            if(lista != null) {
+                JScrollPane scrollpane;
+                JOptionPane optionPane;
+                JDialog dialog;
+                switch (lista) {
+                    case CLIENTE:
+                        JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
+                        scrollpane = new JScrollPane(tableClientes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Clientes");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case VEICULO:
+                        JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
+                        scrollpane = new JScrollPane(tableVeiculos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Veículos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case LOCACAO:
+                        JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
+                        scrollpane = new JScrollPane(tableLocacoes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Locações");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case PAGAMENTO:
+                        JTable tablePagamentos = new JTable(new PagamentoDAO().dadosPagamentosCadastrados(), new PagamentoDAO().atributosPagamentosCadastrados());
+                        scrollpane = new JScrollPane(tablePagamentos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Pagamentos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         comboBoxAcao.addItemListener(e -> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
@@ -169,6 +222,8 @@ public class PagamentosView {
                     btnGerarValor.setVisible(true);
                     btnConfirmar.setVisible(true);
                     comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+//                    comboBoxLocacoes.setSelectedIndex(-1);
+                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
                     break;
                 case "EDITAR":
                     lblIdPagamento.setVisible(true);
@@ -183,6 +238,10 @@ public class PagamentosView {
                     comboBoxMetodoPagamento.setVisible(true);
                     btnGerarValor.setVisible(true);
                     btnConfirmar.setVisible(true);
+                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
+//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento,comboBoxLocacoes)));
+//                    comboBoxIdPagamento.setSelectedIndex(-1);
+//                    comboBoxLocacoes.setSelectedIndex(-1);
                     break;
                 case "EXCLUIR":
                     lblIdPagamento.setVisible(true);
@@ -197,37 +256,27 @@ public class PagamentosView {
                     comboBoxMetodoPagamento.setVisible(false);
                     btnGerarValor.setVisible(false);
                     btnConfirmar.setVisible(true);
-                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento,comboBoxLocacoes)));
+                    resetarEntradas(comboBoxIdPagamento,comboBoxLocacoes,txtValorPago,txtDataPagamento,comboBoxMetodoPagamento);
                     break;
                 default:
                     break;
-
             }
         });
 
-        comboBoxLocacoes.addActionListener(e -> {
-            JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
-            JScrollPane scrollpaneLocacoes = new JScrollPane(tableLocacoes);
-            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            JOptionPane optionPane = new JOptionPane(scrollpaneLocacoes, JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Locações");
-            dialog.setSize(new Dimension(600, 300));
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
+        comboBoxIdPagamento.addItemListener(e-> {
+            String acao = String.valueOf(comboBoxAcao.getSelectedItem());
+            if(acao.equals("EDITAR")){
+                String idPagamento = String.valueOf(comboBoxIdPagamento.getSelectedItem());
+                Pagamento pagamento = new PagamentoDAO().ler(idPagamento);
+                int idlocacao = pagamento.getIdLocacao();
+                comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new Integer[]{idlocacao}));
+            }
         });
 
-        comboBoxIdPagamento.addActionListener(e -> {
-            setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes);
-            JTable tablePagamentos = new JTable(new PagamentoDAO().dadosPagamentosCadastrados(), new PagamentoDAO().atributosPagamentosCadastrados());
-            JScrollPane scrollpanePagamentos = new JScrollPane(tablePagamentos);
-            scrollpanePagamentos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            JOptionPane optionPane = new JOptionPane(scrollpanePagamentos, JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = optionPane.createDialog("ID Pagamentos");
-            dialog.setSize(new Dimension(600, 300));
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-
-        });
+//        comboBoxLocacoes.addActionListener(e -> new PagamentoController().setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes));
+//
+//        comboBoxIdPagamento.addActionListener(e -> new PagamentoController().setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes));
 
         btnGerarValor.addActionListener(e -> {
             double valor = new PagamentoController().calcularPagamento(comboBoxLocacoes, txtDataPagamento);
@@ -240,119 +289,25 @@ public class PagamentosView {
             switch (acao) {
                 case "REGISTRAR":
                     pagamentoController.registrarPagamento(comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
-                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));//atualiza veiculos
-                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));//atualiza locações
+//                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));
+//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EDITAR":
                     pagamentoController.editarPagamento(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
-                    setComboBoxIdLocacao(comboBoxIdPagamento, comboBoxLocacoes);
+//                    new PagamentoController().getIdLocacaoDeIdPagamento(comboBoxIdPagamento, comboBoxLocacoes);
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 case "EXCLUIR":
                     pagamentoController.excluirPagamento(comboBoxIdPagamento);
-                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));//atualiza veiculos
-                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));//atualiza locações
+//                    comboBoxIdPagamento.setModel(new DefaultComboBoxModel<>(new PagamentoDAO().listaPagamentosCadastrados()));
+//                    comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+                    resetarEntradas(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
                     break;
                 default:
                     break;
             }
         });
-
-
-//        JButton btnExcluirPagamento = new JButton("<html><div style='text-align:center'>Excluir Pagamento</div></html>");
-//        btnExcluirPagamento.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnExcluirPagamento.setBounds(305, 200, 100, 50);
-//        panel.add(btnExcluirPagamento);
-
-//        frame.setBounds(100, 100, 430, 240);
-//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        frame.getContentPane().setLayout(null);
-//
-//        JLabel lblPagamentos = new JLabel("Pagamentos");
-//        lblPagamentos.setHorizontalAlignment(SwingConstants.CENTER);
-//        lblPagamentos.setVerticalAlignment(SwingConstants.CENTER);
-//        lblPagamentos.setFont(new Font("Tahoma", Font.BOLD, 14));
-//        lblPagamentos.setBounds(140, 10, 120, 20);
-//        frame.getContentPane().add(lblPagamentos);
-//
-//        JPanel panelRegistroPagamento = new JPanel();
-//        panelRegistroPagamento.setLayout(null);
-//        panelRegistroPagamento.setBackground(new Color(255, 255, 255));
-//        panelRegistroPagamento.setBounds(10, 40, 395, 100);
-//        frame.getContentPane().add(panelRegistroPagamento);
-//
-//        JLabel lblIdPagamento = new JLabel("ID (Pagamento)");
-//        lblIdPagamento.setVerticalAlignment(SwingConstants.CENTER);
-//        lblIdPagamento.setBounds(115, 10, 120, 20);
-//        panelRegistroPagamento.add(lblIdPagamento);
-//
-//        JTextField txtIdPagamento = new JTextField();
-//        txtIdPagamento.setBounds(210, 10, 70, 20);
-//        panelRegistroPagamento.add(txtIdPagamento);
-//
-//        JComboBox<String> comboBoxLocacoes = new JComboBox<>(new LocacaoDAO().listagemLocacoesCadastradas());
-//        comboBoxLocacoes.setBounds(75, 40, 95, 20);
-//        comboBoxLocacoes.setSelectedIndex(-1);
-//        panelRegistroPagamento.add(comboBoxLocacoes);
-//
-//        JTextField txtValorPago = new JTextField();
-//        txtValorPago.setBounds(75, 70, 95, 20);
-//        panelRegistroPagamento.add(txtValorPago);
-//
-//        JTextField txtDataPagamento = new JTextField();
-//        txtDataPagamento.setBounds(305, 40, 80, 20);
-//        panelRegistroPagamento.add(txtDataPagamento);
-//
-//        JComboBox<MetodosPagamento> comboBoxMetodoPagamento = new JComboBox<>(MetodosPagamento.values());
-//        comboBoxMetodoPagamento.setBounds(305, 70, 80, 20);
-//        panelRegistroPagamento.add(comboBoxMetodoPagamento);
-//
-//        JLabel lblLocacao = new JLabel("Locacão");
-//        lblLocacao.setBounds(10, 40, 65, 15);
-//        lblLocacao.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroPagamento.add(lblLocacao);
-//
-//        JLabel lblValorPago = new JLabel("Valor Pago");
-//        lblValorPago.setBounds(10, 70, 65, 15);
-//        lblValorPago.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroPagamento.add(lblValorPago);
-//
-//        JLabel lblDataPagamento = new JLabel("Data de pagamento");
-//        lblDataPagamento.setBounds(175, 40, 130, 15);
-//        lblDataPagamento.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroPagamento.add(lblDataPagamento);
-//
-//        JLabel lblMetodoPagamento = new JLabel("Método de pagamento");
-//        lblMetodoPagamento.setBounds(175, 70, 130, 15);
-//        lblDataPagamento.setVerticalAlignment(SwingConstants.CENTER);
-//        panelRegistroPagamento.add(lblMetodoPagamento);
-//
-//        JButton btnGerarValorPago = new JButton("<html><div style='text-align:center'>Gerar valor</div></html>");
-//        btnGerarValorPago.setBounds(305, 10, 80, 20);
-//        frame.add(btnGerarValorPago);
-//
-//        JButton btnRegistrarPagamento = new JButton("<html><div style='text-align:center'>Registrar Pagamento</div></html>");
-//        btnRegistrarPagamento.setBounds(10, 150, 90, 40);
-//        frame.add(btnRegistrarPagamento);
-//
-//        JButton btnEditarPagamento = new JButton("<html><div style='text-align:center'>Editar Pagamento</div></html>");
-//        btnEditarPagamento.setBounds(165, 150, 90, 40);
-//        frame.add(btnEditarPagamento);
-//
-//        JButton btnExcluirPagamento = new JButton("<html><div style='text-align:center'>Excluir Pagamento</div></html>");
-//        btnExcluirPagamento.setBounds(315, 150, 90, 40);
-//        frame.add(btnExcluirPagamento);
-
-//        btnGerarValorPago.addActionListener(e -> {
-//            double valor = new PagamentoController().calcularPagamento(comboBoxLocacoes, txtDataPagamento);
-//            txtValorPago.setText(String.valueOf(valor));
-//        });
-
-//        btnRegistrarPagamento.addActionListener(e -> {
-//            new PagamentoController().registrarPagamento(comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento);
-//            comboBoxLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
-//        });
-//        btnEditarPagamento.addActionListener(e -> new PagamentoController().editarPagamento(comboBoxIdPagamento, comboBoxLocacoes, txtValorPago, txtDataPagamento, comboBoxMetodoPagamento));
-//        btnExcluirPagamento.addActionListener(e -> new PagamentoController().excluirPagamento(comboBoxIdPagamento));
     }
 
     public JFrame getFrame() {

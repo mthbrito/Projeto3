@@ -29,6 +29,7 @@ public class LoginGerView extends LoginView{
             }
         }
         if(acesso) {
+            getFrame().dispose();
             GerenteView gerenteView = new GerenteView();
             gerenteView.getFrame().setVisible(true);
         } else {

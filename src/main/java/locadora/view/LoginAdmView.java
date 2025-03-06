@@ -30,6 +30,7 @@ public class LoginAdmView extends LoginView{
             }
         }
         if(acesso) {
+            getFrame().dispose();
             AdministradorView administradorView = new AdministradorView();
             administradorView.getFrame().setVisible(true);
         } else {

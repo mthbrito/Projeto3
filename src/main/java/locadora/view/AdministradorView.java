@@ -87,7 +87,7 @@ public class AdministradorView {
 
         btnCadastrar.addActionListener(e -> new UsuarioController().cadastrarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
         btnEditar.addActionListener(e -> new UsuarioController().editarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
-        btnExcluir.addActionListener(e -> new UsuarioController().excluirUsuario(txtUsuario));
+        btnExcluir.addActionListener(e -> new UsuarioController().excluirUsuario(comboBoxFuncao, txtUsuario));
     }
 
     public JFrame getFrame() {

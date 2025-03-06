@@ -1,7 +1,12 @@
 package locadora.view;
 
 import locadora.controller.VeiculoController;
+import locadora.dao.ClienteDAO;
+import locadora.dao.LocacaoDAO;
+import locadora.dao.PagamentoDAO;
+import locadora.dao.VeiculoDAO;
 import locadora.model.StatusVeiculo;
+import locadora.model.TiposObjetos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -125,6 +130,72 @@ public class VeiculosView {
         btnExcluirVeiculo.setFont(new Font("Open Sans", Font.PLAIN, 14));
         btnExcluirVeiculo.setBounds(320, 200, 90, 50);
         panel.add(btnExcluirVeiculo);
+
+        JLabel lblListas = new JLabel("Listas");
+        lblListas.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lblListas.setBounds(330, 5, 80, 15);
+        lblListas.setForeground(Color.WHITE);
+        lblListas.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblListas);
+
+        JComboBox<TiposObjetos> comboBoxListas = new JComboBox<>(TiposObjetos.values());
+        comboBoxListas.setFont(new Font("Open Sans", Font.PLAIN, 12));
+        comboBoxListas.setBounds(330, 20, 80, 25);
+        comboBoxListas.setSelectedIndex(-1);
+        panel.add(comboBoxListas);
+
+        comboBoxListas.addActionListener(e -> {
+            TiposObjetos lista = (TiposObjetos) comboBoxListas.getSelectedItem();
+            if(lista != null) {
+                JScrollPane scrollpane;
+                JOptionPane optionPane;
+                JDialog dialog;
+                switch (lista) {
+                    case CLIENTE:
+                        JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
+                        scrollpane = new JScrollPane(tableClientes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Clientes");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case VEICULO:
+                        JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
+                        scrollpane = new JScrollPane(tableVeiculos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Veículos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case LOCACAO:
+                        JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
+                        scrollpane = new JScrollPane(tableLocacoes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Locações");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case PAGAMENTO:
+                        JTable tablePagamentos = new JTable(new PagamentoDAO().dadosPagamentosCadastrados(), new PagamentoDAO().atributosPagamentosCadastrados());
+                        scrollpane = new JScrollPane(tablePagamentos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Pagamentos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
 //        frame.setBounds(100, 100, 335, 235);
 //        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

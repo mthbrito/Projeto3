@@ -1,1 +1,47 @@
-[{"tipo":"ADMINISTRADOR","endereco":"admin","senha":"admin"},{"tipo":"GERENTE","endereco":"gerente","senha":"gerente"},{"tipo":"ATENDENTE","endereco":"atendente","senha":"atendente"},{"tipo":"ADMINISTRADOR","endereco":"matheus","senha":"1234"},{"tipo":"GERENTE","endereco":"mth","senha":"123"},{"tipo":"ATENDENTE","endereco":"123","senha":"123"}]
+[
+  {
+    "tipo": "ADMINISTRADOR",
+    "endereco": "admin",
+    "senha": "admin"
+  },
+  {
+    "tipo": "GERENTE",
+    "endereco": "gerente",
+    "senha": "gerente"
+  },
+  {
+    "tipo": "ATENDENTE",
+    "endereco": "atendente",
+    "senha": "atendente"
+  },
+  {
+    "tipo": "GERENTE",
+    "endereco": "mth",
+    "senha": "123"
+  },
+  {
+    "tipo": "ATENDENTE",
+    "endereco": "123",
+    "senha": "123"
+  },
+  {
+    "tipo": "ATENDENTE",
+    "endereco": "abc",
+    "senha": "123"
+  },
+  {
+    "tipo": "ADMINISTRADOR",
+    "endereco": "matheus",
+    "senha": "123456"
+  },
+  {
+    "tipo": "GERENTE",
+    "endereco": "matheus",
+    "senha": "123456"
+  },
+  {
+    "tipo": "ATENDENTE",
+    "endereco": "matheus",
+    "senha": "123456"
+  }
+]

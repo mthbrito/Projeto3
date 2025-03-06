@@ -29,6 +29,7 @@ public class LoginAtendView extends LoginView{
             }
         }
         if(acesso) {
+            getFrame().dispose();
             AtendenteView atendenteView = new AtendenteView();
             atendenteView.getFrame().setVisible(true);
         } else {

@@ -3,10 +3,14 @@ package locadora.view;
 import locadora.controller.LocacaoController;
 import locadora.dao.ClienteDAO;
 import locadora.dao.LocacaoDAO;
+import locadora.dao.PagamentoDAO;
 import locadora.dao.VeiculoDAO;
+import locadora.model.TiposObjetos;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static locadora.controller.LocacaoController.resetarEntradas;
 
 public class LocacoesView {
 
@@ -41,11 +45,6 @@ public class LocacoesView {
         panelRegistroLocacao.setBounds(20, 50, 390, 140);
         panel.add(panelRegistroLocacao);
 
-//        JComboBox<TiposObjetos> comboBoxTiposObjetos = new JComboBox<>(TiposObjetos.values());
-//        comboBoxTiposObjetos.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        comboBoxTiposObjetos.setBounds(62, 10, 120, 30);
-//        comboBoxTiposObjetos.setSelectedIndex(-1);
-//        panelRegistroLocacao.add(comboBoxTiposObjetos);
         JComboBox<String> comboBoxAcao = new JComboBox<>(new String[]{"REGISTRAR","EDITAR","EXCLUIR"});
         comboBoxAcao.setFont(new Font("Open Sans", Font.PLAIN, 12));
         comboBoxAcao.setBounds(62, 10, 120, 30);
@@ -127,30 +126,77 @@ public class LocacoesView {
         lblDataDevolucao.setVisible(false);
         panelRegistroLocacao.add(lblDataDevolucao);
 
-//        JButton btnRegistrarLocacao = new JButton("<html><div style='text-align:center'>Registrar Locação</div></html>");
-//        btnRegistrarLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnRegistrarLocacao.setBounds(20, 200, 90, 50);
-//        panel.add(btnRegistrarLocacao);
-//
-//        JButton btnEditarLocacao = new JButton("<html><div style='text-align:center'>Editar Locação</div></html>");
-//        btnEditarLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnEditarLocacao.setBounds(165, 200, 90, 50);
-//        panel.add(btnEditarLocacao);
         JButton btnConfirmar = new JButton("<html><div style='text-align:center'>Confirmar</div></html>");
         btnConfirmar.setFont(new Font("Open Sans", Font.PLAIN, 12));
         btnConfirmar.setBounds(165, 200, 90, 50);
         btnConfirmar.setVisible(false);
         panel.add(btnConfirmar);
-//
-//        JButton btnExcluirLocacao = new JButton("<html><div style='text-align:center'>Excluir Locação</div></html>");
-//        btnExcluirLocacao.setFont(new Font("Open Sans", Font.PLAIN, 14));
-//        btnExcluirLocacao.setBounds(320, 200, 90, 50);
-//        panel.add(btnExcluirLocacao);
 
-//        comboBoxTiposObjetos.addActionListener(e -> {
-//
-//            JTable tableObjetos = new JTable()
-//        });
+        JLabel lblListas = new JLabel("Listas");
+        lblListas.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lblListas.setBounds(320, 200, 80, 20);
+        lblListas.setForeground(Color.WHITE);
+        lblListas.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(lblListas);
+
+        JComboBox<TiposObjetos> comboBoxListas = new JComboBox<>(TiposObjetos.values());
+        comboBoxListas.setFont(new Font("Open Sans", Font.PLAIN, 12));
+        comboBoxListas.setBounds(320, 220, 80, 30);
+        comboBoxListas.setSelectedIndex(-1);
+        panel.add(comboBoxListas);
+
+        comboBoxListas.addActionListener(e -> {
+            TiposObjetos lista = (TiposObjetos) comboBoxListas.getSelectedItem();
+            if(lista != null) {
+                JScrollPane scrollpane;
+                JOptionPane optionPane;
+                JDialog dialog;
+                switch (lista) {
+                    case CLIENTE:
+                        JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
+                        scrollpane = new JScrollPane(tableClientes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Clientes");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case VEICULO:
+                        JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
+                        scrollpane = new JScrollPane(tableVeiculos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Veículos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case LOCACAO:
+                        JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
+                        scrollpane = new JScrollPane(tableLocacoes);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Locações");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    case PAGAMENTO:
+                        JTable tablePagamentos = new JTable(new PagamentoDAO().dadosPagamentosCadastrados(), new PagamentoDAO().atributosPagamentosCadastrados());
+                        scrollpane = new JScrollPane(tablePagamentos);
+                        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        optionPane = new JOptionPane(scrollpane, JOptionPane.INFORMATION_MESSAGE);
+                        dialog = optionPane.createDialog("Pagamentos");
+                        dialog.setSize(new Dimension(600, 300));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         comboBoxAcao.addItemListener(e-> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
@@ -167,6 +213,7 @@ public class LocacoesView {
                     lblDataRetirada.setVisible(true);
                     txtDataRetirada.setVisible(true);
                     btnConfirmar.setVisible(true);
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 case "EDITAR":
                     lblIdLocacao.setVisible(true);
@@ -180,6 +227,7 @@ public class LocacoesView {
                     lblDataRetirada.setVisible(true);
                     txtDataRetirada.setVisible(true);
                     btnConfirmar.setVisible(true);
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 case "EXCLUIR":
                     lblIdLocacao.setVisible(true);
@@ -193,6 +241,7 @@ public class LocacoesView {
                     lblDataRetirada.setVisible(false);;
                     txtDataRetirada.setVisible(false);
                     btnConfirmar.setVisible(true);
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 default:
                     break;
@@ -200,69 +249,60 @@ public class LocacoesView {
             }
         });
 
-
-        comboBoxClientes.addActionListener(e -> {
-            JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
-            JScrollPane scrollpaneClientes = new JScrollPane(tableClientes);
-            scrollpaneClientes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            JOptionPane optionPane = new JOptionPane(scrollpaneClientes, JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Clientes");
-            dialog.setSize(new Dimension(600, 300));
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-        });
-
-        comboBoxVeiculos.addActionListener(e -> {
-            JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
-            JScrollPane scrollpaneVeiculos = new JScrollPane(tableVeiculos);
-            scrollpaneVeiculos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            JOptionPane optionPane = new JOptionPane(scrollpaneVeiculos, JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Veículos");
-            dialog.setSize(new Dimension(600, 300));
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-        });
-
-        comboBoxIdLocacoes.addActionListener(e -> {
-            JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
-            JScrollPane scrollpaneLocacoes = new JScrollPane(tableLocacoes);
-            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            JOptionPane optionPane = new JOptionPane(scrollpaneLocacoes, JOptionPane.INFORMATION_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Locações");
-            dialog.setSize(new Dimension(600, 300));
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-        });
-
-//        btnRegistrarLocacao.addActionListener(e -> {
-//            new LocacaoController().registrarLocacao(comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao);
-//            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesCadastradas()));
-//            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+//        comboBoxClientes.addActionListener(e -> {
+//            JTable tableClientes = new JTable(new ClienteDAO().dadosClientesCadastrados(), new ClienteDAO().atributosClientesCadastrados());
+//            JScrollPane scrollpaneClientes = new JScrollPane(tableClientes);
+//            scrollpaneClientes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//            JOptionPane optionPane = new JOptionPane(scrollpaneClientes, JOptionPane.INFORMATION_MESSAGE);
+//            JDialog dialog = optionPane.createDialog("Clientes");
+//            dialog.setSize(new Dimension(600, 300));
+//            dialog.setLocationRelativeTo(null);
+//            dialog.setVisible(true);
 //        });
-//        btnEditar.addActionListener(e -> new LocacaoController().editarLocacao(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos, txtDataRetirada, txtDataDevolucao));
-//        btnExcluirLocacao.addActionListener(e -> {
-//            new LocacaoController().excluirLocacao(comboBoxIdLocacoes);
-//            comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesCadastradas()));
-//            comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+
+//        comboBoxVeiculos.addActionListener(e -> {
+//            JTable tableVeiculos = new JTable(new VeiculoDAO().dadosVeiculosCadastrados(), new VeiculoDAO().atributosVeiculosCadastrados());
+//            JScrollPane scrollpaneVeiculos = new JScrollPane(tableVeiculos);
+//            scrollpaneVeiculos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//            JOptionPane optionPane = new JOptionPane(scrollpaneVeiculos, JOptionPane.INFORMATION_MESSAGE);
+//            JDialog dialog = optionPane.createDialog("Veículos");
+//            dialog.setSize(new Dimension(600, 300));
+//            dialog.setLocationRelativeTo(null);
+//            dialog.setVisible(true);
 //        });
+
+//        comboBoxIdLocacoes.addActionListener(e -> {
+//            JTable tableLocacoes = new JTable(new LocacaoDAO().dadosLocacoesCadastradas(), new LocacaoDAO().atributosLocacoesCadastradas());
+//            JScrollPane scrollpaneLocacoes = new JScrollPane(tableLocacoes);
+//            scrollpaneLocacoes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//            JOptionPane optionPane = new JOptionPane(scrollpaneLocacoes, JOptionPane.INFORMATION_MESSAGE);
+//            JDialog dialog = optionPane.createDialog("Locações");
+//            dialog.setSize(new Dimension(600, 300));
+//            dialog.setLocationRelativeTo(null);
+//            dialog.setVisible(true);
+//        });
+
         btnConfirmar.addActionListener(e -> {
             String acao = String.valueOf(comboBoxAcao.getSelectedItem());
             LocacaoController locacaoController = new LocacaoController();
             switch (acao) {
                 case "REGISTRAR":
                     locacaoController.registrarLocacao(comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
-                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));//atualiza locações
-                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));//atualiza veiculos
+                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 case "EDITAR":
                     locacaoController.editarLocacao(comboBoxIdLocacoes, comboBoxClientes, comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
-                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));//atualiza locações
-                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));//atualiza veiculos
+                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 case "EXCLUIR":
                     locacaoController.excluirLocacao(comboBoxIdLocacoes);
-                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));//atualiza locações
-                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));//atualiza veiculos
+                    comboBoxIdLocacoes.setModel(new DefaultComboBoxModel<>(new LocacaoDAO().listaLocacoesNaoPagas()));
+                    comboBoxVeiculos.setModel(new DefaultComboBoxModel<>(new VeiculoDAO().listaVeiculosDisponiveis()));
+                    resetarEntradas(comboBoxIdLocacoes,comboBoxClientes,comboBoxVeiculos,txtDataRetirada,txtDataDevolucao);
                     break;
                 default:
                     break;

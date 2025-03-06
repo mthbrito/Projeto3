@@ -1,15 +1,15 @@
 package locadora.dao;
 
-import locadora.exception.PagamentoJaExisteException;
 import locadora.exception.UsuarioJaExisteException;
 import locadora.exception.UsuarioNaoExisteException;
+import locadora.model.TiposUsuarios;
 import locadora.model.Usuario;
 import locadora.utils.JsonHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioDAO extends JsonHandler implements IPersistencia<Usuario, Object> {
+public class UsuarioDAO extends JsonHandler {
 
     private List<Usuario> usuarios;
 
@@ -17,11 +17,10 @@ public class UsuarioDAO extends JsonHandler implements IPersistencia<Usuario, Ob
         this.usuarios = usuariosCadastrados();
     }
 
-    @Override
     public void salvar(Usuario usuarioNovo) throws UsuarioJaExisteException {
         for (Usuario usuarioListado : usuarios) {
-            if (usuarioListado.getEndereco().equals(usuarioNovo.getEndereco())) {
-                throw new PagamentoJaExisteException("Usuário já existe: " + usuarioNovo.getEndereco());
+            if(usuarioListado.getTipo().equals(usuarioNovo.getTipo()) && usuarioListado.getEndereco().equals(usuarioNovo.getEndereco())){
+                throw new UsuarioJaExisteException("Usuário já existe: " + usuarioNovo.getEndereco());
             }
         }
         usuarios.add(usuarioNovo);
@@ -29,19 +28,17 @@ public class UsuarioDAO extends JsonHandler implements IPersistencia<Usuario, Ob
         System.out.println("Usuário salvo!");
     }
 
-    @Override
-    public Usuario ler(Object endereco) throws UsuarioNaoExisteException {
+    public Usuario ler(TiposUsuarios tipo, String endereco) throws UsuarioNaoExisteException {
         for (Usuario usuarioListado : usuarios) {
-            if (usuarioListado.getEndereco().equals(endereco)) {
+            if(usuarioListado.getTipo().equals(tipo) && usuarioListado.getEndereco().equals(endereco)){
                 return usuarioListado;
             }
         }
         throw new UsuarioNaoExisteException("Usuário não existe: " + endereco);
     }
 
-    @Override
     public void atualizar(Usuario usuarioAtualizado) throws UsuarioNaoExisteException {
-        boolean usuarioAntigo = usuarios.removeIf(usuario -> usuario.getEndereco().equals(usuarioAtualizado.getEndereco()));
+        boolean usuarioAntigo = usuarios.removeIf(usuario -> usuario.getEndereco().equals(usuarioAtualizado.getEndereco()) && usuario.getTipo().equals(usuarioAtualizado.getTipo()));
         if (!usuarioAntigo) {
             throw new UsuarioNaoExisteException("Usuário não existe: " + usuarioAtualizado.getEndereco());
         }
@@ -50,9 +47,8 @@ public class UsuarioDAO extends JsonHandler implements IPersistencia<Usuario, Ob
         System.out.println("Usuário atualizado!");
     }
 
-    @Override
-    public void deletar(Object endereco) throws UsuarioNaoExisteException {
-        boolean usuarioAntigo = usuarios.removeIf(usuario -> usuario.getEndereco().equals(endereco));
+    public void deletar(TiposUsuarios tipo, String endereco) throws UsuarioNaoExisteException {
+        boolean usuarioAntigo = usuarios.removeIf(usuario -> usuario.getEndereco().equals(endereco) && usuario.getTipo().equals(tipo));
         if (!usuarioAntigo) {
             throw new UsuarioNaoExisteException("Usuário não existe: " + endereco);
         }

@@ -1,7 +1,6 @@
 package locadora.controller;
 
 import locadora.dao.VeiculoDAO;
-import locadora.exception.ClienteNaoExisteException;
 import locadora.exception.VeiculoJaExisteException;
 import locadora.exception.VeiculoNaoExisteException;
 import locadora.model.*;
