@@ -7,6 +7,8 @@ import locadora.dao.PagamentoDAO;
 import locadora.model.Locacao;
 import locadora.model.Pagamento;
 
+import javax.swing.*;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Comparator;
@@ -14,11 +16,13 @@ import java.util.List;
 
 public class RelatorioGerencial {
 
+    private final String caminhoArquivo = new File(System.getProperty("user.dir")).getAbsolutePath() + "\\data\\pdf";
+
     public void gerarRelatorioVeiculosLocados() {
         List<Locacao> locacoes = new LocacaoDAO().locacoesCadastradas();
         Document documento = new Document();
         try {
-            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get("src/main/java/locadora/utils/veiculosLocados.pdf")));
+            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get(caminhoArquivo + "\\veiculosLocados.pdf")));
             documento.open();
 
             // Fonte personalizada para o título
@@ -45,6 +49,7 @@ public class RelatorioGerencial {
                 // Adicionando espaçamento entre locações
                 documento.add(Chunk.NEWLINE);
             }
+            JOptionPane.showMessageDialog(null, "Relatório gerado, cheque a pasta data/pdf", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             System.out.println("Erro ao gerar PDF: " + e.getMessage());
         } finally {
@@ -58,7 +63,7 @@ public class RelatorioGerencial {
         List<Pagamento> pagamentos = new PagamentoDAO().pagamentosCadastrados();
         Document documento = new Document();
         try {
-            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get("src/main/java/locadora/utils/faturamentoMensal.pdf")));
+            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get(caminhoArquivo + "\\faturamentoMensal.pdf")));
             documento.open();
 
             // Fonte personalizada para o título
@@ -81,6 +86,7 @@ public class RelatorioGerencial {
                 documento.add(Chunk.NEWLINE);
             }
             documento.add(new Paragraph("Total: R$" + total, fonteNormal));
+            JOptionPane.showMessageDialog(null, "Relatório gerado, cheque a pasta data/pdf", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             System.out.println("Erro ao gerar PDF: " + e.getMessage());
         } finally {
@@ -95,7 +101,7 @@ public class RelatorioGerencial {
         locacoes.sort(Comparator.comparing(locacao -> locacao.getCliente().getCpf()));
         Document documento = new Document();
         try {
-            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get("src/main/java/locadora/utils/clientesLocacoes.pdf")));
+            PdfWriter.getInstance(documento, Files.newOutputStream(Paths.get(caminhoArquivo + "\\clientesLocacoes.pdf")));
             documento.open();
 
             // Fonte personalizada para o título
@@ -122,6 +128,7 @@ public class RelatorioGerencial {
                 // Adicionando espaçamento entre locações
                 documento.add(Chunk.NEWLINE);
             }
+            JOptionPane.showMessageDialog(null, "Relatório gerado, cheque a pasta data/pdf", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             System.out.println("Erro ao gerar PDF: " + e.getMessage());
         } finally {

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class UsuarioDAO extends JsonHandler {
 
+    private final String json = getCaminhoArquivoJson("\\data\\json\\usuarios.json");
     private List<Usuario> usuarios;
 
     public UsuarioDAO() {
@@ -57,11 +58,11 @@ public class UsuarioDAO extends JsonHandler {
     }
 
     private void atualizarJson(List<Usuario> usuariosAtualizado) {
-        atualizarArquivo("src/main/java/locadora/json/usuarios.json", usuariosAtualizado);
+        atualizarArquivo(json, usuariosAtualizado);
     }
 
     public List<Usuario> usuariosCadastrados() {
-        String arquivo = "src/main/java/locadora/json/usuarios.json";
+        String arquivo = json;
         if (this.isVazio(arquivo, Usuario.class)) {
             usuarios = new ArrayList<>();
         } else {

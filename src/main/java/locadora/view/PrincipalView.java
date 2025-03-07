@@ -59,7 +59,7 @@ public class PrincipalView {
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Bebas Neue", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setBounds(125, 30, 200, 20);
+        lblTitulo.setBounds(105, 30, 240, 20);
         panel.add(lblTitulo);
 
         JLabel lblSubTitulo = new JLabel("Sempre um veículo à disposição!");
@@ -69,7 +69,7 @@ public class PrincipalView {
         lblSubTitulo.setBounds(75, 60, 300, 20);
         panel.add(lblSubTitulo);
 
-        ImageIcon icone = new ImageIcon("src/main/java/locadora/image/carro_preto.png");
+        ImageIcon icone = new ImageIcon(getClass().getResource("/carro_preto.png"));
         Image imagem = icone.getImage();
         Image novaImagem = imagem.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon novoIcone = new ImageIcon(novaImagem);

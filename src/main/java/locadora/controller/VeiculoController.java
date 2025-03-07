@@ -11,6 +11,13 @@ public class VeiculoController {
 
     private final VeiculoDAO veiculoDAO = new VeiculoDAO();
 
+    public static void resetarEntradas(JTextField txtPlaca, JTextField txtModelo, JTextField txtAno, JComboBox<StatusVeiculo> comboBoxStatus) {
+        txtPlaca.setText(null);
+        txtModelo.setText(null);
+        txtAno.setText(null);
+        comboBoxStatus.setSelectedIndex(-1);
+    }
+
     public void cadastrarVeiculo(JRadioButton rdbtnCaminhao, JRadioButton rdbtnCarro, JRadioButton rdbtnMoto, JTextField txtPlaca, JTextField txtModelo, JTextField txtAno, JComboBox<StatusVeiculo> comboBoxStatus) {
         String tipo = getTipo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto);
         String placa = txtPlaca.getText().trim();

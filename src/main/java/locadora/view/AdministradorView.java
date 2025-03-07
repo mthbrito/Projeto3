@@ -6,8 +6,11 @@ import locadora.model.TiposUsuarios;
 import javax.swing.*;
 import java.awt.*;
 
+import static locadora.controller.UsuarioController.resetarEntradas;
+
 public class AdministradorView {
 
+    private final UsuarioController usuarioController = new UsuarioController();
     private JFrame frame;
 
     public AdministradorView() {
@@ -85,9 +88,10 @@ public class AdministradorView {
         btnExcluir.setBounds(280, 200, 120, 30);
         panel.add(btnExcluir);
 
-        btnCadastrar.addActionListener(e -> new UsuarioController().cadastrarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
-        btnEditar.addActionListener(e -> new UsuarioController().editarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
-        btnExcluir.addActionListener(e -> new UsuarioController().excluirUsuario(comboBoxFuncao, txtUsuario));
+        comboBoxFuncao.addActionListener(e -> resetarEntradas(txtUsuario, txtSenha));
+        btnCadastrar.addActionListener(e -> usuarioController.cadastrarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
+        btnEditar.addActionListener(e -> usuarioController.editarUsuario(comboBoxFuncao, txtUsuario, txtSenha));
+        btnExcluir.addActionListener(e -> usuarioController.excluirUsuario(comboBoxFuncao, txtUsuario));
     }
 
     public JFrame getFrame() {

@@ -14,6 +14,7 @@ import java.awt.*;
 public class VeiculosView {
 
     private final JFrame frame = new JFrame();
+    private final VeiculoController veiculoController = new VeiculoController();
 
     public VeiculosView() {
         initialize();
@@ -196,9 +197,15 @@ public class VeiculosView {
             }
         });
 
-        btnCadastrarVeiculo.addActionListener(e -> new VeiculoController().cadastrarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus));
-        btnEditarVeiculo.addActionListener(e -> new VeiculoController().editarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus));
-        btnExcluirVeiculo.addActionListener(e -> new VeiculoController().excluirVeiculo(txtPlaca));
+        btnCadastrarVeiculo.addActionListener(e -> {
+            veiculoController.cadastrarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus);
+        });
+        btnEditarVeiculo.addActionListener(e -> {
+            veiculoController.editarVeiculo(rdbtnCaminhao, rdbtnCarro, rdbtnMoto, txtPlaca, txtModelo, txtAno, comboBoxStatus);
+        });
+        btnExcluirVeiculo.addActionListener(e -> {
+            veiculoController.excluirVeiculo(txtPlaca);
+        });
     }
 
     public JFrame getFrame() {

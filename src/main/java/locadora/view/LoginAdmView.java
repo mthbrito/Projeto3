@@ -16,7 +16,9 @@ public class LoginAdmView extends LoginView {
     }
 
     private void call() {
-        getBtnAcessar().addActionListener(e -> acessarAdm(getTxtUsuario(), getTxtSenha()));
+        getBtnAcessar().addActionListener(e -> {
+            acessarAdm(getTxtUsuario(), getTxtSenha());
+        });
     }
 
     public void acessarAdm(JTextField txtUsuario, JTextField txtSenha) {

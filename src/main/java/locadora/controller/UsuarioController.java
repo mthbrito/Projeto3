@@ -12,6 +12,17 @@ public class UsuarioController {
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
 
+    public static void resetarEntradas(JTextField txtEndereco, JTextField txtSenha) {
+        txtEndereco.setText(null);
+        txtSenha.setText(null);
+    }
+
+    public static void resetarEntradas(JComboBox<TiposUsuarios> comboBoxFuncao, JTextField txtEndereco, JTextField txtSenha) {
+        comboBoxFuncao.setSelectedIndex(-1);
+        txtEndereco.setText(null);
+        txtSenha.setText(null);
+    }
+
     public void cadastrarUsuario(JComboBox<TiposUsuarios> comboBoxFuncao, JTextField txtEndereco, JTextField txtSenha) {
         TiposUsuarios tipoUsuario = (TiposUsuarios) comboBoxFuncao.getSelectedItem();
         String endereco = txtEndereco.getText().trim();
@@ -45,7 +56,6 @@ public class UsuarioController {
         }
         return usuario;
     }
-
 
     public void editarUsuario(JComboBox<TiposUsuarios> comboBoxFuncao, JTextField txtEndereco, JTextField txtSenha) {
         TiposUsuarios tipoUsuario = (TiposUsuarios) comboBoxFuncao.getSelectedItem();

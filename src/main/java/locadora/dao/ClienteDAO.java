@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Object> {
 
+    private final String json = getCaminhoArquivoJson("\\data\\json\\clientes.json");
     private List<Cliente> clientes;
 
     public ClienteDAO() {
@@ -60,11 +61,11 @@ public class ClienteDAO extends JsonHandler implements IPersistencia<Cliente, Ob
     }
 
     private void atualizarJson(List<Cliente> clientesAtualizado) {
-        atualizarArquivo("src/main/java/locadora/json/clientes.json", clientesAtualizado);
+        atualizarArquivo(json, clientesAtualizado);
     }
 
     public List<Cliente> clientesCadastrados() {
-        String arquivo = "src/main/java/locadora/json/clientes.json";
+        String arquivo = json;
         if (this.isVazio(arquivo, Cliente.class)) {
             clientes = new ArrayList<>();
         } else {

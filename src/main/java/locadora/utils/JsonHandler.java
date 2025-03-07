@@ -3,6 +3,7 @@ package locadora.utils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class JsonHandler {
+
+    public static String getCaminhoArquivoJson(String nomeArquivo) {
+        try {
+            String arquivoJar = new File(System.getProperty("user.dir")).getAbsolutePath();
+            return arquivoJar + nomeArquivo;
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
 
     protected <T> void atualizarArquivo(String arquivo, List<T> listaAtualizada) {
         String listaAtualizadaJson = new Gson().toJson(listaAtualizada);

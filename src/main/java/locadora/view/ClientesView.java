@@ -13,6 +13,7 @@ import java.awt.*;
 public class ClientesView {
 
     private final JFrame frame = new JFrame();
+    private final ClienteController clienteController = new ClienteController();
 
     public ClientesView() {
         initialize();
@@ -175,9 +176,15 @@ public class ClientesView {
             }
         });
 
-        btnCadastrarCliente.addActionListener(e -> new ClienteController().cadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
-        btnEditarCliente.addActionListener(e -> new ClienteController().editarCliente(txtNome, txtCpf, txtTelefone, txtEmail));
-        btnExcluirCliente.addActionListener(e -> new ClienteController().excluirCliente(txtCpf));
+        btnCadastrarCliente.addActionListener(e -> {
+            clienteController.cadastrarCliente(txtNome, txtCpf, txtTelefone, txtEmail);
+        });
+        btnEditarCliente.addActionListener(e -> {
+            clienteController.editarCliente(txtNome, txtCpf, txtTelefone, txtEmail);
+        });
+        btnExcluirCliente.addActionListener(e -> {
+            clienteController.excluirCliente(txtCpf);
+        });
     }
 
     public JFrame getFrame() {

@@ -6,6 +6,7 @@ import java.io.*;
 
 public class Pagamento {
 
+    private static final String caminhoIdPagamentoCounter = new File(System.getProperty("user.dir")).getAbsolutePath() + "\\data\\txt\\idPagamentoCounter.txt";
     private static int idPagamentoCounter = carregarIdPagamentoCounter();
     private final MetodosPagamento metodoPagamento;
     private int idPagamento;
@@ -31,7 +32,7 @@ public class Pagamento {
     }
 
     private static int carregarIdPagamentoCounter() {
-        File file = new File("src/main/java/locadora/utils/idPagamentoCounter.txt");
+        File file = new File(caminhoIdPagamentoCounter);
         if (!file.exists()) {
             return 1000;
         }
@@ -44,7 +45,7 @@ public class Pagamento {
     }
 
     private static void salvarIdPagamentoCounter(int idCounter) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/locadora/utils/idPagamentoCounter.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoIdPagamentoCounter))) {
             writer.write(String.valueOf(idCounter));
         } catch (IOException e) {
             System.out.println("Erro: " + e.getMessage());

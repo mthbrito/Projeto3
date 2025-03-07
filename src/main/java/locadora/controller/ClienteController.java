@@ -11,6 +11,13 @@ public class ClienteController {
 
     private final ClienteDAO clienteDAO = new ClienteDAO();
 
+    public static void resetarEntradas(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
+        txtNome.setText(null);
+        txtCpf.setText(null);
+        txtTelefone.setText(null);
+        txtEmail.setText(null);
+    }
+
     public void cadastrarCliente(JTextField txtNome, JTextField txtCpf, JTextField txtTelefone, JTextField txtEmail) {
         String nome = txtNome.getText().trim();
         String cpf = txtCpf.getText().trim();

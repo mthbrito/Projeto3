@@ -20,6 +20,7 @@ import java.util.List;
 
 public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Object> {
 
+    private final String json = getCaminhoArquivoJson("\\data\\json\\locacoes.json");
     private List<Locacao> locacoes;
 
     public LocacaoDAO() {
@@ -70,7 +71,7 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
     }
 
     private void atualizarJson(List<Locacao> locacoesAtualizado) {
-        atualizarArquivo("src/main/java/locadora/json/locacoes.json", locacoesAtualizado);
+        atualizarArquivo(json, locacoesAtualizado);
     }
 
     private boolean isVazio(String arquivo) {
@@ -98,7 +99,7 @@ public class LocacaoDAO extends JsonHandler implements IPersistencia<Locacao, Ob
     }
 
     public List<Locacao> locacoesCadastradas() {
-        String arquivo = "src/main/java/locadora/json/locacoes.json";
+        String arquivo = json;
         if (this.isVazio(arquivo)) {
             locacoes = new ArrayList<>();
         } else {

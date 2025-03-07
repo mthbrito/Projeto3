@@ -6,6 +6,7 @@ import java.io.*;
 
 public class Locacao {
 
+    private static final String caminhoIdLocacaoCounter = new File(System.getProperty("user.dir")).getAbsolutePath() + "\\data\\txt\\idLocacaoCounter.txt";
     private static int idLocacaoCounter = carregarIdLocacaoCounter();
     private int idLocacao;
     private Cliente cliente;
@@ -31,7 +32,7 @@ public class Locacao {
     }
 
     private static int carregarIdLocacaoCounter() {
-        File file = new File("src/main/java/locadora/utils/idLocacaoCounter.txt");
+        File file = new File(caminhoIdLocacaoCounter);
         if (!file.exists()) {
             return 1000;
         }
@@ -44,7 +45,7 @@ public class Locacao {
     }
 
     private static void salvarIdLocacaoCounter(int idCounter) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/locadora/utils/idLocacaoCounter.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoIdLocacaoCounter))) {
             writer.write(String.valueOf(idCounter));
         } catch (IOException e) {
             System.out.println("Erro: " + e.getMessage());
