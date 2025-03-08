@@ -116,6 +116,7 @@ public class PagamentoController {
             Veiculo veiculo = locacaoDAO.ler(idLocacao).getVeiculo();
             veiculo.setStatus(StatusVeiculo.DISPONIVEL);
             veiculoDAO.atualizar(veiculo);
+            JOptionPane.showMessageDialog(null, "Pagamento salvo!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (PagamentoJaExisteException e) {
             JOptionPane.showMessageDialog(null, "Pagamento já existe!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
