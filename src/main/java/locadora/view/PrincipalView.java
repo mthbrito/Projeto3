@@ -59,7 +59,7 @@ public class PrincipalView {
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Bebas Neue", Font.BOLD, 24));
         lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setBounds(105, 30, 240, 20);
+        lblTitulo.setBounds(85, 30, 280, 20);
         panel.add(lblTitulo);
 
         JLabel lblSubTitulo = new JLabel("Sempre um veículo à disposição!");
